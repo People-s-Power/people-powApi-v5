@@ -1,4 +1,4 @@
-import { Injectable, Inject, NotFoundException } from '@nestjs/common';
+import { Injectable, Inject, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from 'src/user/entity/user.schema';
@@ -46,6 +46,13 @@ export class EndorsementService {
         { new: true },
       );
 
+      const campEndorsementsCount = await this.endorsementModel.find({ campaign: campaign }).count()
+
+      const numberOfPaidEndorsementCount = campaign1.numberOfPaidEndorsementCount
+        if(numberOfPaidEndorsementCount <= campEndorsementsCount) {
+          throw new BadRequestException(`Can't endorse campaign right now`)
+        }
+
       const endorsement = await this.endorsementModel.create({
         campaign,
         body,
@@ -58,11 +65,13 @@ export class EndorsementService {
         { new: true },
       );
 
+      // Notify that an endorsement was created
       await this.campaignGateway.endorsedCampaign({
         campaignTitle: campaign1.title,
         user,
       });
 
+      // Send an Email to owner of the campaign
       const author = await this.userModel.findById(campaign1.author)
       const endorserName = user.name
 

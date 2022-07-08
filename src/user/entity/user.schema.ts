@@ -56,7 +56,7 @@ export class User {
   emailToken: string;
   @Prop()
   emailVerified: boolean;
-  @Prop({ default: false })
+  @Prop({ default: true })
   isActive: boolean;
   @Prop({
     type: String,

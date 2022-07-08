@@ -262,6 +262,11 @@ let CampaignService = class CampaignService {
             if (campaign.views.includes(userId))
                 return 'Viewed';
             const author = await this.userModel.findById(campaign.author);
+            const numberOfViews = campaign.views.length;
+            const numberOfPaidViews = campaign.numberOfPaidViewsCount;
+            if (numberOfPaidViews <= numberOfViews) {
+                return 'Viewer Added';
+            }
             campaign.views.push(userId);
             campaign.save();
             return 'Viewer Added';
