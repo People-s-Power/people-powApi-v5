@@ -69,7 +69,7 @@ let TransactionService = class TransactionService {
                 },
             });
             const res = data;
-            const transaction = await this.transactionModel.create(Object.assign(Object.assign({}, res.data), { transactionId: res.data.id, purpose: (_a = res.data.metadata) === null || _a === void 0 ? void 0 : _a.purpose, key: (_b = res.data.metadata) === null || _b === void 0 ? void 0 : _b.key }));
+            const transaction = await this.transactionModel.create(Object.assign(Object.assign({}, res.data), { transactionId: res.data.id, purpose: (_a = res.data.metadata) === null || _a === void 0 ? void 0 : _a.purpose, key: (_b = res.data.metadata) === null || _b === void 0 ? void 0 : _b.key, name: res.data.metadata.name }));
             if (transaction.purpose === transaction_interface_1.PaymentPurposeEnum.VIEWS || transaction.purpose === transaction_interface_1.PaymentPurposeEnum.ENDORSEMENT) {
                 await this.campaignModel
                     .findByIdAndUpdate(transaction.key, {
@@ -85,6 +85,10 @@ let TransactionService = class TransactionService {
             console.log(error);
             throw error;
         }
+    }
+    async sendTxForCamp(campId) {
+        const tx = await this.transactionModel.find({ key: campId });
+        return tx;
     }
 };
 TransactionService = __decorate([

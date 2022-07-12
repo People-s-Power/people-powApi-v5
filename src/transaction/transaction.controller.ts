@@ -20,4 +20,10 @@ export class TransactionController {
     await this.transactionService.webhook(body);
     return res.status(200);
   }
+
+  @Get('camp/:key')
+  async sendTxForCamp(@Param() param) {
+    const { campId } = param 
+    return this.transactionService.sendTxForCamp(campId)
+  }
 }

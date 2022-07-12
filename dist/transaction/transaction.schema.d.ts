@@ -38,5 +38,6 @@ export declare class Transaction {
     channel: string;
     purpose: PaymentPurposeEnum;
     key: string;
+    name: string;
 }
 export declare const TransactionSchema: import("mongoose").Schema<Transaction, import("mongoose").Model<Transaction, any, any, any>, {}, {}, any>;

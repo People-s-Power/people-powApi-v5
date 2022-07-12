@@ -48,6 +48,8 @@ export class Transaction {
   purpose: PaymentPurposeEnum;
   @Prop()
   key: string;
+  @Prop({ required: true })
+  name: string;
 }
 
 export const TransactionSchema = SchemaFactory.createForClass(Transaction);

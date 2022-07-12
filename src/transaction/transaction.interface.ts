@@ -19,6 +19,7 @@ export interface TransactionPaymentResponse {
     currency: string;
     channel: string;
     metadata: {
+      name: string;
       purpose: PaymentPurposeEnum;
       numberOfViews?: number;
       numberOfEndorsements?: number

@@ -81,6 +81,7 @@ export class TransactionService {
         transactionId: res.data.id,
         purpose: res.data.metadata?.purpose,
         key: res.data.metadata?.key,
+        name: res.data.metadata.name
       });
       if (transaction.purpose === PaymentPurposeEnum.VIEWS || transaction.purpose === PaymentPurposeEnum.ENDORSEMENT) {
         await this.campaignModel
@@ -101,5 +102,10 @@ export class TransactionService {
       throw error;
     }
     // const transaction = await this.transactionModel.create({ ...data, transactionId: data.message });
+  }
+
+  async sendTxForCamp(campId: string): Promise<TransactionDocument[]> {
+    const tx = await this.transactionModel.find({ key: campId })
+    return tx
   }
 }

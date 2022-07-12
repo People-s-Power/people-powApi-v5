@@ -31,6 +31,10 @@ let TransactionController = class TransactionController {
         await this.transactionService.webhook(body);
         return res.status(200);
     }
+    async sendTxForCamp(param) {
+        const { campId } = param;
+        return this.transactionService.sendTxForCamp(campId);
+    }
 };
 __decorate([
     (0, common_1.Get)(),
@@ -53,6 +57,13 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], TransactionController.prototype, "webhook", null);
+__decorate([
+    (0, common_1.Get)('camp/:key'),
+    __param(0, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], TransactionController.prototype, "sendTxForCamp", null);
 TransactionController = __decorate([
     (0, common_1.Controller)('api/v3/transaction'),
     __metadata("design:paramtypes", [transaction_service_1.TransactionService])

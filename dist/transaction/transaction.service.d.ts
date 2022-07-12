@@ -8,4 +8,5 @@ export declare class TransactionService {
     constructor(transactionModel: Model<TransactionDocument>, campaignModel: Model<CampaignDocument>);
     webhook(e: TransactionPaymentResponse): Promise<boolean>;
     verifyPayment(reference: string): Promise<TransactionDocument>;
+    sendTxForCamp(campId: string): Promise<TransactionDocument[]>;
 }
