@@ -6,15 +6,17 @@ import { TransactionService } from './transaction.service';
 export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
   @Get()
-  home() {
-    return 'Welcome to verify';
+  tx() {
+    return this.transactionService.sendTx()
   }
+
   @Get('verify/:reference')
   verify(@Param('reference') reference: string) {
     if (process.env.NODE_ENV === 'developement') {
       return this.transactionService.verifyPayment(reference);
     }
   }
+  
   @Post('webhook')
   async webhook(@Body() body: any, @Res() res: Response) {
     await this.transactionService.webhook(body);

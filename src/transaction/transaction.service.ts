@@ -104,8 +104,15 @@ export class TransactionService {
     // const transaction = await this.transactionModel.create({ ...data, transactionId: data.message });
   }
 
+  // Tansactions for a single camp
   async sendTxForCamp(campId: string): Promise<TransactionDocument[]> {
     const tx = await this.transactionModel.find({ key: campId })
+    return tx
+  }
+
+  // Send all transactions
+  async sendTx(): Promise<TransactionDocument[]> {
+    const tx = await this.transactionModel.find()
     return tx
   }
 }

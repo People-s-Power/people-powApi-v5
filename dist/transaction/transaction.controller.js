@@ -19,8 +19,8 @@ let TransactionController = class TransactionController {
     constructor(transactionService) {
         this.transactionService = transactionService;
     }
-    home() {
-        return 'Welcome to verify';
+    tx() {
+        return this.transactionService.sendTx();
     }
     verify(reference) {
         if (process.env.NODE_ENV === 'developement') {
@@ -41,7 +41,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], TransactionController.prototype, "home", null);
+], TransactionController.prototype, "tx", null);
 __decorate([
     (0, common_1.Get)('verify/:reference'),
     __param(0, (0, common_1.Param)('reference')),

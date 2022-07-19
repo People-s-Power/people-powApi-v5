@@ -9,4 +9,5 @@ export declare class TransactionService {
     webhook(e: TransactionPaymentResponse): Promise<boolean>;
     verifyPayment(reference: string): Promise<TransactionDocument>;
     sendTxForCamp(campId: string): Promise<TransactionDocument[]>;
+    sendTx(): Promise<TransactionDocument[]>;
 }

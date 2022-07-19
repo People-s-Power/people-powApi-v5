@@ -90,6 +90,10 @@ let TransactionService = class TransactionService {
         const tx = await this.transactionModel.find({ key: campId });
         return tx;
     }
+    async sendTx() {
+        const tx = await this.transactionModel.find();
+        return tx;
+    }
 };
 TransactionService = __decorate([
     (0, common_1.Injectable)(),
