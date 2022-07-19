@@ -19,6 +19,7 @@ import {
   ChangePasswordDTO,
   RegisterWithEmailDTO,
 } from 'src/user/dto/user.dto';
+import { Follower, FollowerDocument } from 'src/user/entity/followers.schema';
 import { User, UserDocument } from 'src/user/entity/user.schema';
 import config, { CLIENT_URL } from 'src/utils/config';
 
@@ -26,6 +27,7 @@ import config, { CLIENT_URL } from 'src/utils/config';
 export class AuthService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+    @InjectModel(Follower.name) private readonly FollowerModel: Model<FollowerDocument>,
     @Inject(REQUEST) private readonly req: ReqWithUser | any,
     @Inject('MAIL_SERVICE') private client: ClientProxy,
     private jwtService: JwtService,
@@ -40,8 +42,8 @@ export class AuthService {
     if (user)
       throw new BadRequestException('Email already exist, signin instead');
 
-    if(!location.country_name)
-      throw new BadRequestException('No user country');
+    // if(!location.country_name)
+    //   throw new BadRequestException('No user country');
 
     const payload: Partial<User> = {
       ...data,
@@ -50,8 +52,9 @@ export class AuthService {
       // name: `${data?.firstName} ${data?.lastName}`,
       firstName: data?.name?.split(' ')?.[0],
       lastName: data?.name?.split(' ')?.[1],
-      country: location.country_name,
-      city: location.city,
+      country: 'location.country_name',
+      city: 'location.city',
+      
     };
     // const html = `
     //   <h3>Thank you for registering with EDFHR</h3>
@@ -73,6 +76,10 @@ export class AuthService {
       }
       this.client.emit('confirm-user', mailUser)
       const token = this.jwtService.sign(payloadJWT);
+
+      await this.FollowerModel.create({
+        userId: user._id
+      })
 
       return {
         user,

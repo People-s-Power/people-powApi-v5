@@ -22,11 +22,13 @@ const bcrypt = require("bcryptjs");
 const jsonwebtoken_1 = require("jsonwebtoken");
 const mongoose_2 = require("mongoose");
 const user_dto_1 = require("../user/dto/user.dto");
+const followers_schema_1 = require("../user/entity/followers.schema");
 const user_schema_1 = require("../user/entity/user.schema");
 const config_1 = require("../utils/config");
 let AuthService = class AuthService {
-    constructor(userModel, req, client, jwtService) {
+    constructor(userModel, FollowerModel, req, client, jwtService) {
         this.userModel = userModel;
+        this.FollowerModel = FollowerModel;
         this.req = req;
         this.client = client;
         this.jwtService = jwtService;
@@ -38,9 +40,7 @@ let AuthService = class AuthService {
         const location = this.req.location;
         if (user)
             throw new common_1.BadRequestException('Email already exist, signin instead');
-        if (!location.country_name)
-            throw new common_1.BadRequestException('No user country');
-        const payload = Object.assign(Object.assign({}, data), { password: bcrypt.hashSync(password, 10), emailToken: (Math.floor(Math.random() * 90000) + 10000).toString(), firstName: (_b = (_a = data === null || data === void 0 ? void 0 : data.name) === null || _a === void 0 ? void 0 : _a.split(' ')) === null || _b === void 0 ? void 0 : _b[0], lastName: (_d = (_c = data === null || data === void 0 ? void 0 : data.name) === null || _c === void 0 ? void 0 : _c.split(' ')) === null || _d === void 0 ? void 0 : _d[1], country: location.country_name, city: location.city });
+        const payload = Object.assign(Object.assign({}, data), { password: bcrypt.hashSync(password, 10), emailToken: (Math.floor(Math.random() * 90000) + 10000).toString(), firstName: (_b = (_a = data === null || data === void 0 ? void 0 : data.name) === null || _a === void 0 ? void 0 : _a.split(' ')) === null || _b === void 0 ? void 0 : _b[0], lastName: (_d = (_c = data === null || data === void 0 ? void 0 : data.name) === null || _c === void 0 ? void 0 : _c.split(' ')) === null || _d === void 0 ? void 0 : _d[1], country: 'location.country_name', city: 'location.city' });
         try {
             user = await this.userModel.create(payload);
             const payloadJWT = {
@@ -54,6 +54,9 @@ let AuthService = class AuthService {
             };
             this.client.emit('confirm-user', mailUser);
             const token = this.jwtService.sign(payloadJWT);
+            await this.FollowerModel.create({
+                userId: user._id
+            });
             return {
                 user,
                 token,
@@ -242,9 +245,11 @@ let AuthService = class AuthService {
 AuthService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(user_schema_1.User.name)),
-    __param(1, (0, common_1.Inject)(core_1.REQUEST)),
-    __param(2, (0, common_1.Inject)('MAIL_SERVICE')),
-    __metadata("design:paramtypes", [mongoose_2.Model, Object, microservices_1.ClientProxy,
+    __param(1, (0, mongoose_1.InjectModel)(followers_schema_1.Follower.name)),
+    __param(2, (0, common_1.Inject)(core_1.REQUEST)),
+    __param(3, (0, common_1.Inject)('MAIL_SERVICE')),
+    __metadata("design:paramtypes", [mongoose_2.Model,
+        mongoose_2.Model, Object, microservices_1.ClientProxy,
         jwt_1.JwtService])
 ], AuthService);
 exports.AuthService = AuthService;

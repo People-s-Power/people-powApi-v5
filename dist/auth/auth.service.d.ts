@@ -3,13 +3,15 @@ import { ClientProxy } from '@nestjs/microservices';
 import { Model } from 'mongoose';
 import { ReqWithUser } from 'src/typings';
 import { ChangePasswordDTO, RegisterWithEmailDTO } from 'src/user/dto/user.dto';
+import { FollowerDocument } from 'src/user/entity/followers.schema';
 import { UserDocument } from 'src/user/entity/user.schema';
 export declare class AuthService {
     private readonly userModel;
+    private readonly FollowerModel;
     private readonly req;
     private client;
     private jwtService;
-    constructor(userModel: Model<UserDocument>, req: ReqWithUser | any, client: ClientProxy, jwtService: JwtService);
+    constructor(userModel: Model<UserDocument>, FollowerModel: Model<FollowerDocument>, req: ReqWithUser | any, client: ClientProxy, jwtService: JwtService);
     registerWithEmail(data: Partial<RegisterWithEmailDTO>): Promise<{
         user: Partial<UserDocument>;
         token: string;

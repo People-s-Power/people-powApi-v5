@@ -20,6 +20,7 @@ import { AuthResolver } from './auth.resolver';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './strategies/jwt.strategy'; 
 import { ClientsModule, Transport } from  "@nestjs/microservices"
+import { Follower, FollowerSchema } from 'src/user/entity/followers.schema';
 
 @Module({
   providers: [
@@ -32,6 +33,7 @@ import { ClientsModule, Transport } from  "@nestjs/microservices"
     MongooseModule.forFeature([
       { name: User.name, schema: UserSchema },
       { name: Applicant.name, schema: ApplicantSchema },
+      { name: Follower.name, schema: FollowerSchema }
     ]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({

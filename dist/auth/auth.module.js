@@ -20,6 +20,7 @@ const auth_resolver_1 = require("./auth.resolver");
 const auth_service_1 = require("./auth.service");
 const jwt_strategy_1 = require("./strategies/jwt.strategy");
 const microservices_1 = require("@nestjs/microservices");
+const followers_schema_1 = require("../user/entity/followers.schema");
 let AuthModule = class AuthModule {
 };
 AuthModule = __decorate([
@@ -34,6 +35,7 @@ AuthModule = __decorate([
             mongoose_1.MongooseModule.forFeature([
                 { name: user_schema_1.User.name, schema: user_schema_1.UserSchema },
                 { name: applicant_shema_1.Applicant.name, schema: applicant_shema_1.ApplicantSchema },
+                { name: followers_schema_1.Follower.name, schema: followers_schema_1.FollowerSchema }
             ]),
             passport_1.PassportModule.register({ defaultStrategy: 'jwt' }),
             jwt_1.JwtModule.register({
