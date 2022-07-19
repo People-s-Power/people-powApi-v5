@@ -17,7 +17,7 @@ const graphql_1 = require("@nestjs/graphql");
 const applicant_service_1 = require("../applicant/services/applicant.service");
 const graphql_guard_1 = require("../auth/guards/graphql.guard");
 const user_dto_1 = require("./dto/user.dto");
-const user_service_1 = require("./user.service");
+const user_service_1 = require("./services/user.service");
 let UserResolver = class UserResolver {
     constructor(userService, applicantService) {
         this.userService = userService;

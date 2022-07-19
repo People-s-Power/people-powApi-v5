@@ -19,8 +19,8 @@ import {
   ChangeUserAccountTypeDTO,
   ChangeUserRoleDTO,
   UpdateUserDTO,
-} from './dto/user.dto';
-import { UserService } from './user.service';
+} from '../dto/user.dto'
+import { UserService } from '../services/user.service';
 
 @Controller('api/v3/user')
 @UseInterceptors(CacheInterceptor)

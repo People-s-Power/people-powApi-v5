@@ -1,7 +1,7 @@
 import { CacheModule, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from 'src/user/entity/user.schema';
-import { UserService } from 'src/user/user.service';
+import { UserService } from 'src/user/services/user.service';
 import { AffidavitController } from './controllers/affidavit.controller';
 import { ApplicantController } from './controllers/applicant.controller';
 import { AffidavitResolver } from './resolvers/affidavit.resolver';

@@ -1,7 +1,7 @@
 import { ApplicantService } from 'src/applicant/services/applicant.service';
 import { AccountTypeEnum, StaffRoleEnum } from './dto/user.dto';
 import { User, UserDocument } from './entity/user.schema';
-import { UserService } from './user.service';
+import { UserService } from './services/user.service';
 export declare class UserResolver {
     private readonly userService;
     private readonly applicantService;

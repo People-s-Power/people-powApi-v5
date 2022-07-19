@@ -18,9 +18,11 @@ import { ApplicantService } from 'src/applicant/services/applicant.service';
 import { RepCommentService } from 'src/applicant/services/rep-comment.service';
 import { ReportService } from 'src/applicant/services/report.service';
 import { User, UserSchema } from './entity/user.schema';
-import { UserController } from './user.controller';
+import { UserController } from './controllers/user.controller';
+import { FollowerController } from './controllers/follower.controller';
 import { UserResolver } from './user.resolver';
-import { UserService } from './user.service';
+import { UserService } from './services/user.service';
+import { FollowersService } from './services/follower.service';
 
 @Module({
   imports: [

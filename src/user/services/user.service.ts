@@ -21,8 +21,8 @@ import {
   ChangeUserRoleDTO,
   StaffRoleEnum,
   UpdateUserDTO,
-} from './dto/user.dto';
-import { User, UserDocument } from './entity/user.schema';
+} from '../dto/user.dto';
+import { User, UserDocument } from '../entity/user.schema';
 
 interface OldUser {
   _id: string;

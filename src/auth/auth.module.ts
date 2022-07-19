@@ -13,7 +13,7 @@ import {
 } from 'src/applicant/schema/applicant.shema';
 import { LocationMiddleware } from 'src/middlewares/location.middleware';
 import { User, UserSchema } from 'src/user/entity/user.schema';
-import { UserService } from 'src/user/user.service';
+import { UserService } from 'src/user/services/user.service';
 import config from 'src/utils/config';
 import { AuthController } from './auth.controller';
 import { AuthResolver } from './auth.resolver';

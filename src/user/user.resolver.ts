@@ -3,7 +3,7 @@ import { ApplicantService } from 'src/applicant/services/applicant.service';
 import { CurrentUser } from 'src/auth/guards/graphql.guard';
 import { AccountTypeEnum, StaffRoleEnum } from './dto/user.dto';
 import { User, UserDocument } from './entity/user.schema';
-import { UserService } from './user.service';
+import { UserService } from './services/user.service';
 
 @Resolver('User')
 export class UserResolver {

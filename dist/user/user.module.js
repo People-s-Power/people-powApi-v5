@@ -16,9 +16,9 @@ const applicant_service_1 = require("../applicant/services/applicant.service");
 const rep_comment_service_1 = require("../applicant/services/rep-comment.service");
 const report_service_1 = require("../applicant/services/report.service");
 const user_schema_1 = require("./entity/user.schema");
-const user_controller_1 = require("./user.controller");
+const user_controller_1 = require("./controllers/user.controller");
 const user_resolver_1 = require("./user.resolver");
-const user_service_1 = require("./user.service");
+const user_service_1 = require("./services/user.service");
 let UserModule = class UserModule {
 };
 UserModule = __decorate([

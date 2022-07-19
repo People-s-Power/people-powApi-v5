@@ -13,6 +13,7 @@ import {
 } from './schema/campaign.schema';
 import { Endorsement, EndorsementSchema } from './schema/endorsement.schema';
 import { CampaignService } from './services/campaign.service';
+
 import { EndorsementService } from './services/endorsement.service';
 
 import mongooseSlug = require('mongoose-slug-generator');
@@ -20,6 +21,8 @@ import { User, UserSchema } from 'src/user/entity/user.schema';
 import { Notice, NoticeSchema } from 'src/notification/notification.schema';
 import config from 'src/utils/config';
 import { ClientsModule, Transport } from  "@nestjs/microservices"
+import { UpdateService } from './services/update.service';
+import { UpdateResolver } from './resolvers/update.resolver'
 
 @Module({
   imports: [
@@ -56,10 +59,12 @@ import { ClientsModule, Transport } from  "@nestjs/microservices"
     ])
   ],
   providers: [
+    UpdateService,
     CampaignResolver,
     CampaignService,
     EndorsementService,
     EndorsementResolver,
+    UpdateResolver,
     CampaignGateway,
   ],
   controllers: [CampaignController, EndorsementController],
