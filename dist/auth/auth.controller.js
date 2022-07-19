@@ -25,9 +25,6 @@ let AuthController = class AuthController {
         this.client = client;
         this.authService = authService;
     }
-    home() {
-        return 'Welcome to auth';
-    }
     async me(req) {
         return req.user;
     }
@@ -77,12 +74,6 @@ let AuthController = class AuthController {
         return { id: user.id, email: user.email };
     }
 };
-__decorate([
-    (0, common_1.Get)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], AuthController.prototype, "home", null);
 __decorate([
     (0, common_1.Get)('me'),
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),

@@ -19,9 +19,9 @@ export type FollowerDocument = Follower & Document;
 export class Follower {
   @Prop({ type: Types.ObjectId, ref: 'User' })
   userId: Record<string, User>;
-  @Prop({ type: Types.ObjectId, ref: 'User' })
-  follower: User[] | string[];
-  @Prop({ type: Types.ObjectId, ref: 'User' })
+  @Prop({ type: Types.ObjectId, ref: 'User', default: [] })
+  followers: User[] | string[];
+  @Prop({ type: Types.ObjectId, ref: 'User', default: [] })
   following: User[] | string[];
   @Prop({ default: 0 })
   followersCount: number;

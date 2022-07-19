@@ -7,7 +7,6 @@ export declare class AuthController {
     private client;
     private readonly authService;
     constructor(client: ClientProxy, authService: AuthService);
-    home(): string;
     me(req: ReqWithUser): Promise<import("../user/entity/user.schema").UserDocument>;
     accumulate(): Observable<number>;
     login(data: {

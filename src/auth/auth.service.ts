@@ -32,6 +32,12 @@ export class AuthService {
     @Inject('MAIL_SERVICE') private client: ClientProxy,
     private jwtService: JwtService,
   ) {}
+
+  // test() {
+  //   console.log(config.RMQ_URL)
+  //   this.client.emit('test', 'mailUser')
+  // }
+
   async registerWithEmail(
     data: Partial<RegisterWithEmailDTO>,
   ): Promise<{ user: Partial<UserDocument>; token: string }> {
@@ -42,8 +48,8 @@ export class AuthService {
     if (user)
       throw new BadRequestException('Email already exist, signin instead');
 
-    // if(!location.country_name)
-    //   throw new BadRequestException('No user country');
+    if(!location.country_name)
+      throw new BadRequestException('No user country');
 
     const payload: Partial<User> = {
       ...data,
@@ -52,9 +58,8 @@ export class AuthService {
       // name: `${data?.firstName} ${data?.lastName}`,
       firstName: data?.name?.split(' ')?.[0],
       lastName: data?.name?.split(' ')?.[1],
-      country: 'location.country_name',
-      city: 'location.city',
-      
+      country: location.country_name,
+      city: location.city,
     };
     // const html = `
     //   <h3>Thank you for registering with EDFHR</h3>
@@ -120,6 +125,10 @@ export class AuthService {
         city: location.city,
         isActive: true
       });
+
+      await this.FollowerModel.create({
+        userId: user._id
+      })
 
       const payloadJWT = {
         email: user.email,

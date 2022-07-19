@@ -24,7 +24,7 @@ import { User } from 'src/user/entity/user.schema';
 export declare type FollowerDocument = Follower & Document;
 export declare class Follower {
     userId: Record<string, User>;
-    follower: User[] | string[];
+    followers: User[] | string[];
     following: User[] | string[];
     followersCount: number;
     followingCount: number;

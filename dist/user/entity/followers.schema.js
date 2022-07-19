@@ -20,11 +20,11 @@ __decorate([
     __metadata("design:type", Object)
 ], Follower.prototype, "userId", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'User' }),
+    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'User', default: [] }),
     __metadata("design:type", Array)
-], Follower.prototype, "follower", void 0);
+], Follower.prototype, "followers", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'User' }),
+    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'User', default: [] }),
     __metadata("design:type", Array)
 ], Follower.prototype, "following", void 0);
 __decorate([

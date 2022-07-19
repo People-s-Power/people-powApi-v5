@@ -29,10 +29,12 @@ export class AuthController {
     @Inject('MAIL_SERVICE') private client: ClientProxy,
     private readonly authService: AuthService
     ) {}
-  @Get()
-  home() {
-    return 'Welcome to auth';
-  }
+
+  // @Get()
+  // home() {
+  //   this.authService.test()
+  //   return 'Welcome to auth';
+  // }
 
   @Get('me')
   @UseGuards(JwtAuthGuard)
