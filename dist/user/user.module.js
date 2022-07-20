@@ -19,6 +19,7 @@ const user_schema_1 = require("./entity/user.schema");
 const user_controller_1 = require("./controllers/user.controller");
 const user_resolver_1 = require("./user.resolver");
 const user_service_1 = require("./services/user.service");
+const campaign_schema_1 = require("../campaign/schema/campaign.schema");
 let UserModule = class UserModule {
 };
 UserModule = __decorate([
@@ -36,6 +37,7 @@ UserModule = __decorate([
                 { name: report_schema_1.Report.name, schema: report_schema_1.ReportSchema },
                 { name: affidavit_schema_1.Affidavit.name, schema: affidavit_schema_1.AffidavitSchema },
                 { name: report_schema_1.RepComment.name, schema: report_schema_1.RepCommentSchema },
+                { name: campaign_schema_1.Campaign.name, schema: campaign_schema_1.CampaignSchema },
             ]),
             common_1.CacheModule.register(),
         ],

@@ -33,6 +33,7 @@ const report_service_1 = require("./services/report.service");
 const report_schema_1 = require("./schema/report.schema");
 const rep_comment_service_1 = require("./services/rep-comment.service");
 const rep_comment_controller_1 = require("./controllers/rep-comment.controller");
+const campaign_schema_1 = require("../campaign/schema/campaign.schema");
 let ApplicantModule = class ApplicantModule {
 };
 ApplicantModule = __decorate([
@@ -46,6 +47,7 @@ ApplicantModule = __decorate([
                 { name: report_schema_1.Report.name, schema: report_schema_1.ReportSchema },
                 { name: report_schema_1.RepComment.name, schema: report_schema_1.RepCommentSchema },
                 { name: user_schema_1.User.name, schema: user_schema_1.UserSchema },
+                { name: campaign_schema_1.Campaign.name, schema: campaign_schema_1.CampaignSchema }
             ]),
             common_1.CacheModule.register(),
         ],

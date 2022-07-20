@@ -13,7 +13,6 @@ const mongoose_1 = require("@nestjs/mongoose");
 const passport_1 = require("@nestjs/passport");
 const applicant_shema_1 = require("../applicant/schema/applicant.shema");
 const user_schema_1 = require("../user/entity/user.schema");
-const user_service_1 = require("../user/services/user.service");
 const config_1 = require("../utils/config");
 const auth_controller_1 = require("./auth.controller");
 const auth_resolver_1 = require("./auth.resolver");
@@ -28,8 +27,7 @@ AuthModule = __decorate([
         providers: [
             jwt_strategy_1.JwtStrategy,
             auth_resolver_1.AuthResolver,
-            auth_service_1.AuthService,
-            user_service_1.UserService,
+            auth_service_1.AuthService
         ],
         imports: [
             mongoose_1.MongooseModule.forFeature([

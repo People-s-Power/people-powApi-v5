@@ -1,7 +1,9 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { Document } from 'mongoose';
 import { Applicant } from 'src/applicant/schema/applicant.shema';
+import { CampaignDocument } from 'src/campaign/schema/campaign.schema';
 import { IGeo } from 'src/interfaces';
+import { User, UserDocument } from '../entity/user.schema';
 
 export enum StaffRoleEnum {
   Admin = 'Admin',
@@ -159,4 +161,9 @@ export class ChangePasswordDTO {
   oldPassword: string;
   @ApiProperty()
   newPassword: string;
+}
+
+export class UserAndCampDTO {
+  user: UserDocument;
+  campaigns: CampaignDocument;
 }

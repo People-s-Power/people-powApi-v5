@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ChangePasswordDTO = exports.ChangeUserAccountTypeDTO = exports.ChangeUserRoleDTO = exports.AssignUserAdminDTO = exports.UpdateUserDTO = exports.LoginWithGoogleDTO = exports.LoginWithEmailDTO = exports.RegisterWithGoogleDTO = exports.RegisterWithEmailDTO = exports.IUser = exports.AccountTypeEnum = exports.StaffRoleEnum = void 0;
+exports.UserAndCampDTO = exports.ChangePasswordDTO = exports.ChangeUserAccountTypeDTO = exports.ChangeUserRoleDTO = exports.AssignUserAdminDTO = exports.UpdateUserDTO = exports.LoginWithGoogleDTO = exports.LoginWithEmailDTO = exports.RegisterWithGoogleDTO = exports.RegisterWithEmailDTO = exports.IUser = exports.AccountTypeEnum = exports.StaffRoleEnum = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const mongoose_1 = require("mongoose");
 var StaffRoleEnum;
@@ -221,4 +221,7 @@ __decorate([
     __metadata("design:type", String)
 ], ChangePasswordDTO.prototype, "newPassword", void 0);
 exports.ChangePasswordDTO = ChangePasswordDTO;
+class UserAndCampDTO {
+}
+exports.UserAndCampDTO = UserAndCampDTO;
 //# sourceMappingURL=user.dto.js.map

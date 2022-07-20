@@ -17,14 +17,16 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const applicant_shema_1 = require("../../applicant/schema/applicant.shema");
+const campaign_schema_1 = require("../../campaign/schema/campaign.schema");
 const cloudinary_1 = require("../../utils/cloudinary");
 const connectDb_1 = require("../../utils/connectDb");
 const user_dto_1 = require("../dto/user.dto");
 const user_schema_1 = require("../entity/user.schema");
 let UserService = class UserService {
-    constructor(cacheManager, userModel, applicantModel) {
+    constructor(cacheManager, userModel, campaignModel, applicantModel) {
         this.cacheManager = cacheManager;
         this.userModel = userModel;
+        this.campaignModel = campaignModel;
         this.applicantModel = applicantModel;
     }
     async getUsers(accountType, role, user) {
@@ -82,11 +84,15 @@ let UserService = class UserService {
         try {
             const user = await this.userModel
                 .findById(id)
-                .populate('reps', 'firstName lastName id')
                 .select('-password');
+            const campaigns = await this.campaignModel.find({ author: user._id });
             if (!user)
                 throw new common_1.NotFoundException('No user found');
-            return user;
+            const payload = {
+                user: user,
+                campaigns: campaigns
+            };
+            return payload;
         }
         catch (error) {
             throw error;
@@ -275,8 +281,10 @@ UserService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, common_1.Inject)(common_1.CACHE_MANAGER)),
     __param(1, (0, mongoose_1.InjectModel)(user_schema_1.User.name)),
-    __param(2, (0, mongoose_1.InjectModel)(applicant_shema_1.Applicant.name)),
+    __param(2, (0, mongoose_1.InjectModel)(campaign_schema_1.Campaign.name)),
+    __param(3, (0, mongoose_1.InjectModel)(applicant_shema_1.Applicant.name)),
     __metadata("design:paramtypes", [Object, mongoose_2.Model,
+        mongoose_2.Model,
         mongoose_2.Model])
 ], UserService);
 exports.UserService = UserService;

@@ -29,6 +29,7 @@ import {
 } from './schema/report.schema';
 import { RepCommentService } from './services/rep-comment.service';
 import { RepCommentController } from './controllers/rep-comment.controller';
+import { Campaign, CampaignSchema } from 'src/campaign/schema/campaign.schema';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { RepCommentController } from './controllers/rep-comment.controller';
       { name: Report.name, schema: ReportSchema },
       { name: RepComment.name, schema: RepCommentSchema },
       { name: User.name, schema: UserSchema },
+      { name: Campaign.name, schema: CampaignSchema }
     ]),
     CacheModule.register(),
   ],

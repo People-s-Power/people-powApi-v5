@@ -23,6 +23,7 @@ import { FollowerController } from './controllers/follower.controller';
 import { UserResolver } from './user.resolver';
 import { UserService } from './services/user.service';
 import { FollowersService } from './services/follower.service';
+import { Campaign, CampaignSchema } from 'src/campaign/schema/campaign.schema';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { FollowersService } from './services/follower.service';
       { name: Report.name, schema: ReportSchema },
       { name: Affidavit.name, schema: AffidavitSchema },
       { name: RepComment.name, schema: RepCommentSchema },
+      { name: Campaign.name, schema: CampaignSchema },
     ]),
     CacheModule.register(),
   ],

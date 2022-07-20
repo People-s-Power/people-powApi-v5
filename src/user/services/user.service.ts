@@ -12,6 +12,7 @@ import {
   Applicant,
   ApplicantDocument,
 } from 'src/applicant/schema/applicant.shema';
+import { Campaign, CampaignDocument } from 'src/campaign/schema/campaign.schema';
 import { cloudinaryUpload } from 'src/utils/cloudinary';
 import { connectOldDB } from 'src/utils/connectDb';
 import {
@@ -21,6 +22,7 @@ import {
   ChangeUserRoleDTO,
   StaffRoleEnum,
   UpdateUserDTO,
+  UserAndCampDTO,
 } from '../dto/user.dto';
 import { User, UserDocument } from '../entity/user.schema';
 
@@ -53,6 +55,8 @@ export class UserService {
   constructor(
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+    @InjectModel(Campaign.name)
+    private readonly campaignModel: Model<CampaignDocument>,
     @InjectModel(Applicant.name)
     private readonly applicantModel: Model<ApplicantDocument>,
   ) {}
@@ -119,16 +123,21 @@ export class UserService {
       throw error;
     }
   }
-  async findOne(id: string): Promise<UserDocument> {
+  async findOne(id: string) {
     try {
       const user = await this.userModel
         .findById(id)
-        .populate('reps', 'firstName lastName id')
         .select('-password');
+
+      const campaigns = await this.campaignModel.find({ author: user._id })
 
       if (!user) throw new NotFoundException('No user found');
 
-      return user;
+      const payload = {
+        user: user,
+        campaigns: campaigns
+      }
+      return payload;
     } catch (error) {
       throw error;
     }

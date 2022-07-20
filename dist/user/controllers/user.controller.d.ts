@@ -14,7 +14,19 @@ export declare class UserController {
         role: import("../dto/user.dto").StaffRoleEnum;
         isActive: boolean;
     }[]>;
-    findOne(id: string): Promise<import("../entity/user.schema").UserDocument>;
+    findOne(id: string): Promise<{
+        user: import("../entity/user.schema").User & import("mongoose").Document<any, any, any> & {
+            _id: any;
+            _doc: any;
+        } & {
+            _id: any;
+        };
+        campaigns: (import("../../campaign/schema/campaign.schema").Campaign & import("mongoose").Document<any, any, any> & {
+            _doc: any;
+        } & {
+            _id: any;
+        })[];
+    }>;
     updateUser(data: UpdateUserDTO): Promise<any>;
     assign(data: AssignUserAdminDTO): Promise<any>;
     changeRole(data: ChangeUserRoleDTO): Promise<{

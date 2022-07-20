@@ -1,6 +1,8 @@
 import { Document } from 'mongoose';
 import { Applicant } from 'src/applicant/schema/applicant.shema';
+import { CampaignDocument } from 'src/campaign/schema/campaign.schema';
 import { IGeo } from 'src/interfaces';
+import { UserDocument } from '../entity/user.schema';
 export declare enum StaffRoleEnum {
     Admin = "Admin",
     Rep = "Rep",
@@ -107,5 +109,9 @@ export declare class ChangePasswordDTO {
     id: string;
     oldPassword: string;
     newPassword: string;
+}
+export declare class UserAndCampDTO {
+    user: UserDocument;
+    campaigns: CampaignDocument;
 }
 export {};
