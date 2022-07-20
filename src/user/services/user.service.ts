@@ -129,7 +129,7 @@ export class UserService {
         .findById(id)
         .select('-password');
 
-      const campaigns = await this.campaignModel.find({ author: user._id })
+      const campaigns = await this.campaignModel.find({ author: id })
 
       if (!user) throw new NotFoundException('No user found');
 

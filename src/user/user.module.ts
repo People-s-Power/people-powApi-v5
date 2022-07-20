@@ -24,6 +24,7 @@ import { UserResolver } from './user.resolver';
 import { UserService } from './services/user.service';
 import { FollowersService } from './services/follower.service';
 import { Campaign, CampaignSchema } from 'src/campaign/schema/campaign.schema';
+import { Follower, FollowerSchema } from './entity/followers.schema';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { Campaign, CampaignSchema } from 'src/campaign/schema/campaign.schema';
       { name: Affidavit.name, schema: AffidavitSchema },
       { name: RepComment.name, schema: RepCommentSchema },
       { name: Campaign.name, schema: CampaignSchema },
+      { name: Follower.name, schema: FollowerSchema }
     ]),
     CacheModule.register(),
   ],
@@ -49,7 +51,8 @@ import { Campaign, CampaignSchema } from 'src/campaign/schema/campaign.schema';
     ApplicantService,
     ReportService,
     RepCommentService,
+    FollowersService
   ],
-  controllers: [UserController],
+  controllers: [UserController, FollowerController],
 })
 export class UserModule {}
