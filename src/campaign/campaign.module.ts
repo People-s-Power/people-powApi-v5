@@ -23,6 +23,7 @@ import config from 'src/utils/config';
 import { ClientsModule, Transport } from  "@nestjs/microservices"
 import { UpdateService } from './services/update.service';
 import { UpdateController } from './controllers/update.controller'
+import { Update, UpdateSchema } from './schema/update.schema';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { UpdateController } from './controllers/update.controller'
       { name: User.name, schema: UserSchema },
       { name: Notice.name, schema: NoticeSchema },
       { name: View.name, schema: ViewSchema },
+      { name: Update.name, schema: UpdateSchema }
     ]),
     MongooseModule.forFeatureAsync([
       {

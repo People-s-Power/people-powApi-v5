@@ -25,6 +25,7 @@ const config_1 = require("../utils/config");
 const microservices_1 = require("@nestjs/microservices");
 const update_service_1 = require("./services/update.service");
 const update_controller_1 = require("./controllers/update.controller");
+const update_schema_1 = require("./schema/update.schema");
 let CampaignModule = class CampaignModule {
 };
 CampaignModule = __decorate([
@@ -36,6 +37,7 @@ CampaignModule = __decorate([
                 { name: user_schema_1.User.name, schema: user_schema_1.UserSchema },
                 { name: notification_schema_1.Notice.name, schema: notification_schema_1.NoticeSchema },
                 { name: campaign_schema_1.View.name, schema: campaign_schema_1.ViewSchema },
+                { name: update_schema_1.Update.name, schema: update_schema_1.UpdateSchema }
             ]),
             mongoose_1.MongooseModule.forFeatureAsync([
                 {
