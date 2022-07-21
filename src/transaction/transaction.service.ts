@@ -32,6 +32,7 @@ export class TransactionService {
         name: e.data.metadata?.name
       });
       console.log(e)
+      console.log(transaction)
       if (transaction.purpose === PaymentPurposeEnum.VIEWS || transaction.purpose === PaymentPurposeEnum.ENDORSEMENT) {
         await this.campaignModel
           .findByIdAndUpdate(

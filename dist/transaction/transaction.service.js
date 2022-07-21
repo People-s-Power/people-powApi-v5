@@ -31,6 +31,7 @@ let TransactionService = class TransactionService {
         try {
             const transaction = await this.transactionModel.create(Object.assign(Object.assign({}, e.data), { transactionId: e.data.id, purpose: (_a = e.data.metadata) === null || _a === void 0 ? void 0 : _a.purpose, key: (_b = e.data.metadata) === null || _b === void 0 ? void 0 : _b.key, name: (_c = e.data.metadata) === null || _c === void 0 ? void 0 : _c.name }));
             console.log(e);
+            console.log(transaction);
             if (transaction.purpose === transaction_interface_1.PaymentPurposeEnum.VIEWS || transaction.purpose === transaction_interface_1.PaymentPurposeEnum.ENDORSEMENT) {
                 await this.campaignModel
                     .findByIdAndUpdate(transaction.key, {
