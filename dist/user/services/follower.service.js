@@ -29,7 +29,6 @@ let FollowersService = class FollowersService {
             if (!user)
                 throw new common_1.BadRequestException(`User don't exist`);
             const userIsFollowing = user.followers.find(item => item === id);
-            console.log(user.followers, id);
             if (userIsFollowing)
                 throw new common_1.BadRequestException('User already following');
             const follower = await this.userModel.findById(id);
@@ -51,6 +50,46 @@ let FollowersService = class FollowersService {
                     followersCount: result.followersCount,
                     following: result.following,
                     followingCount: result.followingCount
+                },
+                userFollowing: {
+                    followers: follower.followers,
+                    followersCount: follower.followersCount,
+                    following: follower.following,
+                    followingCount: follower.followingCount
+                }
+            };
+            return payload;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+    async unFollow(id, userId) {
+        try {
+            const user = await this.userModel.findById(userId);
+            if (!user)
+                throw new common_1.BadRequestException(`User don't exist`);
+            let userIsFollowing = user.followers.findIndex(item => item === id);
+            const { followers } = user;
+            const fx = followers;
+            fx.splice(userIsFollowing, 1);
+            user.followers = fx;
+            user.followersCount--;
+            const result = await user.save();
+            const follower = await this.userModel.findById(id);
+            if (!follower)
+                throw new common_1.BadRequestException(`User don't exist`);
+            let { following } = follower;
+            const followedUserIndex = following.findIndex(item => item === userId);
+            follower.followingCount--;
+            follower.following.splice(followedUserIndex, 1);
+            await follower.save();
+            const payload = {
+                userFollowed: {
+                    followers: user.followers,
+                    followersCount: user.followersCount,
+                    following: user.following,
+                    followingCount: user.followingCount
                 },
                 userFollowing: {
                     followers: follower.followers,

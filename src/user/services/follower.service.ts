@@ -20,15 +20,15 @@ export class FollowersService {
 
   async addFollowers(id, userId) {
     try {
-      const user = await this.userModel.findById(userId)
 
+      // Find user
+      const user = await this.userModel.findById(userId)
+      // Checks if it exists
       if(!user) throw new BadRequestException(`User don't exist`)
       
       
       // Check if user is already following
       const userIsFollowing =  user.followers.find(item => item === id)
-      // console.log(followers, 'wesdfjknknknuiiwn')
-      console.log(user.followers, id)
       if(userIsFollowing) throw new BadRequestException('User already following')
       
       // Add the followed user to the followers following Array
@@ -68,6 +68,56 @@ export class FollowersService {
     } catch (error) {
       throw error
     }
+  }
+
+
+  async unFollow(id, userId) {
+    try {
+      
+      // Check if user exists Allways!!!
+      const user = await this.userModel.findById(userId)
+      if(!user) throw new BadRequestException(`User don't exist`)
+
+      // Unfollow the user
+      let userIsFollowing =  user.followers.findIndex(item => item === id)
+      const { followers } = user
+      const fx = followers
+      fx.splice(userIsFollowing, 1)
+
+      user.followers = fx
+      user.followersCount --
+      const result = await user.save()
+
+      // Remove user from following
+      const follower = await this.userModel.findById(id)
+      if(!follower) throw new BadRequestException(`User don't exist`)
+      let { following } = follower
+      const followedUserIndex = following.findIndex(item => item === userId)
+      follower.followingCount --
+      follower.following.splice(followedUserIndex, 1)
+
+      await follower.save()
+
+      const payload = {
+        userFollowed: {
+          followers: user.followers,
+          followersCount: user.followersCount,
+          following: user.following,
+          followingCount: user.followingCount
+        },
+        userFollowing: {
+          followers: follower.followers,
+          followersCount: follower.followersCount,
+          following: follower.following,
+          followingCount: follower.followingCount
+        }
+      }
+
+      return payload
+    } catch (error) {
+      throw error
+    }
+
   }
 
 }

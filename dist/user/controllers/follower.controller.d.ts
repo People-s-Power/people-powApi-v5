@@ -17,4 +17,18 @@ export declare class FollowerController {
             followingCount: number;
         };
     }>;
+    unfollow(body: any, req: ReqWithUser): Promise<{
+        userFollowed: {
+            followers: string[];
+            followersCount: number;
+            following: string[];
+            followingCount: number;
+        };
+        userFollowing: {
+            followers: string[];
+            followersCount: number;
+            following: string[];
+            followingCount: number;
+        };
+    }>;
 }

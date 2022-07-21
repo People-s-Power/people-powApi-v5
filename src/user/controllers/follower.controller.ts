@@ -31,4 +31,13 @@ export class FollowerController {
     const { _id } = req.user
     return this.followerService.addFollowers(_id, userId)
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Put()
+  unfollow(@Body() body, @Req() req: ReqWithUser) {
+    const { userId } = body 
+    const { _id } = req.user
+    return this.followerService.unFollow(_id, userId)
+  }
+
 }

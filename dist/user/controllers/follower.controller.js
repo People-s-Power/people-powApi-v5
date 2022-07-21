@@ -25,6 +25,11 @@ let FollowerController = class FollowerController {
         const { _id } = req.user;
         return this.followerService.addFollowers(_id, userId);
     }
+    unfollow(body, req) {
+        const { userId } = body;
+        const { _id } = req.user;
+        return this.followerService.unFollow(_id, userId);
+    }
 };
 __decorate([
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
@@ -35,6 +40,15 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], FollowerController.prototype, "follow", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
+    (0, common_1.Put)(),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", void 0)
+], FollowerController.prototype, "unfollow", null);
 FollowerController = __decorate([
     (0, common_1.Controller)('api/v3/followers'),
     __metadata("design:paramtypes", [follower_service_1.FollowersService])

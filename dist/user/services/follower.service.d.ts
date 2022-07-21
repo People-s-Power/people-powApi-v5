@@ -19,4 +19,18 @@ export declare class FollowersService {
             followingCount: number;
         };
     }>;
+    unFollow(id: any, userId: any): Promise<{
+        userFollowed: {
+            followers: string[];
+            followersCount: number;
+            following: string[];
+            followingCount: number;
+        };
+        userFollowing: {
+            followers: string[];
+            followersCount: number;
+            following: string[];
+            followingCount: number;
+        };
+    }>;
 }
