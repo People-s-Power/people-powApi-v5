@@ -44,6 +44,8 @@ export class User {
 
   @Prop()
   lastName: string;
+  @Prop({ required: true, default: 'Fill this in!!!' })
+  description: string;
   @Prop()
   otherName: string;
   @Prop({ require: true, unique: true })
@@ -90,6 +92,14 @@ export class User {
   city: string;
   @Prop({ type: Date, default: Date.now })
   lastSeen: Date;
+  @Prop()
+  followers: string[];
+  @Prop()
+  following: string[];
+  @Prop({ default: 0 })
+  followersCount: number;
+  @Prop({ default: 0 })
+  followingCount: number;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

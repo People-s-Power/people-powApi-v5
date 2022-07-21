@@ -1,31 +1,20 @@
-/// <reference types="mongoose/types/aggregate" />
-/// <reference types="mongoose/types/callback" />
-/// <reference types="mongoose/types/collection" />
-/// <reference types="mongoose/types/connection" />
-/// <reference types="mongoose/types/cursor" />
-/// <reference types="mongoose/types/document" />
-/// <reference types="mongoose/types/error" />
-/// <reference types="mongoose/types/helpers" />
-/// <reference types="mongoose/types/middlewares" />
-/// <reference types="mongoose/types/indizes" />
-/// <reference types="mongoose/types/models" />
-/// <reference types="mongoose/types/mongooseoptions" />
-/// <reference types="mongoose/types/pipelinestage" />
-/// <reference types="mongoose/types/populate" />
-/// <reference types="mongoose/types/query" />
-/// <reference types="mongoose/types/schemaoptions" />
-/// <reference types="mongoose/types/schematypes" />
-/// <reference types="mongoose/types/session" />
-/// <reference types="mongoose/types/types" />
-/// <reference types="mongoose/types/utility" />
-/// <reference types="mongoose/types/validation" />
-/// <reference types="mongoose" />
 import { ReqWithUser } from 'src/typings';
 import { FollowersService } from '../services/follower.service';
 export declare class FollowerController {
     private readonly followerService;
     constructor(followerService: FollowersService);
-    follow(body: any, req: ReqWithUser): Promise<import("../entity/followers.schema").Follower & import("mongoose").Document<any, any, any> & {
-        _id: any;
+    follow(body: any, req: ReqWithUser): Promise<{
+        userFollowed: {
+            followers: string[];
+            followersCount: number;
+            following: string[];
+            followingCount: number;
+        };
+        userFollowing: {
+            followers: string[];
+            followersCount: number;
+            following: string[];
+            followingCount: number;
+        };
     }>;
 }

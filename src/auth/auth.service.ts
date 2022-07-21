@@ -82,13 +82,6 @@ export class AuthService {
       // this.client.emit('confirm-user', mailUser)
       const token = this.jwtService.sign(payloadJWT);
 
-      const objFollow = await this.FollowerModel.create({
-        userId: user._id,
-        followers: [],
-        following: []
-      })
-      console.log(objFollow)
-
       return {
         user,
         token,

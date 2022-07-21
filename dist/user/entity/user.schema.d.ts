@@ -34,6 +34,7 @@ export declare class User {
     image: string;
     firstName: string;
     lastName: string;
+    description: string;
     otherName: string;
     email: string;
     password: string;
@@ -55,5 +56,9 @@ export declare class User {
     state: string;
     city: string;
     lastSeen: Date;
+    followers: string[];
+    following: string[];
+    followersCount: number;
+    followingCount: number;
 }
 export declare const UserSchema: import("mongoose").Schema<User, import("mongoose").Model<User, any, any, any>, {}, {}, any>;

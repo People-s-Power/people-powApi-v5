@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.FollowerSchema = exports.Follower = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const mongoose_1 = require("@nestjs/mongoose");
-const mongoose_2 = require("mongoose");
 let Follower = class Follower {
 };
 __decorate([
@@ -20,11 +19,11 @@ __decorate([
     __metadata("design:type", String)
 ], Follower.prototype, "userId", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'User', autopopulate: true }),
+    (0, mongoose_1.Prop)(),
     __metadata("design:type", Array)
 ], Follower.prototype, "followers", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'User', autopopulate: true }),
+    (0, mongoose_1.Prop)(),
     __metadata("design:type", Array)
 ], Follower.prototype, "following", void 0);
 __decorate([
