@@ -21,9 +21,22 @@ let FollowersService = class FollowersService {
     constructor(followerModel) {
         this.followerModel = followerModel;
     }
-    async addFollowers() {
-        const followers = await this.followerModel.find();
-        return followers;
+    async addFollowers(id, userId) {
+        try {
+            const followersModel = await this.followerModel.findOne({ userId: userId });
+            const { followers } = followersModel;
+            const userIsFollowing = followersModel.followers.find(item => item === id);
+            console.log(followers);
+            if (userIsFollowing)
+                throw new common_1.BadRequestException('User already following');
+            followersModel.followers.push(id);
+            followersModel.followersCount++;
+            const result = await followersModel.save();
+            return result;
+        }
+        catch (error) {
+            throw error;
+        }
     }
 };
 FollowersService = __decorate([

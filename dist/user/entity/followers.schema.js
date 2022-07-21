@@ -16,15 +16,15 @@ const mongoose_2 = require("mongoose");
 let Follower = class Follower {
 };
 __decorate([
-    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'User' }),
-    __metadata("design:type", Object)
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
 ], Follower.prototype, "userId", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'User', default: [] }),
+    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'User', autopopulate: true }),
     __metadata("design:type", Array)
 ], Follower.prototype, "followers", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'User', default: [] }),
+    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'User', autopopulate: true }),
     __metadata("design:type", Array)
 ], Follower.prototype, "following", void 0);
 __decorate([

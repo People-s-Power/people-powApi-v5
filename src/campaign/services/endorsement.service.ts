@@ -46,12 +46,12 @@ export class EndorsementService {
         { new: true },
       );
 
-      const campEndorsementsCount = await this.endorsementModel.find({ campaign: campaign }).count()
+      // const campEndorsementsCount = await this.endorsementModel.find({ campaign: campaign }).count()
 
-      const numberOfPaidEndorsementCount = campaign1.numberOfPaidEndorsementCount
-        if(numberOfPaidEndorsementCount <= campEndorsementsCount) {
-          throw new BadRequestException(`Can't endorse campaign right now`)
-        }
+      // const numberOfPaidEndorsementCount = campaign1.numberOfPaidEndorsementCount
+      //   if(numberOfPaidEndorsementCount <= campEndorsementsCount) {
+      //     throw new BadRequestException(`Can't endorse campaign right now`)
+      //   }
 
       const endorsement = await this.endorsementModel.create({
         campaign,

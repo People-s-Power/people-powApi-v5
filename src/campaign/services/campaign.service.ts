@@ -322,13 +322,13 @@ export class CampaignService {
 
       // Sending email to the author 
       const author = await this.userModel.findById(campaign.author)
-      const numberOfViews = campaign.views.length
+      // const numberOfViews = campaign.views.length
 
-      const numberOfPaidViews = campaign.numberOfPaidViewsCount
+      // const numberOfPaidViews = campaign.numberOfPaidViewsCount
 
-      if(numberOfPaidViews <= numberOfViews) {
-        return 'Viewer Added';
-      }
+      // if(numberOfPaidViews <= numberOfViews) {
+      //   return 'Viewer Added';
+      // }
 
 
       campaign.views.push(userId)

@@ -8,6 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FollowerController = void 0;
 const common_1 = require("@nestjs/common");
@@ -17,15 +20,19 @@ let FollowerController = class FollowerController {
     constructor(followerService) {
         this.followerService = followerService;
     }
-    follow() {
-        return this.followerService.addFollowers();
+    follow(body, req) {
+        const { userId } = body;
+        const { _id } = req.user;
+        return this.followerService.addFollowers(_id, userId);
     }
 };
 __decorate([
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
     (0, common_1.Post)(),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], FollowerController.prototype, "follow", null);
 FollowerController = __decorate([

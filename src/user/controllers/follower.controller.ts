@@ -26,7 +26,9 @@ export class FollowerController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  follow() {
-    return this.followerService.addFollowers()
+  follow (@Body() body, @Req() req: ReqWithUser) {
+    const { userId } = body 
+    const { _id } = req.user
+    return this.followerService.addFollowers(_id, userId)
   }
 }

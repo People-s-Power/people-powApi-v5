@@ -38,11 +38,6 @@ let EndorsementService = class EndorsementService {
             if (endorser)
                 throw new Error('User already Endorsed');
             campaign1 = await this.CampaignModel.findOneAndUpdate({ _id: campaign }, { $addToSet: { endorserIds: user.id } }, { new: true });
-            const campEndorsementsCount = await this.endorsementModel.find({ campaign: campaign }).count();
-            const numberOfPaidEndorsementCount = campaign1.numberOfPaidEndorsementCount;
-            if (numberOfPaidEndorsementCount <= campEndorsementsCount) {
-                throw new common_1.BadRequestException(`Can't endorse campaign right now`);
-            }
             const endorsement = await this.endorsementModel.create({
                 campaign,
                 body,

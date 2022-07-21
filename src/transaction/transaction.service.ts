@@ -29,6 +29,7 @@ export class TransactionService {
         transactionId: e.data.id,
         purpose: e.data.metadata?.purpose,
         key: e.data.metadata?.key,
+        name: e.data.metadata?.name
       });
       console.log(e)
       if (transaction.purpose === PaymentPurposeEnum.VIEWS || transaction.purpose === PaymentPurposeEnum.ENDORSEMENT) {

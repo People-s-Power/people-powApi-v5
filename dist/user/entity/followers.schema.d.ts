@@ -20,12 +20,11 @@
 /// <reference types="mongoose/types/utility" />
 /// <reference types="mongoose/types/validation" />
 import { Document } from 'mongoose';
-import { User } from 'src/user/entity/user.schema';
 export declare type FollowerDocument = Follower & Document;
 export declare class Follower {
-    userId: Record<string, User>;
-    followers: User[] | string[];
-    following: User[] | string[];
+    userId: string;
+    followers: string[];
+    following: string[];
     followersCount: number;
     followingCount: number;
 }

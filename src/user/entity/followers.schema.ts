@@ -17,12 +17,12 @@ export type FollowerDocument = Follower & Document;
   },
 })
 export class Follower {
-  @Prop({ type: Types.ObjectId, ref: 'User' })
-  userId: Record<string, User>;
-  @Prop({ type: Types.ObjectId, ref: 'User', default: [] })
-  followers: User[] | string[];
-  @Prop({ type: Types.ObjectId, ref: 'User', default: [] })
-  following: User[] | string[];
+  @Prop()
+  userId: string;
+  @Prop({ type: Types.ObjectId, ref: 'User',  autopopulate: true})
+  followers: string[];
+  @Prop({ type: Types.ObjectId, ref: 'User',  autopopulate: true})
+  following: string[];
   @Prop({ default: 0 })
   followersCount: number;
   @Prop({ default: 0 })
