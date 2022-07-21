@@ -7,11 +7,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateController = void 0;
-const graphql_1 = require("@nestjs/graphql");
+const common_1 = require("@nestjs/common");
 let UpdateController = class UpdateController {
 };
 UpdateController = __decorate([
-    (0, graphql_1.Resolver)()
+    (0, common_1.Controller)()
 ], UpdateController);
 exports.UpdateController = UpdateController;
 //# sourceMappingURL=update.controller.js.map

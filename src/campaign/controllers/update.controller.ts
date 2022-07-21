@@ -1,4 +1,4 @@
-import { Resolver } from '@nestjs/graphql';
+import { Controller } from '@nestjs/common';
 
-@Resolver()
+@Controller()
 export class UpdateController {}
