@@ -27,9 +27,9 @@ let TransactionService = class TransactionService {
         this.campaignModel = campaignModel;
     }
     async webhook(e) {
-        var _a, _b, _c, _d, _e;
+        var _a, _b, _c, _d, _e, _f, _g;
         try {
-            const transaction = await this.transactionModel.create(Object.assign(Object.assign({}, e.data), { transactionId: e.data.id, purpose: (_a = e.data.metadata) === null || _a === void 0 ? void 0 : _a.purpose, key: (_b = e.data.metadata) === null || _b === void 0 ? void 0 : _b.key, name: (_c = e.data.metadata) === null || _c === void 0 ? void 0 : _c.name }));
+            const transaction = await this.transactionModel.create(Object.assign(Object.assign({}, e.data), { transactionId: e.data.id, purpose: (_a = e.data.metadata) === null || _a === void 0 ? void 0 : _a.purpose, key: (_b = e.data.metadata) === null || _b === void 0 ? void 0 : _b.key, name: (_c = e.data.metadata) === null || _c === void 0 ? void 0 : _c.name, message: `${(_d = e.data.metadata) === null || _d === void 0 ? void 0 : _d.name} ${(_e = e.data.metadata) === null || _e === void 0 ? void 0 : _e.purpose}` }));
             console.log(e);
             console.log(transaction);
             if (transaction.purpose === transaction_interface_1.PaymentPurposeEnum.VIEWS || transaction.purpose === transaction_interface_1.PaymentPurposeEnum.ENDORSEMENT) {
@@ -45,13 +45,13 @@ let TransactionService = class TransactionService {
             let value;
             const campaign = await this.campaignModel.findById(_id);
             if (transaction.purpose === transaction_interface_1.PaymentPurposeEnum.VIEWS) {
-                value = (_d = e.data.metadata) === null || _d === void 0 ? void 0 : _d.numberOfViews;
+                value = (_f = e.data.metadata) === null || _f === void 0 ? void 0 : _f.numberOfViews;
                 const numViews = parseInt(value);
                 campaign.numberOfPaidViewsCount += numViews;
                 await campaign.save();
                 return true;
             }
-            value = (_e = e.data.metadata) === null || _e === void 0 ? void 0 : _e.numberOfEndorsements;
+            value = (_g = e.data.metadata) === null || _g === void 0 ? void 0 : _g.numberOfEndorsements;
             const numEd = parseInt(value);
             campaign.numberOfPaidEndorsementCount += numEd;
             await campaign.save();

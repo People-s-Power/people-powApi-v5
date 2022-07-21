@@ -24,7 +24,7 @@ const notification_schema_1 = require("../notification/notification.schema");
 const config_1 = require("../utils/config");
 const microservices_1 = require("@nestjs/microservices");
 const update_service_1 = require("./services/update.service");
-const update_resolver_1 = require("./resolvers/update.resolver");
+const update_controller_1 = require("./controllers/update.controller");
 let CampaignModule = class CampaignModule {
 };
 CampaignModule = __decorate([
@@ -68,10 +68,9 @@ CampaignModule = __decorate([
             campaign_service_1.CampaignService,
             endorsement_service_1.EndorsementService,
             endorsement_resolver_1.EndorsementResolver,
-            update_resolver_1.UpdateResolver,
             campaign_gateway_1.CampaignGateway,
         ],
-        controllers: [campaign_controller_1.CampaignController, endorsement_controller_1.EndorsementController],
+        controllers: [campaign_controller_1.CampaignController, endorsement_controller_1.EndorsementController, update_controller_1.UpdateController],
     })
 ], CampaignModule);
 exports.CampaignModule = CampaignModule;

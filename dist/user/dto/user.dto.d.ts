@@ -82,6 +82,7 @@ export declare class UpdateUserDTO {
     accountType: AccountTypeEnum;
     image?: string;
     firstName?: string;
+    description: string;
     lastName?: string;
     otherName?: string;
     phone?: string;

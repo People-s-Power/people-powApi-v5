@@ -29,7 +29,8 @@ export class TransactionService {
         transactionId: e.data.id,
         purpose: e.data.metadata?.purpose,
         key: e.data.metadata?.key,
-        name: e.data.metadata?.name
+        name: e.data.metadata?.name,
+        message: `${e.data.metadata?.name} ${e.data.metadata?.purpose}`
       });
       console.log(e)
       console.log(transaction)

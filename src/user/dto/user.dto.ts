@@ -110,6 +110,7 @@ export class UpdateUserDTO {
   @ApiProperty({ nullable: true })
   image?: string;
   firstName?: string;
+  description: string;
   @ApiProperty({ nullable: true })
   lastName?: string;
   @ApiProperty({ nullable: true })

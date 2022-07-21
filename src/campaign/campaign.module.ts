@@ -22,7 +22,7 @@ import { Notice, NoticeSchema } from 'src/notification/notification.schema';
 import config from 'src/utils/config';
 import { ClientsModule, Transport } from  "@nestjs/microservices"
 import { UpdateService } from './services/update.service';
-import { UpdateResolver } from './resolvers/update.resolver'
+import { UpdateController } from './controllers/update.controller'
 
 @Module({
   imports: [
@@ -64,9 +64,8 @@ import { UpdateResolver } from './resolvers/update.resolver'
     CampaignService,
     EndorsementService,
     EndorsementResolver,
-    UpdateResolver,
     CampaignGateway,
   ],
-  controllers: [CampaignController, EndorsementController],
+  controllers: [CampaignController, EndorsementController, UpdateController],
 })
 export class CampaignModule {}
