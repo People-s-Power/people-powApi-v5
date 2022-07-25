@@ -61,14 +61,7 @@ export class AuthService {
       country: location.country_name,
       city: location.city,
     };
-    // const html = `
-    //   <h3>Thank you for registering with EDFHR</h3>
-    //   <p>Please click to <a href="${CLIENT_URL}/auth?mode=verify token&token=${payload.emailToken}">Verify your account</a> or copy your verification code ${payload.emailToken} </p>
-  
-    // `;
-    // console.log(user)
     try {
-      // await sendMail(payload.email, 'Verify your email', html);
       user = await this.userModel.create(payload);
       const payloadJWT = {
         email: user.email,

@@ -155,6 +155,10 @@ __decorate([
     (0, mongoose_1.Prop)({ default: 0 }),
     __metadata("design:type", Number)
 ], User.prototype, "followingCount", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ default: false }),
+    __metadata("design:type", Boolean)
+], User.prototype, "createdOrg", void 0);
 User = __decorate([
     (0, mongoose_1.Schema)({
         timestamps: true,

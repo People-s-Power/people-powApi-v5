@@ -60,5 +60,6 @@ export declare class User {
     following: string[];
     followersCount: number;
     followingCount: number;
+    createdOrg: boolean;
 }
 export declare const UserSchema: import("mongoose").Schema<User, import("mongoose").Model<User, any, any, any>, {}, {}, any>;

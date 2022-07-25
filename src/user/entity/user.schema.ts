@@ -100,6 +100,8 @@ export class User {
   followersCount: number;
   @Prop({ default: 0 })
   followingCount: number;
+  @Prop({ default: false })
+  createdOrg: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
