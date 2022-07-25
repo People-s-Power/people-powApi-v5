@@ -79,7 +79,7 @@ export class AuthService {
         email: user.email,
         code: user.emailToken
       }
-      // this.client.emit('confirm-user', mailUser)
+      this.client.emit('confirm-user', mailUser)
       const token = this.jwtService.sign(payloadJWT);
 
       return {

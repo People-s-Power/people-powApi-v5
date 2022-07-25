@@ -14,10 +14,15 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrgsController = void 0;
 const common_1 = require("@nestjs/common");
+const microservices_1 = require("@nestjs/microservices");
 const jwt_guard_1 = require("../auth/guards/jwt.guard");
 let OrgsController = class OrgsController {
+    constructor(client) {
+        this.client = client;
+    }
     createOrg(req) {
-        console.log(req.user);
+        this.client.emit('create-org', req.user._id);
+        return 'sucess';
     }
 };
 __decorate([
@@ -29,7 +34,9 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], OrgsController.prototype, "createOrg", null);
 OrgsController = __decorate([
-    (0, common_1.Controller)('orgs')
+    (0, common_1.Controller)('api/v3/orgs'),
+    __param(0, (0, common_1.Inject)('ORG_SERVICE')),
+    __metadata("design:paramtypes", [microservices_1.ClientProxy])
 ], OrgsController);
 exports.OrgsController = OrgsController;
 //# sourceMappingURL=orgs.controller.js.map

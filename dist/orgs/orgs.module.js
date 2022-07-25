@@ -8,11 +8,28 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrgsModule = void 0;
 const common_1 = require("@nestjs/common");
+const microservices_1 = require("@nestjs/microservices");
 const orgs_controller_1 = require("./orgs.controller");
 let OrgsModule = class OrgsModule {
 };
 OrgsModule = __decorate([
     (0, common_1.Module)({
+        imports: [
+            microservices_1.ClientsModule.register([
+                {
+                    name: 'ORG_SERVICE',
+                    transport: microservices_1.Transport.RMQ,
+                    options: {
+                        urls: [process.env.RMQ_URL],
+                        queue: 'org_queue',
+                        noAck: false,
+                        queueOptions: {
+                            durable: false
+                        }
+                    }
+                }
+            ])
+        ],
         controllers: [orgs_controller_1.OrgsController]
     })
 ], OrgsModule);

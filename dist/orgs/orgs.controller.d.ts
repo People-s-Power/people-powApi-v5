@@ -1,4 +1,7 @@
+import { ClientProxy } from '@nestjs/microservices';
 import { ReqWithUser } from 'src/typings';
 export declare class OrgsController {
-    createOrg(req: ReqWithUser): void;
+    private client;
+    constructor(client: ClientProxy);
+    createOrg(req: ReqWithUser): string;
 }
