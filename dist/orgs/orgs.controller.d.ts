@@ -3,7 +3,7 @@ import { Model } from 'mongoose';
 import { Observable } from 'rxjs';
 import { ReqWithUser } from 'src/typings';
 import { UserDocument } from 'src/user/entity/user.schema';
-import { CreateOrgDTO } from './dto/org.dto';
+import { CreateOrgDTO, UpdateOrgDTO } from './dto/org.dto';
 import { OrgDocument } from './dto/org.schema';
 export declare class OrgsController {
     private client;
@@ -15,4 +15,5 @@ export declare class OrgsController {
     uploadImage(data: {
         file: string;
     }, param: any): Promise<string>;
+    updateOrg(data: UpdateOrgDTO, param: any): Promise<string>;
 }

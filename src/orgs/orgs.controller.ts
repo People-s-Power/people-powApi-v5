@@ -1,4 +1,4 @@
-import { Body, Controller, Inject, Post, Req, UseGuards, BadRequestException, Get, Param } from '@nestjs/common';
+import { Body, Controller, Inject, Post, Req, UseGuards, BadRequestException, Get, Param, Put } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -7,7 +7,7 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { ReqWithUser } from 'src/typings';
 import { User, UserDocument } from 'src/user/entity/user.schema';
 import { cloudinaryUpload } from 'src/utils/cloudinary';
-import { CreateOrgDTO, IOrg } from './dto/org.dto';
+import { CreateOrgDTO, IOrg, UpdateOrgDTO} from './dto/org.dto';
 import { OrgDocument } from './dto/org.schema';
 
 @Controller('api/v3/orgs')
@@ -63,6 +63,15 @@ export class OrgsController {
       orgId: param.orgId
     }
     this.client.emit('upload-image', payload)
+    return 'Success'
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put('/:orgId')
+  async updateOrg(@Body() data: UpdateOrgDTO, @Param() param) {
+    const { orgId } = param
+    const payload = { ...data, orgId }
+    this.client.emit('update-org', payload)
     return 'Success'
   }
 

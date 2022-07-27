@@ -49,10 +49,10 @@ export declare class UpdateOrgDTO {
     orgName: string;
     linkedIn: string;
     facebook: string;
-    image: string;
     email: string;
-    password: string;
     phone: string;
     instagram: string;
     twitter: string;
+    country: string;
+    state: string;
 }
