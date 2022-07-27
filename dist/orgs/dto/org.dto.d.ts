@@ -20,6 +20,8 @@ export declare class IOrg extends Document {
     followersCount: number;
     followingCount: number;
     operators: Ioperators[];
+    country: string;
+    state: string;
 }
 export interface Ioperators {
     userId: string;

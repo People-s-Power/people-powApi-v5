@@ -1,11 +1,14 @@
-import { Body, Controller, Inject, Post, Req, UseGuards, BadRequestException } from '@nestjs/common';
+import { Body, Controller, Inject, Post, Req, UseGuards, BadRequestException, Get, Param } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { Observable } from 'rxjs';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { ReqWithUser } from 'src/typings';
 import { User, UserDocument } from 'src/user/entity/user.schema';
-import { CreateOrgDTO } from './dto/org.dto';
+import { cloudinaryUpload } from 'src/utils/cloudinary';
+import { CreateOrgDTO, IOrg } from './dto/org.dto';
+import { OrgDocument } from './dto/org.schema';
 
 @Controller('api/v3/orgs')
 export class OrgsController {
@@ -19,7 +22,7 @@ export class OrgsController {
   async createOrg(@Req() req: ReqWithUser, @Body() data: CreateOrgDTO) {
     
     const user = req.user
-    
+
     // Chaeck if user already has an org
     if(user.createdOrg) throw new BadRequestException(`User already has an organsation`)
 
@@ -32,4 +35,36 @@ export class OrgsController {
     this.client.emit('create-org', payload)
     return 'sucess'
   }
+
+  @Get()
+  getOrgs(): Observable<OrgDocument[]> {
+    const pattern = { cmd: 'getOrgs' };
+    return this.client.send(pattern, 'getorgs');
+  }
+
+  // 62debb6df2e456a82112b5fe
+
+  @Get('/:orgId')
+  getOrg(@Param() param): Observable<OrgDocument> {
+    const { orgId } = param
+    const pattern = { cmd: 'getOrg' };
+    return this.client.send<OrgDocument>(pattern, orgId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('/:orgId')
+  async uploadImage(@Body() data: { file: string }, @Param() param) {
+    const image = await cloudinaryUpload(data.file).catch((err) => {
+      console.log(err);
+      throw new Error('Problem with uploading image');
+    });
+    const payload = {
+      img: image,
+      orgId: param.orgId
+    }
+    this.client.emit('upload-image', payload)
+    return 'Success'
+  }
+
+
 }
