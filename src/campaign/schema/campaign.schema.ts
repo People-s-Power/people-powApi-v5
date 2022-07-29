@@ -1,5 +1,6 @@
 import { ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { transpileModule } from '@ts-morph/common/lib/typescript';
 import { Document, Types } from 'mongoose';
 import { User, UserDocument } from 'src/user/entity/user.schema';
 import { CampaignStatusEnum, IEndorsement } from '../dto/campaign.interface';
@@ -47,8 +48,8 @@ export class Campaign {
   status: string;
   @Prop({ type: Boolean, default: false })
   featured: boolean;
-  @Prop({ type: Types.ObjectId, ref: 'User', autopopulate: true })
-  author: Record<string, User>;
+  @Prop({ required: true })
+  author: string;
   @Prop()
   createdAt: Date;
   @Prop()

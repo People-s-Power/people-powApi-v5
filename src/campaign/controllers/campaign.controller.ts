@@ -34,6 +34,13 @@ export class CampaignController {
     return this.campaignService.create(data, req.user);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Post('/org/:orgId')
+  createCampForOrg(@Body() data: CreateCampaignDTO, @Param() param) {
+    const { orgId } = param
+    return this.campaignService.create(data, orgId);
+  }
+
 
   @Get('session/:id')
   async getSession(

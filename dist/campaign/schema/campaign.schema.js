@@ -57,8 +57,8 @@ __decorate([
     __metadata("design:type", Boolean)
 ], Campaign.prototype, "featured", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'User', autopopulate: true }),
-    __metadata("design:type", Object)
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", String)
 ], Campaign.prototype, "author", void 0);
 __decorate([
     (0, mongoose_1.Prop)(),

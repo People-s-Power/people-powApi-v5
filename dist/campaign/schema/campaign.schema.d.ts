@@ -20,7 +20,7 @@
 /// <reference types="mongoose/types/utility" />
 /// <reference types="mongoose/types/validation" />
 import { Document } from 'mongoose';
-import { User, UserDocument } from 'src/user/entity/user.schema';
+import { UserDocument } from 'src/user/entity/user.schema';
 import { IEndorsement } from '../dto/campaign.interface';
 export declare type CampaignDocument = Campaign & Document & {
     _doc: any;
@@ -36,7 +36,7 @@ export declare class Campaign {
     excerpt: string;
     status: string;
     featured: boolean;
-    author: Record<string, User>;
+    author: string;
     createdAt: Date;
     updatedAt: Date;
     addedFrom: string;

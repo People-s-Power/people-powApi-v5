@@ -26,6 +26,10 @@ let CampaignController = class CampaignController {
     create(data, req) {
         return this.campaignService.create(data, req.user);
     }
+    createCampForOrg(data, param) {
+        const { orgId } = param;
+        return this.campaignService.create(data, orgId);
+    }
     async getSession(id, req) {
         const campaign = await this.campaignService.updateSession(id, req.sessionID);
         return campaign.id;
@@ -71,6 +75,15 @@ __decorate([
     __metadata("design:paramtypes", [campaign_dto_1.CreateCampaignDTO, Object]),
     __metadata("design:returntype", void 0)
 ], CampaignController.prototype, "create", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
+    (0, common_1.Post)('/org/:orgId'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [campaign_dto_1.CreateCampaignDTO, Object]),
+    __metadata("design:returntype", void 0)
+], CampaignController.prototype, "createCampForOrg", null);
 __decorate([
     (0, common_1.Get)('session/:id'),
     __param(0, (0, common_1.Param)('id')),
