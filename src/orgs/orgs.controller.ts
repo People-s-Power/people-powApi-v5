@@ -52,7 +52,7 @@ export class OrgsController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Post('/user-org')
+  @Post('/user/orgs')
   getUserOrg(@Req() req: ReqWithUser): Observable<OrgDocument[]> {
     const { user } = req
     const author = user._id
