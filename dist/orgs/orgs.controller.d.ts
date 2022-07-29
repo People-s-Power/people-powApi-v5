@@ -12,6 +12,7 @@ export declare class OrgsController {
     createOrg(req: ReqWithUser, data: CreateOrgDTO): Promise<string>;
     getOrgs(): Observable<OrgDocument[]>;
     getOrg(param: any): Observable<OrgDocument>;
+    getUserOrg(req: ReqWithUser): Observable<OrgDocument[]>;
     uploadImage(data: {
         file: string;
     }, param: any): Promise<string>;

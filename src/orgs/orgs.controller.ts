@@ -52,6 +52,15 @@ export class OrgsController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Post('/user-org')
+  getUserOrg(@Req() req: ReqWithUser): Observable<OrgDocument[]> {
+    const { user } = req
+    const author = user._id
+    const pattern = { cmd: 'user-orgs' };
+    return this.client.send<OrgDocument[]>(pattern, author);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Post('/:orgId')
   async uploadImage(@Body() data: { file: string }, @Param() param) {
     const image = await cloudinaryUpload(data.file).catch((err) => {

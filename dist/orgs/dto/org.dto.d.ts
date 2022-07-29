@@ -28,7 +28,6 @@ export interface Ioperators {
     role: StaffRoleEnum;
 }
 export declare class CreateOrgDTO {
-    image: string;
     orgName: string;
     email: string;
     phone: string;

@@ -34,7 +34,6 @@ export interface Ioperators {
 
 
 export class CreateOrgDTO {
-  image: string;
   orgName: string;
   email: string;
   phone: string;

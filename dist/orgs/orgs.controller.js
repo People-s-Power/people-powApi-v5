@@ -46,6 +46,12 @@ let OrgsController = class OrgsController {
         const pattern = { cmd: 'getOrg' };
         return this.client.send(pattern, orgId);
     }
+    getUserOrg(req) {
+        const { user } = req;
+        const author = user._id;
+        const pattern = { cmd: 'user-orgs' };
+        return this.client.send(pattern, author);
+    }
     async uploadImage(data, param) {
         const image = await (0, cloudinary_1.cloudinaryUpload)(data.file).catch((err) => {
             console.log(err);
@@ -87,6 +93,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", rxjs_1.Observable)
 ], OrgsController.prototype, "getOrg", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
+    (0, common_1.Post)('/user-org'),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", rxjs_1.Observable)
+], OrgsController.prototype, "getUserOrg", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
     (0, common_1.Post)('/:orgId'),
