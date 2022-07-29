@@ -26,7 +26,7 @@ export declare type OrgDocument = Org & Document & {
 };
 export declare class Org {
     author: string;
-    orgName: string;
+    name: string;
     email: string;
     description: string;
     phone: string;

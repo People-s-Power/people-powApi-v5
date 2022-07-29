@@ -66,6 +66,21 @@ export class CampaignGateway implements OnGatewayConnection, OnGatewayInit {
     return notice;
   }
 
+  @UseGuards(WsGuard)
+  @SubscribeMessage(CampaignSocketEnum.Created)
+  async createdCampaignOrg(
+    @MessageBody() data: { campaignTitle: string; orgName: string, orgId: string },
+  ) {
+    const notice = await this.noticeModel.create({
+      event: CampaignSocketEnum.Created,
+      message: `${data?.orgName} created a campaign ${data.campaignTitle} `,
+      user: data?.orgId,
+      db_model: 'campaign',
+    });
+    this.getCampaignNotice();
+    return notice;
+  }
+
   @SubscribeMessage(CampaignSocketEnum.Endorsed)
   async endorsedCampaign(
     @MessageBody() data: { campaignTitle: string; user: UserDocument },
@@ -84,7 +99,6 @@ export class CampaignGateway implements OnGatewayConnection, OnGatewayInit {
     const campaigns = await this.noticeModel
       .find({ db_model: 'campaign' })
       .sort({ createdAt: -1 })
-      .populate('user', 'image, id, firstName, lastName');
     return this.server.emit(CampaignSocketEnum.Get, campaigns);
   }
   @SubscribeMessage(CampaignSocketEnum.Get)
@@ -93,13 +107,11 @@ export class CampaignGateway implements OnGatewayConnection, OnGatewayInit {
       const notices = await this.noticeModel
         .find()
         .sort({ createdAt: -1 })
-        .populate('user', 'image, id, firstName, lastName');
       return this.server.emit('all', notices);
     } else {
       const notices = await this.noticeModel
         .find({ db_model: model })
         .sort({ createdAt: -1 })
-        .populate('user', 'image, id, firstName, lastName');
       return this.server.emit('all', notices);
     }
   }

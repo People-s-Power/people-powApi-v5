@@ -2,7 +2,7 @@ import { Connection, Model, ObjectId } from 'mongoose';
 import { IGeo } from 'src/interfaces';
 import { Notice, NoticeDocument } from 'src/notification/notification.schema';
 import { UserDocument } from 'src/user/entity/user.schema';
-import { CreateCampaignDTO, UpdateCampaignDTO } from '../dto/campaign.dto';
+import { CreateCampaignDTO, CreateOrgCampDTO, UpdateCampaignDTO } from '../dto/campaign.dto';
 import { CampaignGateway } from '../gateway/campaign.gateway';
 import { Campaign, CampaignDocument, ViewDocument } from '../schema/campaign.schema';
 import { Endorsement } from '../schema/endorsement.schema';
@@ -23,6 +23,7 @@ export declare class CampaignService {
     private connection;
     constructor(client: ClientProxy, userModel: Model<UserDocument>, viewModel: Model<ViewDocument>, campaignModel: Model<CampaignDocument>, endorsementModel: Model<Endorsement>, noticeModel: Model<NoticeDocument>, campaignGateway: CampaignGateway, connection: Connection);
     create(data: CreateCampaignDTO, user: UserDocument): Promise<Campaign>;
+    createForOrg(data: CreateOrgCampDTO): Promise<Campaign>;
     findAll(region?: string, limit?: number): Promise<Campaign[]>;
     findAllOtherRegions(limit?: number): Promise<Campaign[]>;
     findAllActive(region: string, limit?: number): Promise<Campaign[]>;

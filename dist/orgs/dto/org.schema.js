@@ -20,7 +20,7 @@ __decorate([
 __decorate([
     (0, mongoose_1.Prop)({ require: true, unique: true }),
     __metadata("design:type", String)
-], Org.prototype, "orgName", void 0);
+], Org.prototype, "name", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ require: true, unique: true }),
     __metadata("design:type", String)

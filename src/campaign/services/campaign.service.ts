@@ -12,7 +12,7 @@ import { Notice, NoticeDocument } from 'src/notification/notification.schema';
 import { ISession } from 'src/typings';
 import { User, UserDocument } from 'src/user/entity/user.schema';
 import { cloudinaryUpload } from 'src/utils/cloudinary';
-import { CreateCampaignDTO, UpdateCampaignDTO } from '../dto/campaign.dto';
+import { CreateCampaignDTO, CreateOrgCampDTO, UpdateCampaignDTO } from '../dto/campaign.dto';
 import { CampaignStatusEnum } from '../dto/campaign.interface';
 import { CampaignGateway } from '../gateway/campaign.gateway';
 import { Campaign, CampaignDocument, View, ViewDocument } from '../schema/campaign.schema';
@@ -96,6 +96,65 @@ export class CampaignService {
       throw error;
     }
   }
+
+  async createForOrg(data: CreateOrgCampDTO): Promise<Campaign> {
+    const author = data.orgId;
+    const { orgName, orgId } = data
+
+    if (!author) throw new UnauthorizedException('No author');
+    const image = await cloudinaryUpload(data.image).catch((err) => {
+      throw err;
+    });
+    const { body } = data;
+    let excerpt: string;
+    if (body) {
+      excerpt = body.split(' ').splice(0, 36).join(' ');
+    }
+
+    try {
+      const campaign = await this.campaignModel.create({
+        ...data,
+        author,
+        excerpt,
+        image,
+        numberOfPaidEndorsementCount: 0,
+        numberOfPaidViewsCount: 0,
+        region: data.country,
+
+      });
+      this.campaignGateway.createdCampaignOrg({
+        campaignTitle: campaign.title,
+        orgName,
+        orgId
+      });
+
+
+      // Get all users 
+    const users = await this.userModel.find()
+    // Extract email and user name
+    const usersEmails = users.map(user => {
+     return {email: user.email, username: user.firstName}
+    })
+
+    // Get all campaigns to display 
+    const allCampaigns = await this.campaignModel.find()
+
+    // Payload to be sent
+    const mailPayload = {
+      users: usersEmails,
+      campaign: campaign,
+      campaigns: allCampaigns
+    }
+    // proxy function
+    this.client.emit('campaign-created', mailPayload)
+
+      
+      return campaign;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async findAll(region?: string, limit?: number, ): Promise<Campaign[]> {
     try {
       const campaigns = await this.campaignModel

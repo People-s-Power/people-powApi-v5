@@ -6,7 +6,7 @@ export declare enum StaffRoleEnum {
 export declare class IOrg extends Document {
     _doc: any;
     author: string;
-    orgName: string;
+    name: string;
     linkedIn: string;
     facebook: string;
     image: string;
@@ -28,14 +28,14 @@ export interface Ioperators {
     role: StaffRoleEnum;
 }
 export declare class CreateOrgDTO {
-    orgName: string;
+    name: string;
     email: string;
     phone: string;
     description: string;
 }
 export interface ICreateOrgDTO {
     image: string;
-    orgName: string;
+    name: string;
     email: string;
     phone: string;
     description: string;
@@ -45,7 +45,7 @@ export declare class createOperators {
     role: StaffRoleEnum;
 }
 export declare class UpdateOrgDTO {
-    orgName: string;
+    name: string;
     linkedIn: string;
     facebook: string;
     email: string;

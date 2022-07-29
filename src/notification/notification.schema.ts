@@ -29,8 +29,8 @@ export class Notice {
   event: string;
   @Prop()
   db_model: string;
-  @Prop({ type: Types.ObjectId, ref: 'User' })
-  user: User;
+  @Prop()
+  author: string;
 }
 
 export const NoticeSchema = SchemaFactory.createForClass(Notice);

@@ -31,7 +31,7 @@ export class Org {
   @Prop()
   author: string;
   @Prop({ require: true, unique: true })
-  orgName: string;
+  name: string;
   @Prop({ require: true, unique: true })
   email: string;
   @Prop({ require: true })

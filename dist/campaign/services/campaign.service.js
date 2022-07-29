@@ -75,6 +75,45 @@ let CampaignService = class CampaignService {
             throw error;
         }
     }
+    async createForOrg(data) {
+        const author = data.orgId;
+        const { orgName, orgId } = data;
+        if (!author)
+            throw new common_1.UnauthorizedException('No author');
+        const image = await (0, cloudinary_1.cloudinaryUpload)(data.image).catch((err) => {
+            throw err;
+        });
+        const { body } = data;
+        let excerpt;
+        if (body) {
+            excerpt = body.split(' ').splice(0, 36).join(' ');
+        }
+        try {
+            const campaign = await this.campaignModel.create(Object.assign(Object.assign({}, data), { author,
+                excerpt,
+                image, numberOfPaidEndorsementCount: 0, numberOfPaidViewsCount: 0, region: data.country }));
+            this.campaignGateway.createdCampaignOrg({
+                campaignTitle: campaign.title,
+                orgName,
+                orgId
+            });
+            const users = await this.userModel.find();
+            const usersEmails = users.map(user => {
+                return { email: user.email, username: user.firstName };
+            });
+            const allCampaigns = await this.campaignModel.find();
+            const mailPayload = {
+                users: usersEmails,
+                campaign: campaign,
+                campaigns: allCampaigns
+            };
+            this.client.emit('campaign-created', mailPayload);
+            return campaign;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
     async findAll(region, limit) {
         try {
             const campaigns = await this.campaignModel

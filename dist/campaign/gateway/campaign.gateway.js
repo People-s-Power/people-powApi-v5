@@ -46,6 +46,16 @@ let CampaignGateway = class CampaignGateway {
         this.getCampaignNotice();
         return notice;
     }
+    async createdCampaignOrg(data) {
+        const notice = await this.noticeModel.create({
+            event: campaign_interface_1.CampaignSocketEnum.Created,
+            message: `${data === null || data === void 0 ? void 0 : data.orgName} created a campaign ${data.campaignTitle} `,
+            user: data === null || data === void 0 ? void 0 : data.orgId,
+            db_model: 'campaign',
+        });
+        this.getCampaignNotice();
+        return notice;
+    }
     async endorsedCampaign(data) {
         var _a, _b, _c;
         const notice = await this.noticeModel.create({
@@ -60,23 +70,20 @@ let CampaignGateway = class CampaignGateway {
     async getCampaignNotice() {
         const campaigns = await this.noticeModel
             .find({ db_model: 'campaign' })
-            .sort({ createdAt: -1 })
-            .populate('user', 'image, id, firstName, lastName');
+            .sort({ createdAt: -1 });
         return this.server.emit(campaign_interface_1.CampaignSocketEnum.Get, campaigns);
     }
     async getAllNotice(model) {
         if (!model) {
             const notices = await this.noticeModel
                 .find()
-                .sort({ createdAt: -1 })
-                .populate('user', 'image, id, firstName, lastName');
+                .sort({ createdAt: -1 });
             return this.server.emit('all', notices);
         }
         else {
             const notices = await this.noticeModel
                 .find({ db_model: model })
-                .sort({ createdAt: -1 })
-                .populate('user', 'image, id, firstName, lastName');
+                .sort({ createdAt: -1 });
             return this.server.emit('all', notices);
         }
     }
@@ -93,6 +100,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], CampaignGateway.prototype, "createdCampaign", null);
+__decorate([
+    (0, common_1.UseGuards)(local_guard_1.WsGuard),
+    (0, websockets_1.SubscribeMessage)(campaign_interface_1.CampaignSocketEnum.Created),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], CampaignGateway.prototype, "createdCampaignOrg", null);
 __decorate([
     (0, websockets_1.SubscribeMessage)(campaign_interface_1.CampaignSocketEnum.Endorsed),
     __param(0, (0, websockets_1.MessageBody)()),

@@ -12,8 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.NoticeSchema = exports.Notice = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const mongoose_1 = require("@nestjs/mongoose");
-const mongoose_2 = require("mongoose");
-const user_schema_1 = require("../user/entity/user.schema");
 let Notice = class Notice {
 };
 __decorate([
@@ -29,9 +27,9 @@ __decorate([
     __metadata("design:type", String)
 ], Notice.prototype, "db_model", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'User' }),
-    __metadata("design:type", user_schema_1.User)
-], Notice.prototype, "user", void 0);
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Notice.prototype, "author", void 0);
 Notice = __decorate([
     (0, graphql_1.ObjectType)(),
     (0, mongoose_1.Schema)({

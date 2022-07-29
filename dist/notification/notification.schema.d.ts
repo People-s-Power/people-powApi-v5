@@ -20,7 +20,6 @@
 /// <reference types="mongoose/types/utility" />
 /// <reference types="mongoose/types/validation" />
 import { Document } from 'mongoose';
-import { User } from 'src/user/entity/user.schema';
 export declare type NoticeDocument = Notice & Document & {
     _doc: any;
 };
@@ -28,6 +27,6 @@ export declare class Notice {
     message: string;
     event: string;
     db_model: string;
-    user: User;
+    author: string;
 }
 export declare const NoticeSchema: import("mongoose").Schema<Notice, import("mongoose").Model<Notice, any, any, any>, {}, {}, any>;

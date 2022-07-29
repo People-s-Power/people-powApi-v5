@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateCampaignDTO = exports.CreateCampaignDTO = void 0;
+exports.CreateOrgCampDTO = exports.UpdateCampaignDTO = exports.CreateCampaignDTO = void 0;
 const swagger_1 = require("@nestjs/swagger");
 class CreateCampaignDTO {
 }
@@ -41,4 +41,7 @@ __decorate([
     __metadata("design:type", String)
 ], UpdateCampaignDTO.prototype, "id", void 0);
 exports.UpdateCampaignDTO = UpdateCampaignDTO;
+class CreateOrgCampDTO {
+}
+exports.CreateOrgCampDTO = CreateOrgCampDTO;
 //# sourceMappingURL=campaign.dto.js.map

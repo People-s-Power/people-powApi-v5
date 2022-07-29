@@ -19,6 +19,15 @@ export declare class CampaignGateway implements OnGatewayConnection, OnGatewayIn
     } & {
         _id: any;
     }>;
+    createdCampaignOrg(data: {
+        campaignTitle: string;
+        orgName: string;
+        orgId: string;
+    }): Promise<Notice & import("mongoose").Document<any, any, any> & {
+        _doc: any;
+    } & {
+        _id: any;
+    }>;
     endorsedCampaign(data: {
         campaignTitle: string;
         user: UserDocument;
