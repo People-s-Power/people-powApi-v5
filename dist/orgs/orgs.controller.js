@@ -29,8 +29,6 @@ let OrgsController = class OrgsController {
     }
     async createOrg(req, data) {
         const user = req.user;
-        if (user.createdOrg)
-            throw new common_1.BadRequestException(`User already has an organsation`);
         user.createdOrg = true;
         await user.save();
         const payload = Object.assign(Object.assign({}, data), { country: user.country, city: user.city, author: user._id });

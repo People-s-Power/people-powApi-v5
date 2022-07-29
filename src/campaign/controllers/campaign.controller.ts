@@ -71,11 +71,20 @@ export class CampaignController {
   findOne(@Param('slug') slug: string) {
     return this.campaignService.findOne(slug);
   }
+
   @UseGuards(JwtAuthGuard)
   @Get('mycampaign')
   async myCampaign(@Req() req: ReqWithUser) {
     return this.campaignService.myCampaigns(req?.user?.id);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('orgcampaign/:orgId')
+  async orgCampaign(@Param() param) {
+    const { orgId } = param
+    return this.campaignService.myCampaigns(orgId);
+  }
+
   @Put()
   update(@Body() data: UpdateCampaignDTO) {
     return this.campaignService.update(data);

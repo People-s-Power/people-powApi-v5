@@ -24,7 +24,7 @@ export class OrgsController {
     const user = req.user
 
     // Chaeck if user already has an org
-    if(user.createdOrg) throw new BadRequestException(`User already has an organsation`)
+    // if(user.createdOrg) throw new BadRequestException(`User already has an organsation`)
 
     user.createdOrg = true
     await user.save()

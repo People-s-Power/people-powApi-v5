@@ -18,6 +18,7 @@ export declare class CampaignController {
     }, never>[]>;
     findOne(slug: string): Promise<import("../schema/campaign.schema").CampaignDocument>;
     myCampaign(req: ReqWithUser): Promise<import("../schema/campaign.schema").Campaign[]>;
+    orgCampaign(param: any): Promise<import("../schema/campaign.schema").Campaign[]>;
     update(data: UpdateCampaignDTO): Promise<import("../schema/campaign.schema").Campaign>;
     delete(id: string): Promise<any>;
     like(id: string, req: ReqWithUser): Promise<import("../schema/campaign.schema").CampaignDocument>;

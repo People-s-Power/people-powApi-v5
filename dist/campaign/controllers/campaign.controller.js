@@ -47,6 +47,10 @@ let CampaignController = class CampaignController {
         var _a;
         return this.campaignService.myCampaigns((_a = req === null || req === void 0 ? void 0 : req.user) === null || _a === void 0 ? void 0 : _a.id);
     }
+    async orgCampaign(param) {
+        const { orgId } = param;
+        return this.campaignService.myCampaigns(orgId);
+    }
     update(data) {
         return this.campaignService.update(data);
     }
@@ -120,6 +124,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], CampaignController.prototype, "myCampaign", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
+    (0, common_1.Get)('orgcampaign/:orgId'),
+    __param(0, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], CampaignController.prototype, "orgCampaign", null);
 __decorate([
     (0, common_1.Put)(),
     __param(0, (0, common_1.Body)()),
