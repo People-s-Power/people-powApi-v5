@@ -17,4 +17,6 @@ export declare class OrgsController {
         file: string;
     }, param: any): Promise<string>;
     updateOrg(data: UpdateOrgDTO, param: any): Promise<string>;
+    follow(body: any, req: ReqWithUser): string;
+    unfollow(body: any, req: ReqWithUser): string;
 }

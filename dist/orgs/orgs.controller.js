@@ -70,6 +70,24 @@ let OrgsController = class OrgsController {
         this.client.emit('update-org', payload);
         return 'Success';
     }
+    follow(body, req) {
+        const { orgId } = body;
+        const { _id } = req.user;
+        const payload = {
+            _id, orgId
+        };
+        this.client.emit('follow-org', payload);
+        return 'Success';
+    }
+    unfollow(body, req) {
+        const { orgId } = body;
+        const { _id } = req.user;
+        const payload = {
+            _id, orgId
+        };
+        this.client.emit('unfollow-org', payload);
+        return 'Success';
+    }
 };
 __decorate([
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
@@ -119,6 +137,24 @@ __decorate([
     __metadata("design:paramtypes", [org_dto_1.UpdateOrgDTO, Object]),
     __metadata("design:returntype", Promise)
 ], OrgsController.prototype, "updateOrg", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
+    (0, common_1.Post)('/follow'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", void 0)
+], OrgsController.prototype, "follow", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
+    (0, common_1.Put)('/unfollow'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", void 0)
+], OrgsController.prototype, "unfollow", null);
 OrgsController = __decorate([
     (0, common_1.Controller)('api/v3/orgs'),
     __param(0, (0, common_1.Inject)('ORG_SERVICE')),

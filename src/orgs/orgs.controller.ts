@@ -84,5 +84,28 @@ export class OrgsController {
     return 'Success'
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Post('/follow')
+  follow (@Body() body, @Req() req: ReqWithUser) {
+    const { orgId } = body 
+    const { _id } = req.user
+    const payload = {
+      _id, orgId
+    }
+    this.client.emit('follow-org', payload)
+    return 'Success'
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put('/unfollow')
+  unfollow(@Body() body, @Req() req: ReqWithUser) {
+    const { orgId } = body 
+    const { _id } = req.user
+    const payload = {
+      _id, orgId
+    }
+    this.client.emit('unfollow-org', payload)
+    return 'Success'
+  }
 
 }
