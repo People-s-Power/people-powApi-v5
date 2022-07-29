@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Observable } from 'rxjs';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import { Campaign, CampaignDocument } from 'src/campaign/schema/campaign.schema';
 import { ReqWithUser } from 'src/typings';
 import { User, UserDocument } from 'src/user/entity/user.schema';
 import { cloudinaryUpload } from 'src/utils/cloudinary';
@@ -14,7 +15,8 @@ import { OrgDocument } from './dto/org.schema';
 export class OrgsController {
   constructor(
     @Inject('ORG_SERVICE') private client: ClientProxy,
-    @InjectModel(User.name) private readonly userModel: Model<UserDocument>
+    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+    @InjectModel(Campaign.name) private readonly CampModel: Model<CampaignDocument>
   ){}
   
   @UseGuards(JwtAuthGuard)

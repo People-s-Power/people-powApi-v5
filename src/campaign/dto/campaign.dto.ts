@@ -2,15 +2,11 @@ import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { Interface } from 'readline';
 
 export class CreateCampaignDTO {
-  @ApiProperty()
   title: string;
-  @ApiProperty({ description: 'this is must be uploaded' })
+  category: string;
   image: string;
-  @ApiProperty()
   aim: string;
-  @ApiProperty()
   target: string;
-  @ApiProperty()
   body: string;
 }
 
@@ -29,6 +25,7 @@ export interface ICreateOrgCamp {
   target: string;
   body: string;
   orgName: string;
+  category: string;
 }
 
 export class CreateOrgCampDTO {
@@ -41,4 +38,5 @@ export class CreateOrgCampDTO {
   aim: string;
   target: string;
   body: string;
+  category: string;
 }

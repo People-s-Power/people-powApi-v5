@@ -38,6 +38,7 @@ export class CreateOrgDTO {
   email: string;
   phone: string;
   description: string;
+  website: string;
 }
 
 export interface ICreateOrgDTO {
@@ -46,6 +47,7 @@ export interface ICreateOrgDTO {
   email: string;
   phone: string;
   description: string;
+  website: string;
 }
 
 export class createOperators {
