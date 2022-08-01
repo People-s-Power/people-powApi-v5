@@ -58,6 +58,7 @@ export declare class User {
     lastSeen: Date;
     followers: string[];
     following: string[];
+    orgOperating: string[];
     followersCount: number;
     followingCount: number;
     createdOrg: boolean;

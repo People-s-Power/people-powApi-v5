@@ -6,6 +6,18 @@ export enum StaffRoleEnum {
   Editor = 'Editor'
 }
 
+export class createOperator {
+  userId: string;
+  role: StaffRoleEnum;
+  orgId: string;
+}
+
+export interface IcreateOperator {
+  userId: string;
+  role: StaffRoleEnum;
+  orgId: string;
+}
+
 export class IOrg extends Document {
   _doc: any;
   author: string;

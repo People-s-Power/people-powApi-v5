@@ -1,5 +1,6 @@
 export declare class CreateCampaignDTO {
     title: string;
+    category: string;
     image: string;
     aim: string;
     target: string;
@@ -19,6 +20,7 @@ export interface ICreateOrgCamp {
     target: string;
     body: string;
     orgName: string;
+    category: string;
 }
 export declare class CreateOrgCampDTO {
     orgId: string;
@@ -30,5 +32,6 @@ export declare class CreateOrgCampDTO {
     aim: string;
     target: string;
     body: string;
+    category: string;
 }
 export {};

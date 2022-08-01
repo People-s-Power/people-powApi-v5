@@ -86,6 +86,34 @@ let OrgsController = class OrgsController {
         this.client.emit('unfollow-org', payload);
         return 'Success';
     }
+    async createOperator(data) {
+        const Idata = data;
+        const { userId, orgId } = Idata;
+        const user = await this.userModel.findById(userId);
+        if (!user)
+            throw new common_1.BadRequestException(`User don't exists`);
+        user.orgOperating.push(orgId);
+        await user.save();
+        this.client.emit('create-operator', Idata);
+    }
+    async updateOperator(data) {
+        const Idata = data;
+        const { userId, orgId, role } = Idata;
+        const user = await this.userModel.findById(userId);
+        if (!user)
+            throw new common_1.BadRequestException(`User don't exists`);
+        this.client.emit('update-operator', Idata);
+    }
+    async deleteOperator(data) {
+        const { userId, orgId } = data;
+        const user = await this.userModel.findById(userId);
+        if (!user)
+            throw new common_1.BadRequestException(`User don't exists`);
+        const orgIndex = user.orgOperating.findIndex(item => item === userId);
+        user.orgOperating.splice(orgIndex, 1);
+        await user.save();
+        this.client.emit('delete-operator', data);
+    }
 };
 __decorate([
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
@@ -153,6 +181,30 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], OrgsController.prototype, "unfollow", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
+    (0, common_1.Post)('/operator'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [org_dto_1.createOperator]),
+    __metadata("design:returntype", Promise)
+], OrgsController.prototype, "createOperator", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
+    (0, common_1.Put)('/operator'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [org_dto_1.createOperator]),
+    __metadata("design:returntype", Promise)
+], OrgsController.prototype, "updateOperator", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
+    (0, common_1.Delete)('/operator'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], OrgsController.prototype, "deleteOperator", null);
 OrgsController = __decorate([
     (0, common_1.Controller)('api/v3/orgs'),
     __param(0, (0, common_1.Inject)('ORG_SERVICE')),
