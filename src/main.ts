@@ -17,8 +17,7 @@ async function bootstrap() {
     'http://localhost',
     'http://localhost:3000',
     'http://localhost:3001',
-    'http://localhost:3002',
-    'localho.st:3000',
+    'https://people-power-user.vercel.app/',
   ];
   const prodOrigins = [
     'https://edfhr.org',
