@@ -6,7 +6,7 @@ const express = require("express");
 const app_module_1 = require("./app.module");
 const location_middleware_1 = require("./middlewares/location.middleware");
 async function bootstrap() {
-    const app = await core_1.NestFactory.create(app_module_1.AppModule, { cors: true });
+    const app = await core_1.NestFactory.create(app_module_1.AppModule);
     const devOrigins = [
         'http://localhost',
         'http://localhost:3000',
@@ -15,7 +15,8 @@ async function bootstrap() {
         'localho.st:3000',
     ];
     const prodOrigins = [
-        'https://people-power-user.vercel.app/'
+        'https://people-power-user.vercel.app/',
+        /\.people-power-user\.vercel\.app$/,
     ];
     const origin = process.env.NODE_ENV === 'production' ? prodOrigins : devOrigins;
     app.enableCors({

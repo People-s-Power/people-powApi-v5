@@ -21,14 +21,22 @@ async function bootstrap() {
     'localho.st:3000',
   ];
   const prodOrigins = [
-    'https://people-power-user.vercel.app/'
+    'https://people-power-user.vercel.app/',
+  
+    /\.people-power-user\.vercel\.app$/,
   ];
 
   // const origin = devOrigins
   const origin =
     process.env.NODE_ENV === 'production' ? prodOrigins : devOrigins;
 
-  app.enableCors();
+  app.enableCors(
+    {
+      origin,
+  
+      credentials: true,
+    }
+  );
 
   app.use(locationLogger)
 
