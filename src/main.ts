@@ -10,7 +10,7 @@ import config from './utils/config';
 // import { RedisIoAdapter } from './utils/redis.io';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
   // app.setGlobalPrefix('api/v3/')
 
   const devOrigins = [
