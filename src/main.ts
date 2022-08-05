@@ -23,7 +23,7 @@ async function bootstrap() {
   const prodOrigins = [
     'https://people-power-user.vercel.app/',
   
-    /\.people-power-user\.app$/,
+    /\people-power-user\.vercel.app$/,
   ];
 
   // const origin = devOrigins
