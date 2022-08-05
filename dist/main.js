@@ -15,14 +15,10 @@ async function bootstrap() {
         'localho.st:3000',
     ];
     const prodOrigins = [
-        'https://edfhr.org',
-        'http://edfhr.org',
-        'https://team.edfhr.org',
-        'https://portal.edfhr.org',
-        'https://portal-dev.edfhr.org',
-        /\.edfhr\.org$/,
+        'https://people-power-user.vercel.app/',
+        /\.people-power-user\.app$/,
     ];
-    const origin = devOrigins;
+    const origin = process.env.NODE_ENV === 'production' ? prodOrigins : devOrigins;
     app.enableCors({
         origin,
         credentials: true,

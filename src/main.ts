@@ -17,19 +17,18 @@ async function bootstrap() {
     'http://localhost',
     'http://localhost:3000',
     'http://localhost:3001',
-    'https://people-power-user.vercel.app/',
+    'http://localhost:3002',
+    'localho.st:3000',
   ];
   const prodOrigins = [
-    'https://edfhr.org',
-    'http://edfhr.org',
-    'https://team.edfhr.org',
-    'https://portal.edfhr.org',
-    'https://portal-dev.edfhr.org',
+    'https://people-power-user.vercel.app/',
   
-    /\.edfhr\.org$/,
+    /\.people-power-user\.app$/,
   ];
 
-  const origin = devOrigins
+  // const origin = devOrigins
+  const origin =
+    process.env.NODE_ENV === 'production' ? prodOrigins : devOrigins;
 
   app.enableCors(
     {
