@@ -29,11 +29,11 @@ async function bootstrap() {
     process.env.NODE_ENV === 'production' ? prodOrigins : devOrigins;
 
   app.enableCors(
-    // {
-    //   origin,
+    {
+      origin,
   
-    //   credentials: true,
-    // }
+      credentials: true,
+    }
   );
 
   app.use(locationLogger)

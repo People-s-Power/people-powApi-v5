@@ -18,7 +18,10 @@ async function bootstrap() {
         'https://people-power-user.vercel.app/'
     ];
     const origin = process.env.NODE_ENV === 'production' ? prodOrigins : devOrigins;
-    app.enableCors();
+    app.enableCors({
+        origin,
+        credentials: true,
+    });
     app.use(location_middleware_1.locationLogger);
     const PORT = process.env.PORT || 8000;
     app.use(express.json({ limit: '50mb' }));

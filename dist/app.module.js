@@ -54,7 +54,7 @@ AppModule = __decorate([
                 },
                 installSubscriptionHandlers: true,
                 path: '/graphql',
-                cors: false,
+                cors: true,
                 buildSchemaOptions: {
                     dateScalarMode: 'timestamp',
                 },
