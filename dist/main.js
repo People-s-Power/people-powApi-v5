@@ -6,7 +6,7 @@ const express = require("express");
 const app_module_1 = require("./app.module");
 const location_middleware_1 = require("./middlewares/location.middleware");
 async function bootstrap() {
-    const app = await core_1.NestFactory.create(app_module_1.AppModule);
+    const app = await core_1.NestFactory.create(app_module_1.AppModule, { cors: true });
     const devOrigins = [
         'http://localhost',
         'http://localhost:3000',
@@ -18,10 +18,7 @@ async function bootstrap() {
         'https://people-power-user.vercel.app/'
     ];
     const origin = process.env.NODE_ENV === 'production' ? prodOrigins : devOrigins;
-    app.enableCors({
-        origin,
-        credentials: true,
-    });
+    app.enableCors();
     app.use(location_middleware_1.locationLogger);
     const PORT = process.env.PORT || 8000;
     app.use(express.json({ limit: '50mb' }));

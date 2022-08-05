@@ -51,9 +51,10 @@ import { OrgsModule } from './orgs/orgs.module';
       definitions: {
         path: join(process.cwd(), 'src/graphql.ts'),
       },
+      
       installSubscriptionHandlers: true,
       path: '/graphql',
-      cors: false,
+      cors: true,
       buildSchemaOptions: {
         dateScalarMode: 'timestamp',
       },

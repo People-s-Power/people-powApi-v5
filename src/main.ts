@@ -10,7 +10,7 @@ import config from './utils/config';
 // import { RedisIoAdapter } from './utils/redis.io';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
   // app.setGlobalPrefix('api/v3/')
 
   const devOrigins = [
@@ -29,11 +29,11 @@ async function bootstrap() {
     process.env.NODE_ENV === 'production' ? prodOrigins : devOrigins;
 
   app.enableCors(
-    {
-      origin,
+    // {
+    //   origin,
   
-      credentials: true,
-    }
+    //   credentials: true,
+    // }
   );
 
   app.use(locationLogger)
