@@ -15,8 +15,7 @@ async function bootstrap() {
         'localho.st:3000',
     ];
     const prodOrigins = [
-        'https://people-power-user.vercel.app/',
-        /\.people-power-user\.app$/,
+        'https://people-power-user.vercel.app/'
     ];
     const origin = process.env.NODE_ENV === 'production' ? prodOrigins : devOrigins;
     app.enableCors({
