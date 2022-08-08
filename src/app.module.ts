@@ -55,6 +55,7 @@ import { OrgsModule } from './orgs/orgs.module';
       installSubscriptionHandlers: true,
       path: '/graphql',
       cors: true,
+      playground: true,
       buildSchemaOptions: {
         dateScalarMode: 'timestamp',
       },

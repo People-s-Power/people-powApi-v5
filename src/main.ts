@@ -10,7 +10,7 @@ import config from './utils/config';
 // import { RedisIoAdapter } from './utils/redis.io';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const app = await NestFactory.create(AppModule);
   // app.setGlobalPrefix('api/v3/')
 
   const devOrigins = [
@@ -21,14 +21,14 @@ async function bootstrap() {
     'localho.st:3000',
   ];
   const prodOrigins = [
-    'https://people-power-user.vercel.app/',
+    'https://peoplespow.com//',
   
-    /\.people-power-user\.vercel\.app$/,
+    /\.peoplespow\.com$/,
   ];
 
   // const origin = devOrigins
-  const origin =
-    process.env.NODE_ENV === 'production' ? prodOrigins : devOrigins;
+  const origin = prodOrigins
+    // process.env.NODE_ENV === 'production' ? prodOrigins : devOrigins;
 
   app.enableCors(
     {
