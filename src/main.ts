@@ -5,6 +5,7 @@ import * as express from 'express';
 // import { join } from 'path';
 import { AppModule } from './app.module';
 import { locationLogger } from './middlewares/location.middleware';
+import * as cors from 'cors'
 // import { LocationMiddleware } from './middlewares/location.middleware';
 import config from './utils/config';
 // import { RedisIoAdapter } from './utils/redis.io';
@@ -30,7 +31,7 @@ async function bootstrap() {
   const origin = prodOrigins
     // process.env.NODE_ENV === 'production' ? prodOrigins : devOrigins;
 
-  app.enableCors();
+  app.use(cors())
 
   app.use(locationLogger)
 
