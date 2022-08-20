@@ -17,6 +17,7 @@ import { ClientsModule, Transport } from  "@nestjs/microservices"
 import { View, ViewSchema } from './campaign/schema/campaign.schema';
 import { ReportModule } from './report/report.module';
 import { OrgsModule } from './orgs/orgs.module';
+import {corsOptions} from "./cors"
 
 @Module({
 
@@ -54,7 +55,7 @@ import { OrgsModule } from './orgs/orgs.module';
       
       installSubscriptionHandlers: true,
       path: '/graphql',
-      cors: true,
+      cors: {...corsOptions},
       playground: true,
       buildSchemaOptions: {
         dateScalarMode: 'timestamp',
