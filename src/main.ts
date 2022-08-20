@@ -18,6 +18,8 @@ async function bootstrap() {
   
   app.use(credentials)
 
+  app.options('*', cors(corsOptions))
+
   app.use(cors(corsOptions))
 
   app.use(locationLogger)
