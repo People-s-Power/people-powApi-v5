@@ -9,29 +9,16 @@ import * as cors from 'cors'
 // import { LocationMiddleware } from './middlewares/location.middleware';
 import config from './utils/config';
 // import { RedisIoAdapter } from './utils/redis.io';
+import {corsOptions,credentials} from "./cors"
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   // app.setGlobalPrefix('api/v3/')
 
-  const devOrigins = [
-    'http://localhost',
-    'http://localhost:3000',
-    'http://localhost:3001',
-    'http://localhost:3002',
-    'localho.st:3000',
-  ];
-  const prodOrigins = [
-    'https://peoplespow.com//',
   
-    /\.peoplespow\.com$/,
-  ];
+  app.use(credentials)
 
-  // const origin = devOrigins
-  const origin = prodOrigins
-    // process.env.NODE_ENV === 'production' ? prodOrigins : devOrigins;
-
-  app.use(cors())
+  app.use(cors(corsOptions))
 
   app.use(locationLogger)
 
