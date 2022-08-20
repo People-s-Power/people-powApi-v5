@@ -16,11 +16,15 @@ async function bootstrap() {
   // app.setGlobalPrefix('api/v3/')
 
   
-  app.use(credentials)
+  // app.use(credentials)
 
-  app.options('*', cors(corsOptions))
+  // app.options('*', cors(corsOptions))
 
-  app.use(cors(corsOptions))
+  // app.use(cors(corsOptions))
+  app.use(cors({
+    origin: ['https://www.peoplespow.com', 'http://localhost:3000'],
+    credentials: true,
+  }))
 
   app.use(locationLogger)
 
