@@ -9,11 +9,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateOrgCampDTO = exports.UpdateCampaignDTO = exports.CreateCampaignDTO = void 0;
+exports.CreateOrgCampDTO = exports.UpdateCampaignDTO = exports.CreateCampaignOrgDTO = exports.CreateCampaignDTO = void 0;
 const swagger_1 = require("@nestjs/swagger");
 class CreateCampaignDTO {
 }
 exports.CreateCampaignDTO = CreateCampaignDTO;
+class CreateCampaignOrgDTO {
+}
+exports.CreateCampaignOrgDTO = CreateCampaignOrgDTO;
 class UpdateCampaignDTO extends (0, swagger_1.PartialType)(CreateCampaignDTO) {
 }
 __decorate([

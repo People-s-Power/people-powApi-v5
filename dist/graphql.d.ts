@@ -316,7 +316,9 @@ export interface Campaign {
     body?: Nullable<string>;
     slug?: Nullable<string>;
     status?: Nullable<string>;
-    author?: Nullable<User>;
+    authorId?: Nullable<string>;
+    authorName?: Nullable<string>;
+    authorImg?: Nullable<string>;
     createdAt?: Nullable<Date>;
     updatedAt?: Nullable<Date>;
     addedFrom?: Nullable<string>;

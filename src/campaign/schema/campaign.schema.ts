@@ -49,7 +49,11 @@ export class Campaign {
   @Prop({ type: Boolean, default: false })
   featured: boolean;
   @Prop({ required: true })
-  author: string;
+  authorId: string;
+  @Prop({ required: true })
+  authorName: string;
+  @Prop({ required: true })
+  authorImg: string;
   @Prop()
   createdAt: Date;
   @Prop()

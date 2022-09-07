@@ -48,7 +48,7 @@ let EndorsementService = class EndorsementService {
                 campaignTitle: campaign1.title,
                 user,
             });
-            const author = await this.userModel.findById(campaign1.author);
+            const author = await this.userModel.findById(campaign1.authorId);
             const endorserName = user.name;
             const mailPayload = {
                 author,

@@ -13,7 +13,7 @@ import {
 import { Request } from 'express';
 // import { JwtAuthGuard } from 'src/auth/guards/local.guard';
 import { ReqWithUser } from 'src/typings';
-import { CreateCampaignDTO, UpdateCampaignDTO } from '../dto/campaign.dto';
+import { CreateCampaignDTO, CreateCampaignOrgDTO, UpdateCampaignDTO } from '../dto/campaign.dto';
 import { CampaignGateway } from '../gateway/campaign.gateway';
 import {
   CampaignService,
@@ -36,7 +36,7 @@ export class CampaignController {
 
   @UseGuards(JwtAuthGuard)
   @Post('/org/:orgId')
-  createCampForOrg(@Body() data: CreateCampaignDTO, @Param() param) {
+  createCampForOrg(@Body() data: CreateCampaignOrgDTO, @Param() param) {
     const { orgId } = param
     return this.campaignService.create(data, orgId);
   }

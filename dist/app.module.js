@@ -54,7 +54,10 @@ AppModule = __decorate([
                 },
                 installSubscriptionHandlers: true,
                 path: '/graphql',
-                cors: true,
+                cors: {
+                    origin: ['https://www.peoplespow.com', 'http://localhost:3000'],
+                    credentials: true,
+                },
                 playground: true,
                 buildSchemaOptions: {
                     dateScalarMode: 'timestamp',

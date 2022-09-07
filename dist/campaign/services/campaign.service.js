@@ -51,8 +51,7 @@ let CampaignService = class CampaignService {
             excerpt = body.split(' ').splice(0, 36).join(' ');
         }
         try {
-            const campaign = await this.campaignModel.create(Object.assign(Object.assign({}, data), { author,
-                excerpt,
+            const campaign = await this.campaignModel.create(Object.assign(Object.assign({}, data), { authorId: author._id, authorName: author.firstName, authorImg: author.image, excerpt,
                 image, numberOfPaidEndorsementCount: 0, numberOfPaidViewsCount: 0, region: user.country }));
             this.campaignGateway.createdCampaign({
                 campaignTitle: campaign.title,
@@ -296,11 +295,11 @@ let CampaignService = class CampaignService {
             const user = await this.userModel.findById(userId);
             if (!campaign || !user)
                 throw new Error('Not found');
-            if (campaign.author.toString() === userId.toString())
+            if (campaign.authorId.toString() === userId.toString())
                 return 'Author Viewed';
             if (campaign.views.includes(userId))
                 return 'Viewed';
-            const author = await this.userModel.findById(campaign.author);
+            const author = await this.userModel.findById(campaign.authorId);
             campaign.views.push(userId);
             campaign.save();
             return 'Viewer Added';

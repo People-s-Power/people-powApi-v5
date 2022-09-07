@@ -8,7 +8,9 @@ type Campaign {
   body: String
   slug: String
   status: String
-  author: User
+  authorId: ID
+  authorName: String
+  authorImg: String 
   createdAt: Date
   updatedAt: Date
   addedFrom: String

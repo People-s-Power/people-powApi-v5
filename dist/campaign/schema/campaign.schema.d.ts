@@ -36,7 +36,9 @@ export declare class Campaign {
     excerpt: string;
     status: string;
     featured: boolean;
-    author: string;
+    authorId: string;
+    authorName: string;
+    authorImg: string;
     createdAt: Date;
     updatedAt: Date;
     addedFrom: string;

@@ -57,7 +57,9 @@ export class CampaignService {
     try {
       const campaign = await this.campaignModel.create({
         ...data,
-        author,
+        authorId: author._id,
+        authorName: author.firstName,
+        authorImg: author.image,
         excerpt,
         image,
         numberOfPaidEndorsementCount: 0,
@@ -236,7 +238,7 @@ export class CampaignService {
         data,
         { new: true },
       );
-      // const author = await this.userModel.findById(campaign.author)git 
+      // const author = await this.userModel.findById(campaign.authorId)git 
 
       // await updateCampMail(campaign.title, author.email, author.name)
       return campaign;
@@ -374,13 +376,13 @@ export class CampaignService {
       const user = await this.userModel.findById(userId)
       if(!campaign || !user) throw new Error('Not found')
 
-      if(campaign.author.toString() === userId.toString())
+      if(campaign.authorId.toString() === userId.toString())
         return 'Author Viewed'
 
       if(campaign.views.includes(userId)) return 'Viewed'
 
       // Sending email to the author 
-      const author = await this.userModel.findById(campaign.author)
+      const author = await this.userModel.findById(campaign.authorId)
       // const numberOfViews = campaign.views.length
 
       // const numberOfPaidViews = campaign.numberOfPaidViewsCount

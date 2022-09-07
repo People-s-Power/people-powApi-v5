@@ -72,7 +72,7 @@ export class EndorsementService {
       });
 
       // Send an Email to owner of the campaign
-      const author = await this.userModel.findById(campaign1.author)
+      const author = await this.userModel.findById(campaign1.authorId)
       const endorserName = user.name
 
       const mailPayload = {

@@ -8,19 +8,10 @@ const location_middleware_1 = require("./middlewares/location.middleware");
 const cors = require("cors");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
-    const devOrigins = [
-        'http://localhost',
-        'http://localhost:3000',
-        'http://localhost:3001',
-        'http://localhost:3002',
-        'localho.st:3000',
-    ];
-    const prodOrigins = [
-        'https://peoplespow.com//',
-        /\.peoplespow\.com$/,
-    ];
-    const origin = prodOrigins;
-    app.use(cors());
+    app.use(cors({
+        origin: ['https://www.peoplespow.com', 'http://localhost:3000'],
+        credentials: true,
+    }));
     app.use(location_middleware_1.locationLogger);
     const PORT = process.env.PORT || 8000;
     app.use(express.json({ limit: '50mb' }));
