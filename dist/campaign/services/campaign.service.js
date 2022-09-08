@@ -39,9 +39,6 @@ let CampaignService = class CampaignService {
         this.connection = connection;
     }
     async create(data, user) {
-        const author = user === null || user === void 0 ? void 0 : user.id;
-        if (!author)
-            throw new common_1.UnauthorizedException('No author');
         const image = await (0, cloudinary_1.cloudinaryUpload)(data.image).catch((err) => {
             throw err;
         });
@@ -51,7 +48,7 @@ let CampaignService = class CampaignService {
             excerpt = body.split(' ').splice(0, 36).join(' ');
         }
         try {
-            const campaign = await this.campaignModel.create(Object.assign(Object.assign({}, data), { authorId: author._id, authorName: author.firstName, authorImg: author.image, excerpt,
+            const campaign = await this.campaignModel.create(Object.assign(Object.assign({}, data), { authorId: user.id, authorName: user.name, authorImg: user.image || 'No img', excerpt,
                 image, numberOfPaidEndorsementCount: 0, numberOfPaidViewsCount: 0, region: user.country }));
             this.campaignGateway.createdCampaign({
                 campaignTitle: campaign.title,
@@ -119,7 +116,6 @@ let CampaignService = class CampaignService {
                 .find({ region: region })
                 .sort({ createdAt: -1 })
                 .limit(limit)
-                .populate('author', 'id firstName lastName image')
                 .populate('endorsements', 'id')
                 .populate('views');
             return campaigns;
@@ -134,7 +130,6 @@ let CampaignService = class CampaignService {
                 .find()
                 .sort({ createdAt: -1 })
                 .limit(limit)
-                .populate('author', 'id firstName lastName image')
                 .populate('endorsements', 'id')
                 .populate('views');
             return campaigns;
@@ -148,7 +143,6 @@ let CampaignService = class CampaignService {
             const campaigns = await this.campaignModel
                 .find({ status: campaign_interface_1.CampaignStatusEnum.Active })
                 .sort({ createdAt: -1 })
-                .populate('author', 'id firstName lastName')
                 .populate('endorsements', 'id');
             const regionCampains = campaigns.filter(camp => camp.region === region);
             return regionCampains;
@@ -162,7 +156,6 @@ let CampaignService = class CampaignService {
             const campaigns = await this.campaignModel
                 .find({ status: campaign_interface_1.CampaignStatusEnum.Active })
                 .sort({ createdAt: -1 })
-                .populate('author', 'id firstName lastName')
                 .populate('endorsements', 'id');
             return campaigns;
         }
@@ -174,7 +167,6 @@ let CampaignService = class CampaignService {
         try {
             const campaigns = await this.campaignModel
                 .findOne({ slug })
-                .populate('author', 'id firstName lastName')
                 .populate('endorsements');
             return campaigns;
         }

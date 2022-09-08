@@ -4,6 +4,7 @@ import {
   NotFoundException,
   UnauthorizedException,
   BadRequestException,
+  Logger
 } from '@nestjs/common';
 import { InjectConnection, InjectModel, Schema } from '@nestjs/mongoose';
 import { Connection, Model, ObjectId } from 'mongoose';
@@ -18,6 +19,7 @@ import { CampaignGateway } from '../gateway/campaign.gateway';
 import { Campaign, CampaignDocument, View, ViewDocument } from '../schema/campaign.schema';
 import { Endorsement } from '../schema/endorsement.schema';
 import { ClientProxy } from '@nestjs/microservices';
+import { UserController } from 'src/user/controllers/user.controller';
 // import { viewCampMail, updateCampMail } from  '../../utils/sendMaijet'
 
 export class ISessionResponseData {
@@ -44,10 +46,7 @@ export class CampaignService {
 
 
   async create(data: CreateCampaignDTO, user: UserDocument): Promise<Campaign> {
-    const author = user?.id;
-    console.log(author)
 
-    if (!author) throw new UnauthorizedException('No author');
     const image = await cloudinaryUpload(data.image).catch((err) => {
       throw err;
     });
@@ -62,7 +61,7 @@ export class CampaignService {
         ...data,
         authorId: user.id,
         authorName: user.name,
-        authorImg: user.image,
+        authorImg: user.image || 'No img',
         excerpt,
         image,
         numberOfPaidEndorsementCount: 0,
