@@ -41,8 +41,11 @@ export class CampaignService {
     private campaignGateway: CampaignGateway,
     @InjectConnection() private connection: Connection,
   ) {}
+
+
   async create(data: CreateCampaignDTO, user: UserDocument): Promise<Campaign> {
     const author = user?.id;
+    console.log(author)
 
     if (!author) throw new UnauthorizedException('No author');
     const image = await cloudinaryUpload(data.image).catch((err) => {
