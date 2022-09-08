@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException,
   UnauthorizedException,
-  BadRequestException
+  BadRequestException,
 } from '@nestjs/common';
 import { InjectConnection, InjectModel, Schema } from '@nestjs/mongoose';
 import { Connection, Model, ObjectId } from 'mongoose';
@@ -60,9 +60,9 @@ export class CampaignService {
     try {
       const campaign = await this.campaignModel.create({
         ...data,
-        authorId: author._id,
-        authorName: author.firstName,
-        authorImg: author.image,
+        authorId: user.id,
+        authorName: user.name,
+        authorImg: user.image,
         excerpt,
         image,
         numberOfPaidEndorsementCount: 0,
