@@ -163,7 +163,6 @@ export class CampaignService {
         .find({ region: region })
         .sort({ createdAt: -1 })
         .limit(limit)
-        .populate('author', 'id firstName lastName image')
         .populate('endorsements', 'id')
         .populate('views');
 
@@ -179,7 +178,6 @@ export class CampaignService {
         .find()
         .sort({ createdAt: -1 })
         .limit(limit)
-        .populate('author', 'id firstName lastName image')
         .populate('endorsements', 'id')
         .populate('views');
 
@@ -194,7 +192,6 @@ export class CampaignService {
       const campaigns = await this.campaignModel
         .find({ status: CampaignStatusEnum.Active })
         .sort({ createdAt: -1 })
-        .populate('author', 'id firstName lastName')
         .populate('endorsements', 'id');
       
       const regionCampains = campaigns.filter(camp => camp.region === region)
@@ -209,7 +206,6 @@ export class CampaignService {
       const campaigns = await this.campaignModel
         .find({ status: CampaignStatusEnum.Active })
         .sort({ createdAt: -1 })
-        .populate('author', 'id firstName lastName')
         .populate('endorsements', 'id');
 
       return campaigns as unknown as Promise<CampaignDocument[]>;
@@ -222,7 +218,6 @@ export class CampaignService {
     try {
       const campaigns = await this.campaignModel
         .findOne({ slug })
-        .populate('author', 'id firstName lastName')
         .populate('endorsements');
 
       return campaigns;
