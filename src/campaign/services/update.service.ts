@@ -17,6 +17,7 @@ export class UpdateService {
       body: body
     })
 
+    await update.save()
     return update
   }
 

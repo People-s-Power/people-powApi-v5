@@ -26,6 +26,7 @@ let UpdateService = class UpdateService {
             campaign: campaignId,
             body: body
         });
+        await update.save();
         return update;
     }
     async getCampUpdates(campaignId) {
