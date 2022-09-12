@@ -36,7 +36,7 @@ export declare class CampaignService {
     unLike(campaign_id: string, user: UserDocument): Promise<CampaignDocument>;
     myCampaigns(user_id: string): Promise<Campaign[]>;
     approveCampaign(campaign_id: string): Promise<CampaignDocument>;
-    viewCampaign(id: string, userId: string): Promise<string>;
+    viewCampaign(id: string, userId: string): Promise<CampaignDocument | string>;
     findAllNotice(model?: string): Promise<Omit<Notice & import("mongoose").Document<any, any, any> & {
         _doc: any;
     } & {

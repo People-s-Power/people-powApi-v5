@@ -3,6 +3,7 @@ import { ReqWithUser } from 'src/typings';
 import { CreateCampaignDTO, CreateCampaignOrgDTO, UpdateCampaignDTO } from '../dto/campaign.dto';
 import { CampaignGateway } from '../gateway/campaign.gateway';
 import { CampaignService, ISessionResponseData } from '../services/campaign.service';
+import { CampaignDocument } from '../schema/campaign.schema';
 export declare class CampaignController {
     private readonly campaignService;
     private readonly campaignGateway;
@@ -16,16 +17,16 @@ export declare class CampaignController {
     } & {
         _id: any;
     }, never>[]>;
-    findOne(slug: string): Promise<import("../schema/campaign.schema").CampaignDocument>;
+    findOne(slug: string): Promise<CampaignDocument>;
     myCampaign(req: ReqWithUser): Promise<import("../schema/campaign.schema").Campaign[]>;
     orgCampaign(param: any): Promise<import("../schema/campaign.schema").Campaign[]>;
     update(data: UpdateCampaignDTO): Promise<import("../schema/campaign.schema").Campaign>;
     delete(id: string): Promise<any>;
-    like(id: string, req: ReqWithUser): Promise<import("../schema/campaign.schema").CampaignDocument>;
+    like(id: string, req: ReqWithUser): Promise<CampaignDocument>;
     approveCampaign(data: {
         campaign_id: string;
-    }): Promise<import("../schema/campaign.schema").CampaignDocument>;
+    }): Promise<CampaignDocument>;
     viewCamp(id: string, data: {
         userId: string;
-    }): Promise<string>;
+    }): Promise<CampaignDocument | string>;
 }

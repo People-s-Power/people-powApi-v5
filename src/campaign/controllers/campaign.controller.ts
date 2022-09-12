@@ -20,6 +20,7 @@ import {
   ISessionResponseData,
 } from '../services/campaign.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import { CampaignDocument } from '../schema/campaign.schema';
 
 @Controller('api/v3/campaign')
 export class CampaignController {
@@ -109,7 +110,7 @@ export class CampaignController {
   async viewCamp(
     @Param('id') id: string,
     @Body() data: { userId: string; }
-    ): Promise<string> {
+    ): Promise<CampaignDocument | string> {
     const userId = data.userId
     const result = await this.campaignService.viewCampaign(
       id,

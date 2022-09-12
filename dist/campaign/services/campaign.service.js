@@ -293,8 +293,8 @@ let CampaignService = class CampaignService {
                 return 'Viewed';
             const author = await this.userModel.findById(campaign.authorId);
             campaign.views.push(userId);
-            campaign.save();
-            return 'Viewer Added';
+            await campaign.save();
+            return campaign;
         }
         catch (error) {
             console.log(error);

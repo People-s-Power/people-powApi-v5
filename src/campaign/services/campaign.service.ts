@@ -368,7 +368,7 @@ export class CampaignService {
   async viewCampaign(
     id: string,
     userId: string,
-  ): Promise<string> {
+  ): Promise<CampaignDocument | string> {
     try {
       const campaign = await this.campaignModel.findById(id);
       const user = await this.userModel.findById(userId)
@@ -391,10 +391,10 @@ export class CampaignService {
 
 
       campaign.views.push(userId)
-      campaign.save()
+      await campaign.save()
       // console.log(campaign)
       // await viewCampMail(campaign.title, user?.name, author.email, author.name)
-      return 'Viewer Added';
+      return campaign
     } catch (error) {
       console.log(error)
       throw error;
