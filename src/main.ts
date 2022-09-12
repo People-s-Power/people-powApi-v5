@@ -22,7 +22,7 @@ async function bootstrap() {
 
   // app.use(cors(corsOptions))
   app.use(cors({
-    origin: ['https://www.peoplespow.com', 'http://localhost:3000', 'https://people-power-user.vercel.app/'],
+    origin: ['https://www.peoplespow.com', 'http://localhost:3000', 'https://people-power-user.vercel.app'],
     credentials: true,
   }))
 
