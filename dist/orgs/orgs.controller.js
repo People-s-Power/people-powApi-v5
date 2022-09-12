@@ -26,6 +26,7 @@ let OrgsController = class OrgsController {
     constructor(client, userModel) {
         this.client = client;
         this.userModel = userModel;
+        this.logger = new common_1.Logger();
     }
     async createOrg(req, data) {
         const user = req.user;
@@ -48,7 +49,10 @@ let OrgsController = class OrgsController {
         const { user } = req;
         const author = user._id;
         const pattern = { cmd: 'user-orgs' };
-        return this.client.send(pattern, author);
+        const userOrgs = this.client.send(pattern, author);
+        console.log(userOrgs);
+        this.logger.log(userOrgs);
+        return userOrgs;
     }
     async uploadImage(data, param) {
         const image = await (0, cloudinary_1.cloudinaryUpload)(data.file).catch((err) => {

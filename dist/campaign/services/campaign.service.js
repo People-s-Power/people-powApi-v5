@@ -256,7 +256,7 @@ let CampaignService = class CampaignService {
         try {
             const campaigns = await this.campaignModel
                 .find({
-                author: user_id,
+                authorId: user_id,
             })
                 .sort({ createdAt: -1 });
             return campaigns;

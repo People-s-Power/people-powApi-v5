@@ -1,4 +1,4 @@
-import { Body, Controller, Inject, Post, Req, UseGuards, BadRequestException, Get, Param, Put, Delete } from '@nestjs/common';
+import { Body, Controller, Inject, Post, Req, UseGuards, BadRequestException, Get, Param, Put, Delete, Logger } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -13,11 +13,14 @@ import { OrgDocument } from './dto/org.schema';
 
 @Controller('api/v3/orgs')
 export class OrgsController {
+  logger: Logger;
   constructor(
     @Inject('ORG_SERVICE') private client: ClientProxy,
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
     // @InjectModel(Campaign.name) private readonly CampModel: Model<CampaignDocument>
-  ){}
+  ){
+    this.logger = new Logger()
+  }
   
   // Promise<Observable<OrgDocument[]>>
 
@@ -64,7 +67,10 @@ export class OrgsController {
     const { user } = req
     const author = user._id
     const pattern = { cmd: 'user-orgs' };
-    return this.client.send<OrgDocument[]>(pattern, author);
+    const userOrgs = this.client.send<OrgDocument[]>(pattern, author);
+    console.log(userOrgs)
+    this.logger.log(userOrgs)
+    return userOrgs
   }
 
 

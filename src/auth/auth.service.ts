@@ -48,8 +48,8 @@ export class AuthService {
     if (user)
       throw new BadRequestException('Email already exist, signin instead');
 
-    if(!location.country_name)
-      throw new BadRequestException('No user country');
+    // if(!location.country_name)
+    //   throw new BadRequestException('No user country');
 
     const payload: Partial<User> = {
       ...data,
@@ -58,8 +58,8 @@ export class AuthService {
       // name: `${data?.firstName} ${data?.lastName}`,
       firstName: data?.name?.split(' ')?.[0],
       lastName: data?.name?.split(' ')?.[1],
-      country: location.country_name,
-      city: location.city,
+      country: 'location.country_name',
+      city: 'location.city',
     };
     try {
       user = await this.userModel.create(payload);
