@@ -9,7 +9,7 @@ const cors = require("cors");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.use(cors({
-        origin: ['https://www.peoplespow.com', 'http://localhost:3000'],
+        origin: ['https://www.peoplespow.com', 'http://localhost:3000', 'https://people-power-user.vercel.app/'],
         credentials: true,
     }));
     app.use(location_middleware_1.locationLogger);
