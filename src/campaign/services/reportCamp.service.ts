@@ -23,7 +23,7 @@ export class ReportCampService {
 
   async createReport(data) {
     try{
-      if (!data.campaignSlug || !data.reportCampMessage || data.reportType) {
+      if (!data.campaignSlug || !data.reportCampMessage || !data.reportType) {
         this.logger.log(data)
         throw new BadRequestException('Add the need info')
       }
