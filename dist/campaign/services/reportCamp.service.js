@@ -22,6 +22,7 @@ let ReportCampService = class ReportCampService {
     constructor(configService, reportModel) {
         this.configService = configService;
         this.reportModel = reportModel;
+        this.logger = new common_1.Logger();
     }
     async getAllReports() {
         const reports = await this.reportModel.find();
@@ -30,6 +31,7 @@ let ReportCampService = class ReportCampService {
     async createReport(data) {
         try {
             if (!data.campaignSlug || !data.reportCampMessage || data.reportType) {
+                this.logger.log(data);
                 throw new common_1.BadRequestException('Add the need info');
             }
             const report = await this.reportModel.create({

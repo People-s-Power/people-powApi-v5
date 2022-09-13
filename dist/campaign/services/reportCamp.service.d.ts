@@ -1,15 +1,16 @@
+import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Model } from 'mongoose';
-import { IreportDTO } from '../schema/reportCamp.dto';
 import { ReportCamp, ReportCampDocument } from '../schema/reportCamp.schema';
 export declare class ReportCampService {
     private readonly configService;
     private readonly reportModel;
+    logger: Logger;
     constructor(configService: ConfigService, reportModel: Model<ReportCampDocument>);
     getAllReports(): Promise<(ReportCamp & import("mongoose").Document<any, any, any> & {
         _id: any;
     })[]>;
-    createReport(data: IreportDTO): Promise<ReportCamp & import("mongoose").Document<any, any, any> & {
+    createReport(data: any): Promise<ReportCamp & import("mongoose").Document<any, any, any> & {
         _id: any;
     }>;
     resolveReport(reportId: String): Promise<import("mongodb").DeleteResult>;
