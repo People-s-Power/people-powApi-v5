@@ -28,13 +28,19 @@ let OrgsController = class OrgsController {
         this.userModel = userModel;
         this.logger = new common_1.Logger();
     }
-    async createOrg(req, data) {
-        const user = req.user;
-        user.createdOrg = true;
-        await user.save();
-        const payload = Object.assign(Object.assign({}, data), { country: user.country, city: user.city, author: user._id });
-        this.client.emit('create-org', payload);
-        return 'sucess';
+    async create(req, data) {
+        try {
+            const user = req.user;
+            user.createdOrg = true;
+            await user.save();
+            const payload = Object.assign(Object.assign({}, data), { country: user.country, city: user.city, author: user._id });
+            console.log('Fired');
+            const pattern = { cmd: 'create-org' };
+            return this.client.send(pattern, payload);
+        }
+        catch (error) {
+            throw error;
+        }
     }
     getOrgs() {
         const pattern = { cmd: 'getOrgs' };
@@ -127,7 +133,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, org_dto_1.CreateOrgDTO]),
     __metadata("design:returntype", Promise)
-], OrgsController.prototype, "createOrg", null);
+], OrgsController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
