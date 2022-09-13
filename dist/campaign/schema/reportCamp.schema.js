@@ -24,6 +24,7 @@ __decorate([
         required: true,
         type: String,
         enum: reportCamp_dto_1.ReportEnum,
+        default: reportCamp_dto_1.ReportEnum.Harmful
     }),
     __metadata("design:type", String)
 ], ReportCamp.prototype, "reportCampType", void 0);

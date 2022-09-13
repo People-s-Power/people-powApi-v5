@@ -16,6 +16,7 @@ export class ReportCamp extends Document {
     required: true,
     type: String,
     enum: ReportEnum,
+    default: ReportEnum.Harmful
   })
   reportCampType: ReportEnum;
   @Prop({ required: true })
