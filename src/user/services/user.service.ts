@@ -8,10 +8,6 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Cache } from 'cache-manager';
 import { Model } from 'mongoose';
-import {
-  Applicant,
-  ApplicantDocument,
-} from 'src/applicant/schema/applicant.shema';
 import { Campaign, CampaignDocument } from 'src/campaign/schema/campaign.schema';
 import { cloudinaryUpload } from 'src/utils/cloudinary';
 import { connectOldDB } from 'src/utils/connectDb';
@@ -35,7 +31,6 @@ interface OldUser {
   image: string;
   probono: boolean;
   admin: string;
-  applicants: ApplicantDocument[];
   name: string;
   email: string;
   password: string;
@@ -57,8 +52,6 @@ export class UserService {
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
     @InjectModel(Campaign.name)
     private readonly campaignModel: Model<CampaignDocument>,
-    @InjectModel(Applicant.name)
-    private readonly applicantModel: Model<ApplicantDocument>,
   ) {}
   async getUsers(
     accountType?: AccountTypeEnum,
@@ -91,18 +84,11 @@ export class UserService {
 
     try {
       const users: UserDocument[] = data.map((user) => {
-        const count = new Promise((resolve) => {
-          resolve(
-            this.applicantModel.countDocuments({
-              $or: [{ rep: user?.id }, { lawyer: user?.id }],
-            }),
-          );
-        });
+        
 
         const payload = {
           ...user._doc,
           id: user._id,
-          applicantCount: count,
         };
         // if(accountType) return users
         return payload;
@@ -164,14 +150,7 @@ export class UserService {
     try {
       const user = await this.userModel.findById(id).select('-password');
       if (!user) throw new NotFoundException('User record not found');
-      const applicants = await this.applicantModel.find({
-        $or: [{ rep: id }, { lawyer: id }],
-      });
-      if (applicants.length)
-        throw new BadRequestException(
-          'Unable to delete user, user has contacts associated with it',
-        );
-      user.remove();
+      
       return user;
     } catch (error) {
       throw error;

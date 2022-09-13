@@ -12,7 +12,6 @@ import { UserModule } from './user/user.module';
 import { EnvModule } from './env/env.module';
 import { CampaignModule } from './campaign/campaign.module';
 import { TransactionModule } from './transaction/transaction.module';
-import { ApplicantModule } from './applicant/applicant.module';
 import { ClientsModule, Transport } from  "@nestjs/microservices"
 import { View, ViewSchema } from './campaign/schema/campaign.schema';
 import { OrgsModule } from './orgs/orgs.module';
@@ -69,7 +68,6 @@ import {corsOptions} from "./cors"
 
     AuthModule,
     UserModule,
-    ApplicantModule,
     CampaignModule,
     TransactionModule,
     EnvModule,

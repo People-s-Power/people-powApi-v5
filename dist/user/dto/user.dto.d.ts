@@ -1,5 +1,4 @@
 import { Document } from 'mongoose';
-import { Applicant } from 'src/applicant/schema/applicant.shema';
 import { CampaignDocument } from 'src/campaign/schema/campaign.schema';
 import { IGeo } from 'src/interfaces';
 import { UserDocument } from '../entity/user.schema';
@@ -39,7 +38,6 @@ export declare class IUser extends Document {
     address: string;
     admin: IUser;
     userId: IUser;
-    applicants: Applicant[];
     reportCount: number;
     applicantCount: number;
     bankName: string;

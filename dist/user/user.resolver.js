@@ -14,14 +14,12 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
-const applicant_service_1 = require("../applicant/services/applicant.service");
 const graphql_guard_1 = require("../auth/guards/graphql.guard");
 const user_dto_1 = require("./dto/user.dto");
 const user_service_1 = require("./services/user.service");
 let UserResolver = class UserResolver {
-    constructor(userService, applicantService) {
+    constructor(userService) {
         this.userService = userService;
-        this.applicantService = applicantService;
     }
     async getUsers(user, role, accountType) {
         return await this.userService.getUsers(accountType, role, user);
@@ -34,9 +32,6 @@ let UserResolver = class UserResolver {
     }
     async getUser(id) {
         return await this.userService.findOne(id);
-    }
-    async getUserApplicants(id) {
-        return await this.applicantService.findByUser(id);
     }
     async seedUsers() {
         return await this.userService.seedUsers();
@@ -73,21 +68,13 @@ __decorate([
 ], UserResolver.prototype, "getUser", null);
 __decorate([
     (0, graphql_1.Query)(),
-    __param(0, (0, graphql_1.Args)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
-], UserResolver.prototype, "getUserApplicants", null);
-__decorate([
-    (0, graphql_1.Query)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "seedUsers", null);
 UserResolver = __decorate([
     (0, graphql_1.Resolver)('User'),
-    __metadata("design:paramtypes", [user_service_1.UserService,
-        applicant_service_1.ApplicantService])
+    __metadata("design:paramtypes", [user_service_1.UserService])
 ], UserResolver);
 exports.UserResolver = UserResolver;
 //# sourceMappingURL=user.resolver.js.map

@@ -11,7 +11,6 @@ const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
 const mongoose_1 = require("@nestjs/mongoose");
 const passport_1 = require("@nestjs/passport");
-const applicant_shema_1 = require("../applicant/schema/applicant.shema");
 const user_schema_1 = require("../user/entity/user.schema");
 const config_1 = require("../utils/config");
 const auth_controller_1 = require("./auth.controller");
@@ -32,7 +31,6 @@ AuthModule = __decorate([
         imports: [
             mongoose_1.MongooseModule.forFeature([
                 { name: user_schema_1.User.name, schema: user_schema_1.UserSchema },
-                { name: applicant_shema_1.Applicant.name, schema: applicant_shema_1.ApplicantSchema },
                 { name: followers_schema_1.Follower.name, schema: followers_schema_1.FollowerSchema }
             ]),
             passport_1.PassportModule.register({ defaultStrategy: 'jwt' }),

@@ -1,6 +1,5 @@
 import { Cache } from 'cache-manager';
 import { Model } from 'mongoose';
-import { ApplicantDocument } from 'src/applicant/schema/applicant.shema';
 import { Campaign, CampaignDocument } from 'src/campaign/schema/campaign.schema';
 import { AccountTypeEnum, AssignUserAdminDTO, ChangeUserAccountTypeDTO, ChangeUserRoleDTO, StaffRoleEnum, UpdateUserDTO } from '../dto/user.dto';
 import { User, UserDocument } from '../entity/user.schema';
@@ -8,8 +7,7 @@ export declare class UserService {
     private readonly cacheManager;
     private readonly userModel;
     private readonly campaignModel;
-    private readonly applicantModel;
-    constructor(cacheManager: Cache, userModel: Model<UserDocument>, campaignModel: Model<CampaignDocument>, applicantModel: Model<ApplicantDocument>);
+    constructor(cacheManager: Cache, userModel: Model<UserDocument>, campaignModel: Model<CampaignDocument>);
     getUsers(accountType?: AccountTypeEnum, role?: StaffRoleEnum, user?: UserDocument): Promise<UserDocument[]>;
     findOne(id: string): Promise<{
         user: User & import("mongoose").Document<any, any, any> & {

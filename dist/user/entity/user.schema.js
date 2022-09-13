@@ -100,10 +100,6 @@ __decorate([
     __metadata("design:type", User)
 ], User.prototype, "suppervisor", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'Applicant' }),
-    __metadata("design:type", Array)
-], User.prototype, "applicants", void 0);
-__decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", Number)
 ], User.prototype, "reportCount", void 0);

@@ -19,7 +19,6 @@
 /// <reference types="mongoose/types/types" />
 /// <reference types="mongoose/types/utility" />
 /// <reference types="mongoose/types/validation" />
-import { Applicant } from 'src/applicant/schema/applicant.shema';
 import { AccountTypeEnum, StaffRoleEnum } from '../dto/user.dto';
 import { Document } from 'mongoose';
 export declare type UserDocument = User & Document & {
@@ -46,7 +45,6 @@ export declare class User {
     address: string;
     reps: User[];
     suppervisor: User;
-    applicants: Applicant[];
     reportCount: number;
     applicantCount: number;
     bankName: string;

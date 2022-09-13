@@ -16,18 +16,16 @@ exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const applicant_shema_1 = require("../../applicant/schema/applicant.shema");
 const campaign_schema_1 = require("../../campaign/schema/campaign.schema");
 const cloudinary_1 = require("../../utils/cloudinary");
 const connectDb_1 = require("../../utils/connectDb");
 const user_dto_1 = require("../dto/user.dto");
 const user_schema_1 = require("../entity/user.schema");
 let UserService = class UserService {
-    constructor(cacheManager, userModel, campaignModel, applicantModel) {
+    constructor(cacheManager, userModel, campaignModel) {
         this.cacheManager = cacheManager;
         this.userModel = userModel;
         this.campaignModel = campaignModel;
-        this.applicantModel = applicantModel;
     }
     async getUsers(accountType, role, user) {
         let data = await this.cacheManager.get('users');
@@ -54,12 +52,7 @@ let UserService = class UserService {
         await this.cacheManager.set('users', data);
         try {
             const users = data.map((user) => {
-                const count = new Promise((resolve) => {
-                    resolve(this.applicantModel.countDocuments({
-                        $or: [{ rep: user === null || user === void 0 ? void 0 : user.id }, { lawyer: user === null || user === void 0 ? void 0 : user.id }],
-                    }));
-                });
-                const payload = Object.assign(Object.assign({}, user._doc), { id: user._id, applicantCount: count });
+                const payload = Object.assign(Object.assign({}, user._doc), { id: user._id });
                 return payload;
             });
             if (accountType)
@@ -113,12 +106,6 @@ let UserService = class UserService {
             const user = await this.userModel.findById(id).select('-password');
             if (!user)
                 throw new common_1.NotFoundException('User record not found');
-            const applicants = await this.applicantModel.find({
-                $or: [{ rep: id }, { lawyer: id }],
-            });
-            if (applicants.length)
-                throw new common_1.BadRequestException('Unable to delete user, user has contacts associated with it');
-            user.remove();
             return user;
         }
         catch (error) {
@@ -282,9 +269,7 @@ UserService = __decorate([
     __param(0, (0, common_1.Inject)(common_1.CACHE_MANAGER)),
     __param(1, (0, mongoose_1.InjectModel)(user_schema_1.User.name)),
     __param(2, (0, mongoose_1.InjectModel)(campaign_schema_1.Campaign.name)),
-    __param(3, (0, mongoose_1.InjectModel)(applicant_shema_1.Applicant.name)),
     __metadata("design:paramtypes", [Object, mongoose_2.Model,
-        mongoose_2.Model,
         mongoose_2.Model])
 ], UserService);
 exports.UserService = UserService;

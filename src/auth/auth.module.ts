@@ -7,10 +7,6 @@ import {
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PassportModule } from '@nestjs/passport';
-import {
-  Applicant,
-  ApplicantSchema,
-} from 'src/applicant/schema/applicant.shema';
 import { LocationMiddleware } from 'src/middlewares/location.middleware';
 import { User, UserSchema } from 'src/user/entity/user.schema';
 // import { UserService } from 'src/user/services/user.service';
@@ -31,7 +27,6 @@ import { Follower, FollowerSchema } from 'src/user/entity/followers.schema';
   imports: [
     MongooseModule.forFeature([
       { name: User.name, schema: UserSchema },
-      { name: Applicant.name, schema: ApplicantSchema },
       { name: Follower.name, schema: FollowerSchema }
     ]),
     PassportModule.register({ defaultStrategy: 'jwt' }),

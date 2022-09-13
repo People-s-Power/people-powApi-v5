@@ -1,5 +1,4 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Applicant } from 'src/applicant/schema/applicant.shema';
 import { AccountTypeEnum, StaffRoleEnum } from '../dto/user.dto';
 import { Document, Types } from 'mongoose';
 
@@ -72,8 +71,6 @@ export class User {
   reps: User[];
   @Prop({ type: Types.ObjectId, ref: 'User' })
   suppervisor: User;
-  @Prop({ type: Types.ObjectId, ref: 'Applicant' })
-  applicants: Applicant[];
   @Prop()
   reportCount: number;
   @Prop()

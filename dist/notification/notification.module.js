@@ -13,7 +13,6 @@ const notification_schema_1 = require("./notification.schema");
 const notification_service_1 = require("./notification.service");
 const notification_controller_1 = require("./notification.controller");
 const notification_gateway_1 = require("./notification.gateway");
-const report_schema_1 = require("../applicant/schema/report.schema");
 let NotificationModule = class NotificationModule {
 };
 NotificationModule = __decorate([
@@ -22,7 +21,6 @@ NotificationModule = __decorate([
         imports: [
             mongoose_1.MongooseModule.forFeature([
                 { name: notification_schema_1.Notice.name, schema: notification_schema_1.NoticeSchema },
-                { name: report_schema_1.Report.name, schema: report_schema_1.ReportSchema },
             ]),
         ],
         providers: [notification_service_1.NotificationService, notification_gateway_1.NotificationGateway],

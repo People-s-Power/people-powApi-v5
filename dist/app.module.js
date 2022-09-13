@@ -21,7 +21,6 @@ const user_module_1 = require("./user/user.module");
 const env_module_1 = require("./env/env.module");
 const campaign_module_1 = require("./campaign/campaign.module");
 const transaction_module_1 = require("./transaction/transaction.module");
-const applicant_module_1 = require("./applicant/applicant.module");
 const microservices_1 = require("@nestjs/microservices");
 const campaign_schema_1 = require("./campaign/schema/campaign.schema");
 const orgs_module_1 = require("./orgs/orgs.module");
@@ -66,7 +65,6 @@ AppModule = __decorate([
             common_1.CacheModule.register({ ttl: 500 }),
             auth_module_1.AuthModule,
             user_module_1.UserModule,
-            applicant_module_1.ApplicantModule,
             campaign_module_1.CampaignModule,
             transaction_module_1.TransactionModule,
             env_module_1.EnvModule,
