@@ -37,6 +37,7 @@ let CampaignService = class CampaignService {
         this.noticeModel = noticeModel;
         this.campaignGateway = campaignGateway;
         this.connection = connection;
+        this.logger = new common_1.Logger();
     }
     async create(data, user) {
         const image = await (0, cloudinary_1.cloudinaryUpload)(data.image).catch((err) => {
@@ -72,10 +73,7 @@ let CampaignService = class CampaignService {
         }
     }
     async createForOrg(data) {
-        const author = data.orgId;
-        const { orgName, orgId } = data;
-        if (!author)
-            throw new common_1.UnauthorizedException('No author');
+        this.logger.log(data);
         const image = await (0, cloudinary_1.cloudinaryUpload)(data.image).catch((err) => {
             throw err;
         });
@@ -85,13 +83,12 @@ let CampaignService = class CampaignService {
             excerpt = body.split(' ').splice(0, 36).join(' ');
         }
         try {
-            const campaign = await this.campaignModel.create(Object.assign(Object.assign({}, data), { author,
-                excerpt,
+            const campaign = await this.campaignModel.create(Object.assign(Object.assign({}, data), { excerpt,
                 image, numberOfPaidEndorsementCount: 0, numberOfPaidViewsCount: 0, region: data.country }));
             this.campaignGateway.createdCampaignOrg({
                 campaignTitle: campaign.title,
-                orgName,
-                orgId
+                orgName: data.authorName,
+                orgId: data.authorId
             });
             const users = await this.userModel.find();
             const usersEmails = users.map(user => {

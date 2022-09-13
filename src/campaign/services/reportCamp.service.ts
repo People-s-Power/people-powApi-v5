@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { IreportDTO } from '../schema/reportCamp.dto';
 import { ReportCamp, ReportCampDocument } from '../schema/reportCamp.schema';
 
 @Injectable()
@@ -17,10 +18,14 @@ export class ReportCampService {
     return reports
   }
 
-  async createReport(data) {
-    const report = await this.reportModel.create(data)
-    // console.log(report);
-    return report
+  async createReport(data: IreportDTO) {
+    try{
+      const report = await this.reportModel.create(data)
+      // console.log(report);
+      return report
+    } catch(error) {
+      throw error
+    }
   }
 
   async resolveReport(reportId: String) {

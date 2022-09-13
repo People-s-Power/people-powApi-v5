@@ -13,7 +13,7 @@ import { Notice, NoticeDocument } from 'src/notification/notification.schema';
 import { ISession } from 'src/typings';
 import { User, UserDocument } from 'src/user/entity/user.schema';
 import { cloudinaryUpload } from 'src/utils/cloudinary';
-import { CreateCampaignDTO, CreateOrgCampDTO, UpdateCampaignDTO } from '../dto/campaign.dto';
+import { CreateCampaignDTO, CreateCampaignOrgDTO, UpdateCampaignDTO } from '../dto/campaign.dto';
 import { CampaignStatusEnum } from '../dto/campaign.interface';
 import { CampaignGateway } from '../gateway/campaign.gateway';
 import { Campaign, CampaignDocument, View, ViewDocument } from '../schema/campaign.schema';
@@ -29,6 +29,7 @@ export class ISessionResponseData {
 }
 @Injectable()
 export class CampaignService {
+  logger: Logger;
   constructor(
     @Inject('MAIL_SERVICE') private client: ClientProxy,
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
@@ -42,7 +43,9 @@ export class CampaignService {
     private readonly noticeModel: Model<NoticeDocument>,
     private campaignGateway: CampaignGateway,
     @InjectConnection() private connection: Connection,
-  ) {}
+  ) {
+    this.logger = new Logger()
+  }
 
 
   async create(data: CreateCampaignDTO, user: UserDocument): Promise<Campaign> {
@@ -102,11 +105,10 @@ export class CampaignService {
     }
   }
 
-  async createForOrg(data: CreateOrgCampDTO): Promise<Campaign> {
-    const author = data.orgId;
-    const { orgName, orgId } = data
+  async createForOrg(data: CreateCampaignOrgDTO): Promise<Campaign> {
 
-    if (!author) throw new UnauthorizedException('No author');
+    this.logger.log(data)
+
     const image = await cloudinaryUpload(data.image).catch((err) => {
       throw err;
     });
@@ -119,7 +121,6 @@ export class CampaignService {
     try {
       const campaign = await this.campaignModel.create({
         ...data,
-        author,
         excerpt,
         image,
         numberOfPaidEndorsementCount: 0,
@@ -129,8 +130,8 @@ export class CampaignService {
       });
       this.campaignGateway.createdCampaignOrg({
         campaignTitle: campaign.title,
-        orgName,
-        orgId
+        orgName: data.authorName,
+        orgId: data.authorId
       });
 
 

@@ -28,8 +28,13 @@ let ReportCampService = class ReportCampService {
         return reports;
     }
     async createReport(data) {
-        const report = await this.reportModel.create(data);
-        return report;
+        try {
+            const report = await this.reportModel.create(data);
+            return report;
+        }
+        catch (error) {
+            throw error;
+        }
     }
     async resolveReport(reportId) {
         const report = await this.reportModel.deleteOne({ _id: reportId });

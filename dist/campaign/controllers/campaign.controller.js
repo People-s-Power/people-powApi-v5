@@ -27,8 +27,7 @@ let CampaignController = class CampaignController {
         return this.campaignService.create(data, req.user);
     }
     createCampForOrg(data, param) {
-        const { orgId } = param;
-        return this.campaignService.create(data, orgId);
+        return this.campaignService.createForOrg(data);
     }
     async getSession(id, req) {
         const campaign = await this.campaignService.updateSession(id, req.sessionID);
@@ -81,7 +80,7 @@ __decorate([
 ], CampaignController.prototype, "create", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
-    (0, common_1.Post)('/org/:orgId'),
+    (0, common_1.Post)('/org'),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Param)()),
     __metadata("design:type", Function),

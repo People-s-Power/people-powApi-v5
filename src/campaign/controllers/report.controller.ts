@@ -1,11 +1,15 @@
-import { Body, Controller, Get, Inject, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, Post, Put, Logger } from '@nestjs/common';
+import { reportDTO } from '../schema/reportCamp.dto';
 import { ReportCampService } from '../services/reportCamp.service';
 
 @Controller('api/v3/campaign/report')
 export class ReportCampController {
+  logger: Logger;
   constructor(
     private readonly reportCampService: ReportCampService
-    ) {}
+    ) {
+      this.logger = new Logger()
+    }
 
     @Get('/:slug')
     async getCampReports(@Param() param) {
@@ -20,7 +24,8 @@ export class ReportCampController {
     }
 
     @Post()
-    createReportPost(@Body() data) {
+    createReportPost(@Body() data: reportDTO) {
+      this.logger.log(data)
       return this.reportCampService.createReport(data);
     }
 

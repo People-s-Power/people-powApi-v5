@@ -36,10 +36,9 @@ export class CampaignController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Post('/org/:orgId')
+  @Post('/org')
   createCampForOrg(@Body() data: CreateCampaignOrgDTO, @Param() param) {
-    const { orgId } = param
-    return this.campaignService.create(data, orgId);
+    return this.campaignService.createForOrg(data);
   }
 
 

@@ -14,10 +14,12 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReportCampController = void 0;
 const common_1 = require("@nestjs/common");
+const reportCamp_dto_1 = require("../schema/reportCamp.dto");
 const reportCamp_service_1 = require("../services/reportCamp.service");
 let ReportCampController = class ReportCampController {
     constructor(reportCampService) {
         this.reportCampService = reportCampService;
+        this.logger = new common_1.Logger();
     }
     async getCampReports(param) {
         const { slug } = param;
@@ -28,6 +30,7 @@ let ReportCampController = class ReportCampController {
         return this.reportCampService.getAllReports();
     }
     createReportPost(data) {
+        this.logger.log(data);
         return this.reportCampService.createReport(data);
     }
     resolveReportPut(param) {
@@ -52,7 +55,7 @@ __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [reportCamp_dto_1.reportDTO]),
     __metadata("design:returntype", void 0)
 ], ReportCampController.prototype, "createReportPost", null);
 __decorate([

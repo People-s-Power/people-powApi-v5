@@ -11,10 +11,10 @@ export declare enum ReportEnum {
 export declare class reportDTO {
     campaignSlug: string;
     reportType: ReportEnum;
-    reportMessage: string;
+    reportCampMessage: string;
 }
 export interface IreportDTO {
     campaignSlug: string;
     reportType: ReportEnum;
-    reportMessage: string;
+    reportCampMessage: string;
 }
