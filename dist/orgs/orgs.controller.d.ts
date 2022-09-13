@@ -16,7 +16,7 @@ export declare class OrgsController {
     getOrg(param: any): Observable<OrgDocument>;
     getUserOrg(req: ReqWithUser): Observable<OrgDocument[]>;
     uploadImage(data: {
-        file: string;
+        image: string;
     }, param: any): Promise<string>;
     updateOrg(data: UpdateOrgDTO, param: any): Promise<string>;
     follow(body: any, req: ReqWithUser): string;

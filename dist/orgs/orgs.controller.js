@@ -55,7 +55,7 @@ let OrgsController = class OrgsController {
         return userOrgs;
     }
     async uploadImage(data, param) {
-        const image = await (0, cloudinary_1.cloudinaryUpload)(data.file).catch((err) => {
+        const image = await (0, cloudinary_1.cloudinaryUpload)(data.image).catch((err) => {
             console.log(err);
             throw new Error('Problem with uploading image');
         });
@@ -151,7 +151,7 @@ __decorate([
 ], OrgsController.prototype, "getUserOrg", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
-    (0, common_1.Post)('/:orgId'),
+    (0, common_1.Post)('/uploadimg/:orgId'),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Param)()),
     __metadata("design:type", Function),

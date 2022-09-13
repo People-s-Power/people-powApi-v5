@@ -76,9 +76,10 @@ export class OrgsController {
 
   // upload orgs Image
   @UseGuards(JwtAuthGuard)
-  @Post('/:orgId')
-  async uploadImage(@Body() data: { file: string }, @Param() param) {
-    const image = await cloudinaryUpload(data.file).catch((err) => {
+  @Post('/uploadimg/:orgId')
+  async uploadImage(@Body() data: { image: string }, @Param() param) {
+
+    const image = await cloudinaryUpload(data.image).catch((err) => {
       console.log(err);
       throw new Error('Problem with uploading image');
     });
