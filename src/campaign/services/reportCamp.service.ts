@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -20,6 +20,10 @@ export class ReportCampService {
 
   async createReport(data: IreportDTO) {
     try{
+      if (!data.campaignSlug || !data.reportCampMessage || data.reportType) {
+        throw new BadRequestException('Add the need info')
+      }
+      
       const report = await this.reportModel.create({
         campaignSlug: data.campaignSlug,
         reportType: data.reportType,

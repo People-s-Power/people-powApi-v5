@@ -29,6 +29,9 @@ let ReportCampService = class ReportCampService {
     }
     async createReport(data) {
         try {
+            if (!data.campaignSlug || !data.reportCampMessage || data.reportType) {
+                throw new common_1.BadRequestException('Add the need info');
+            }
             const report = await this.reportModel.create({
                 campaignSlug: data.campaignSlug,
                 reportType: data.reportType,
