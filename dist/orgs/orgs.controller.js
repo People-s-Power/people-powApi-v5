@@ -31,8 +31,10 @@ let OrgsController = class OrgsController {
     async create(req, data) {
         try {
             const user = req.user;
-            user.createdOrg = true;
-            await user.save();
+            if (!user.createdOrg) {
+                user.createdOrg = true;
+                await user.save();
+            }
             const payload = Object.assign(Object.assign({}, data), { country: user.country, city: user.city, author: user._id });
             console.log('Fired');
             const pattern = { cmd: 'create-org' };

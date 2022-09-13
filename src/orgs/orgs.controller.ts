@@ -48,8 +48,10 @@ export class OrgsController {
   async create(@Req() req: ReqWithUser, @Body() data: CreateOrgDTO): Promise<Observable<OrgDocument>> {
     try {
       const user = req.user
-      user.createdOrg = true
-      await user.save()
+      if(!user.createdOrg) {
+        user.createdOrg = true
+        await user.save()
+      }
       
       const payload = {...data, country: user.country, city: user.city, author: user._id }
       console.log('Fired')
