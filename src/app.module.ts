@@ -15,7 +15,6 @@ import { TransactionModule } from './transaction/transaction.module';
 import { ApplicantModule } from './applicant/applicant.module';
 import { ClientsModule, Transport } from  "@nestjs/microservices"
 import { View, ViewSchema } from './campaign/schema/campaign.schema';
-import { ReportModule } from './report/report.module';
 import { OrgsModule } from './orgs/orgs.module';
 import {corsOptions} from "./cors"
 
@@ -74,7 +73,6 @@ import {corsOptions} from "./cors"
     CampaignModule,
     TransactionModule,
     EnvModule,
-    ReportModule,
     OrgsModule
   ],
   controllers: [AppController],

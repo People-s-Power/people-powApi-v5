@@ -24,6 +24,9 @@ import { ClientsModule, Transport } from  "@nestjs/microservices"
 import { UpdateService } from './services/update.service';
 import { UpdateController } from './controllers/update.controller'
 import { Update, UpdateSchema } from './schema/update.schema';
+import { ReportCamp, ReportCampSchema } from './schema/reportCamp.schema';
+import { ReportCampController } from './controllers/report.controller';
+import { ReportCampService } from './services/reportCamp.service';
 
 @Module({
   imports: [
@@ -33,7 +36,8 @@ import { Update, UpdateSchema } from './schema/update.schema';
       { name: User.name, schema: UserSchema },
       { name: Notice.name, schema: NoticeSchema },
       { name: View.name, schema: ViewSchema },
-      { name: Update.name, schema: UpdateSchema }
+      { name: Update.name, schema: UpdateSchema },
+      { name:ReportCamp.name, schema: ReportCampSchema }
     ]),
     MongooseModule.forFeatureAsync([
       {
@@ -64,10 +68,11 @@ import { Update, UpdateSchema } from './schema/update.schema';
     UpdateService,
     CampaignResolver,
     CampaignService,
+    ReportCampService,
     EndorsementService,
     EndorsementResolver,
     CampaignGateway,
   ],
-  controllers: [CampaignController, EndorsementController, UpdateController],
+  controllers: [CampaignController, EndorsementController, UpdateController, ReportCampController],
 })
 export class CampaignModule {}

@@ -1,15 +1,15 @@
 // import { ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { ReportEnum } from './report.dto';
+import { ReportEnum } from './reportCamp.dto';
 
-export type ReportDocumentRMQ = ReportRMQ & Document;
+export type ReportCampDocument = ReportCamp & Document;
 
 
 @Schema({
   timestamps: true
 })
-export class ReportRMQ extends Document {
+export class ReportCamp extends Document {
   @Prop({ required: true })
   campaignSlug: string;
   @Prop({ 
@@ -17,9 +17,9 @@ export class ReportRMQ extends Document {
     type: String,
     enum: ReportEnum,
   })
-  reportType: ReportEnum;
+  reportCampType: ReportEnum;
   @Prop({ required: true })
-  reportMessage: string;
+  reportCampMessage: string;
 }
 
-export const ReportSchemaRMQ = SchemaFactory.createForClass(ReportRMQ);
+export const ReportCampSchema = SchemaFactory.createForClass(ReportCamp);
