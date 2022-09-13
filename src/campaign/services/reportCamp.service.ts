@@ -20,7 +20,11 @@ export class ReportCampService {
 
   async createReport(data: IreportDTO) {
     try{
-      const report = await this.reportModel.create(data)
+      const report = await this.reportModel.create({
+        campaignSlug: data.campaignSlug,
+        reportType: data.reportType,
+        reportCampMessage: data.reportCampMessage
+      })
       // console.log(report);
       return report
     } catch(error) {

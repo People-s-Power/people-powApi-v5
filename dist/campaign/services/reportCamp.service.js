@@ -29,7 +29,11 @@ let ReportCampService = class ReportCampService {
     }
     async createReport(data) {
         try {
-            const report = await this.reportModel.create(data);
+            const report = await this.reportModel.create({
+                campaignSlug: data.campaignSlug,
+                reportType: data.reportType,
+                reportCampMessage: data.reportCampMessage
+            });
             return report;
         }
         catch (error) {

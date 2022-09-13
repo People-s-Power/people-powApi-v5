@@ -123,6 +123,7 @@ export class CampaignService {
         ...data,
         excerpt,
         image,
+        slug: data.title.split(" ").join("-"),
         numberOfPaidEndorsementCount: 0,
         numberOfPaidViewsCount: 0,
         region: data.country,
