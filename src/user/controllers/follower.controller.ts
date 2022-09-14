@@ -37,7 +37,9 @@ export class FollowerController {
   unfollow(@Body() body, @Req() req: ReqWithUser) {
     const { userId } = body 
     const { _id } = req.user
-    return this.followerService.unFollow(_id, userId)
+    const currentUser:string = _id.toString()
+
+    return this.followerService.unFollow(currentUser, userId)
   }
 
 }

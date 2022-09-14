@@ -28,8 +28,9 @@ export class FollowersService {
       
       
       // Check if user is already following
-      const userIsFollowing =  user.followers.find(item => item === id)
-      if(userIsFollowing) throw new BadRequestException('User already following')
+      const userIsFollowing =  user.followers
+      const res = userIsFollowing.find(item => item.toString() === id.toString())
+      if(res) throw new BadRequestException('User already following')
       
       // Add the followed user to the followers following Array
       const follower = await this.userModel.findById(id)
@@ -83,12 +84,17 @@ export class FollowersService {
 
       // Unfollow the user
       let userIsFollowing =  user.followers.findIndex(item => item === id)
+      if (!userIsFollowing) {
+        throw new BadRequestException('User not followed')
+      }
       const { followers } = user
       const fx = followers
       fx.splice(userIsFollowing, 1)
 
       user.followers = fx
-      user.followersCount -= 1
+      let followerCount = user.followersCount
+      followerCount --
+      user.followersCount = followerCount < 0 ? 0 : followerCount
       const result = await user.save()
 
       // Remove user from following

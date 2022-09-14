@@ -28,7 +28,8 @@ let FollowerController = class FollowerController {
     unfollow(body, req) {
         const { userId } = body;
         const { _id } = req.user;
-        return this.followerService.unFollow(_id, userId);
+        const currentUser = _id.toString();
+        return this.followerService.unFollow(currentUser, userId);
     }
 };
 __decorate([

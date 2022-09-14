@@ -28,8 +28,9 @@ let FollowersService = class FollowersService {
             const user = await this.userModel.findById(userId);
             if (!user)
                 throw new common_1.BadRequestException(`User don't exist`);
-            const userIsFollowing = user.followers.find(item => item === id);
-            if (userIsFollowing)
+            const userIsFollowing = user.followers;
+            const res = userIsFollowing.find(item => item.toString() === id.toString());
+            if (res)
                 throw new common_1.BadRequestException('User already following');
             const follower = await this.userModel.findById(id);
             if (!follower)
@@ -74,11 +75,16 @@ let FollowersService = class FollowersService {
             if (!user)
                 throw new common_1.BadRequestException(`User don't exist`);
             let userIsFollowing = user.followers.findIndex(item => item === id);
+            if (!userIsFollowing) {
+                throw new common_1.BadRequestException('User not followed');
+            }
             const { followers } = user;
             const fx = followers;
             fx.splice(userIsFollowing, 1);
             user.followers = fx;
-            user.followersCount -= 1;
+            let followerCount = user.followersCount;
+            followerCount--;
+            user.followersCount = followerCount < 0 ? 0 : followerCount;
             const result = await user.save();
             const follower = await this.userModel.findById(id);
             if (!follower)
