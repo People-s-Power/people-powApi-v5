@@ -36,13 +36,13 @@ let FollowersService = class FollowersService {
                 throw new common_1.BadRequestException(`User don't exist`);
             let { following } = follower;
             following.push(userId);
-            follower.followingCount++;
+            follower.followingCount += 1;
             await follower.save();
             const { followers } = user;
             const fx = followers;
             fx.push(id);
             user.followers = fx;
-            user.followersCount++;
+            user.followersCount += 1;
             const result = await user.save();
             const payload = {
                 userFollowed: {
@@ -74,7 +74,7 @@ let FollowersService = class FollowersService {
             const fx = followers;
             fx.splice(userIsFollowing, 1);
             user.followers = fx;
-            user.followersCount--;
+            user.followersCount -= 1;
             const result = await user.save();
             const follower = await this.userModel.findById(id);
             if (!follower)
