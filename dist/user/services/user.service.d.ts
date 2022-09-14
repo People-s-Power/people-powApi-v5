@@ -16,11 +16,11 @@ export declare class UserService {
         } & {
             _id: any;
         };
-        campaigns: (Campaign & import("mongoose").Document<any, any, any> & {
+        campaigns: Campaign & import("mongoose").Document<any, any, any> & {
             _doc: any;
         } & {
             _id: any;
-        })[];
+        };
     }>;
     uploadProfileImage(data: {
         image: string;

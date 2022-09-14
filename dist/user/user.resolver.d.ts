@@ -14,11 +14,11 @@ export declare class UserResolver {
         } & {
             _id: any;
         };
-        campaigns: (import("../campaign/schema/campaign.schema").Campaign & import("mongoose").Document<any, any, any> & {
+        campaigns: import("../campaign/schema/campaign.schema").Campaign & import("mongoose").Document<any, any, any> & {
             _doc: any;
         } & {
             _id: any;
-        })[];
+        };
     }>;
     seedUsers(): Promise<(User & import("mongoose").Document<any, any, any> & {
         _id: any;
