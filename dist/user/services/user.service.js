@@ -79,7 +79,7 @@ let UserService = class UserService {
                 .findById(id)
                 .select('-password');
             const campaigns = await this.campaignModel.find();
-            const userCamp = campaigns.find(e => e.authorId === id);
+            const userCamp = campaigns.filter(e => e.authorId === id);
             if (!user)
                 throw new common_1.NotFoundException('No user found');
             const payload = {

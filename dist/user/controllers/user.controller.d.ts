@@ -21,11 +21,11 @@ export declare class UserController {
         } & {
             _id: any;
         };
-        campaigns: import("../../campaign/schema/campaign.schema").Campaign & import("mongoose").Document<any, any, any> & {
+        campaigns: (import("../../campaign/schema/campaign.schema").Campaign & import("mongoose").Document<any, any, any> & {
             _doc: any;
         } & {
             _id: any;
-        };
+        })[];
     }>;
     updateUser(data: UpdateUserDTO): Promise<any>;
     assign(data: AssignUserAdminDTO): Promise<any>;

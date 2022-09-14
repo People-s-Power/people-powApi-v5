@@ -116,7 +116,7 @@ export class UserService {
         .select('-password');
 
       const campaigns = await this.campaignModel.find()
-      const userCamp  = campaigns.find(e => e.authorId === id)
+      const userCamp  = campaigns.filter(e => e.authorId === id)
       if (!user) throw new NotFoundException('No user found');
 
       const payload = {
