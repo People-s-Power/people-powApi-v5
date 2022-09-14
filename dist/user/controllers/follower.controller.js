@@ -50,7 +50,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], FollowerController.prototype, "unfollow", null);
 FollowerController = __decorate([
-    (0, common_1.Controller)('api/v3/followers'),
+    (0, common_1.Controller)('api/v3/user/follow'),
     __metadata("design:paramtypes", [follower_service_1.FollowersService])
 ], FollowerController);
 exports.FollowerController = FollowerController;

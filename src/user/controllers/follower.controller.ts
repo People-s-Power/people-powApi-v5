@@ -20,7 +20,7 @@ import {
 } from '../dto/user.dto'
 import { FollowersService } from '../services/follower.service';
 
-@Controller('api/v3/followers')
+@Controller('api/v3/user/follow')
 export class FollowerController {
   constructor(private readonly followerService: FollowersService) {}
 
