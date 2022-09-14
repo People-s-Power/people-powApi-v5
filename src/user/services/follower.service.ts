@@ -36,8 +36,9 @@ export class FollowersService {
       if(!follower) throw new BadRequestException(`User don't exist`)
       let { following } = follower
       following.push(userId)
-      follower.followingCount += 1
-
+      let userFollowing = follower.followingCount
+      userFollowing ++
+      follower.followingCount = userFollowing
       await follower.save()
 
       // Push in new follower
@@ -47,7 +48,9 @@ export class FollowersService {
 
       // Save new follower
       user.followers = fx
-      user.followersCount += 1
+      let userFollower = user.followersCount
+      userFollower ++
+      user.followersCount = userFollower
       const result = await user.save()
 
       const payload = {

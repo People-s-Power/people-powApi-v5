@@ -36,13 +36,17 @@ let FollowersService = class FollowersService {
                 throw new common_1.BadRequestException(`User don't exist`);
             let { following } = follower;
             following.push(userId);
-            follower.followingCount += 1;
+            let userFollowing = follower.followingCount;
+            userFollowing++;
+            follower.followingCount = userFollowing;
             await follower.save();
             const { followers } = user;
             const fx = followers;
             fx.push(id);
             user.followers = fx;
-            user.followersCount += 1;
+            let userFollower = user.followersCount;
+            userFollower++;
+            user.followersCount = userFollower;
             const result = await user.save();
             const payload = {
                 userFollowed: {
