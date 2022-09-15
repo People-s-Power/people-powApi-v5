@@ -28,21 +28,16 @@ let OrgsController = class OrgsController {
         this.userModel = userModel;
         this.logger = new common_1.Logger();
     }
-    async create(req, data) {
-        try {
-            const user = req.user;
-            if (!user.createdOrg) {
-                user.createdOrg = true;
-                await user.save();
-            }
-            const payload = Object.assign(Object.assign({}, data), { country: user.country, city: user.city, author: user._id });
-            console.log('Fired');
-            const pattern = { cmd: 'create-org' };
-            return this.client.send(pattern, payload);
+    async createOrg(req, data) {
+        const user = req.user;
+        if (!data.name || !data.description || !data.email || !data.phone || !data.website) {
+            throw new common_1.BadRequestException('Please add the right inputs');
         }
-        catch (error) {
-            throw error;
-        }
+        user.createdOrg = true;
+        await user.save();
+        const payload = Object.assign(Object.assign({}, data), { country: user.country, city: user.city, author: user._id });
+        const result = this.client.emit('create-org', payload);
+        return 'sucess';
     }
     getOrgs() {
         const pattern = { cmd: 'getOrgs' };
@@ -135,7 +130,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, org_dto_1.CreateOrgDTO]),
     __metadata("design:returntype", Promise)
-], OrgsController.prototype, "create", null);
+], OrgsController.prototype, "createOrg", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),

@@ -24,6 +24,7 @@ const transaction_module_1 = require("./transaction/transaction.module");
 const microservices_1 = require("@nestjs/microservices");
 const campaign_schema_1 = require("./campaign/schema/campaign.schema");
 const orgs_module_1 = require("./orgs/orgs.module");
+const organization_module_1 = require("./organization/organization.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -68,7 +69,8 @@ AppModule = __decorate([
             campaign_module_1.CampaignModule,
             transaction_module_1.TransactionModule,
             env_module_1.EnvModule,
-            orgs_module_1.OrgsModule
+            orgs_module_1.OrgsModule,
+            organization_module_1.OrganizationModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

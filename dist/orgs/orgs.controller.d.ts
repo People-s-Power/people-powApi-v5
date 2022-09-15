@@ -11,7 +11,7 @@ export declare class OrgsController {
     private readonly userModel;
     logger: Logger;
     constructor(client: ClientProxy, userModel: Model<UserDocument>);
-    create(req: ReqWithUser, data: CreateOrgDTO): Promise<Observable<OrgDocument>>;
+    createOrg(req: ReqWithUser, data: CreateOrgDTO): Promise<string>;
     getOrgs(): Observable<OrgDocument[]>;
     getOrg(param: any): Observable<OrgDocument>;
     getUserOrg(req: ReqWithUser): Observable<OrgDocument[]>;

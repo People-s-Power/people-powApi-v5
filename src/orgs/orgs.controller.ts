@@ -24,44 +24,47 @@ export class OrgsController {
   
   // Promise<Observable<OrgDocument[]>>
 
-  // @UseGuards(JwtAuthGuard)
-  // @Post()
-  // async createOrg(@Req() req: ReqWithUser, @Body() data: CreateOrgDTO) {
-    
-  //   const user = req.user
-
-  //   // Chaeck if user already has an org
-  //   // if(user.createdOrg) throw new BadRequestException(`User already has an organsation`)
-
-  //   user.createdOrg = true
-  //   await user.save()
-
-  //   const payload = {...data, country: user.country, city: user.city, author: user._id }
-
-
-  //   const result = this.client.emit('create-org', payload)
-  //   return 'sucess'
-  // }
-
   @UseGuards(JwtAuthGuard)
   @Post()
-  async create(@Req() req: ReqWithUser, @Body() data: CreateOrgDTO): Promise<Observable<OrgDocument>> {
-    try {
-      const user = req.user
-      if(!user.createdOrg) {
-        user.createdOrg = true
-        await user.save()
-      }
-      
-      const payload = {...data, country: user.country, city: user.city, author: user._id }
-      console.log('Fired')
-      const pattern = { cmd: 'create-org' };
+  async createOrg(@Req() req: ReqWithUser, @Body() data: CreateOrgDTO) {
+    
+    const user = req.user
 
-      return this.client.send<OrgDocument>(pattern, payload);
-    } catch (error) {
-      throw error
+    // Chaeck if user already has an org
+    // if(user.createdOrg) throw new BadRequestException(`User already has an organsation`)
+    if(!data.name || !data.description || !data.email || !data.phone || !data.website) {
+      throw new BadRequestException('Please add the right inputs')
     }
+
+    user.createdOrg = true
+    await user.save()
+
+    const payload = {...data, country: user.country, city: user.city, author: user._id }
+
+
+    const result = this.client.emit('create-org', payload)
+    return 'sucess'
   }
+
+  // @UseGuards(JwtAuthGuard)
+  // @Post()
+  // async create(@Req() req: ReqWithUser, @Body() data: CreateOrgDTO): Promise<Observable<OrgDocument>> {
+  //   try {
+  //     const user = req.user
+  //     if(!user.createdOrg) {
+  //       user.createdOrg = true
+  //       await user.save()
+  //     }
+      
+  //     const payload = {...data, country: user.country, city: user.city, author: user._id }
+  //     console.log('Fired')
+  //     const pattern = { cmd: 'create-org' };
+
+  //     return this.client.send<OrgDocument>(pattern, payload);
+  //   } catch (error) {
+  //     throw error
+  //   }
+  // }
 
   // Get organisations
 
