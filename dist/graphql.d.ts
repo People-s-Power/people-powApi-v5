@@ -29,6 +29,18 @@ export interface CreateOrgInput {
     description: string;
     website: string;
 }
+export interface UpdateInput {
+    name: string;
+    linkedIn: string;
+    facebook: string;
+    orgId: string;
+    email: string;
+    phone: string;
+    instagram: string;
+    twitter: string;
+    country: string;
+    state: string;
+}
 export interface UserInput {
     id?: Nullable<string>;
     firstName?: Nullable<string>;
@@ -117,7 +129,8 @@ export interface IMutation {
     createEnv(input?: Nullable<EnvInput>): Nullable<Env> | Promise<Nullable<Env>>;
     updateEnv(input?: Nullable<EnvInput>): Nullable<Env> | Promise<Nullable<Env>>;
     deleteEnv(id?: Nullable<string>): Nullable<Env> | Promise<Nullable<Env>>;
-    createOrg(input?: Nullable<CreateOrgInput>): Organization | Promise<Organization>;
+    createOrg(input: CreateOrgInput): Organization | Promise<Organization>;
+    updateOrganization(input: UpdateInput): Organization | Promise<Organization>;
     registerWithEmail(input?: Nullable<UserInput>): Nullable<User> | Promise<Nullable<User>>;
     loginWithEmail(email?: Nullable<string>, password?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
     deleteUser(id?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;

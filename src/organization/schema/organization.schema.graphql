@@ -50,9 +50,10 @@ input CreateOrgInput{
   instagram: String!
   twitter: String!
   country: String!
-  state: String!  }
+  state: String!  
+  }
 
 type Mutation {
   createOrg(input: CreateOrgInput!): Organization!
-  updateOrganization(input: UpdateInput!) Organization!
+  updateOrganization(input: UpdateInput!): Organization!
 }
