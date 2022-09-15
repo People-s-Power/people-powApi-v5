@@ -5,5 +5,7 @@ export declare class OrganizationResolver {
     private readonly organizationService;
     constructor(organizationService: OrganizationService);
     getOrganzations(): Promise<organizationDocument[]>;
+    getOrganzation(Id: any): Promise<organizationDocument>;
+    getUserOrganizations(Id: any): Promise<organizationDocument[]>;
     createOrg(payload: any, user: UserDocument): Promise<organizationDocument>;
 }

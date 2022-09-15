@@ -18,6 +18,16 @@ export class OrganizationResolver {
       return this.organizationService.getOrganizations()
     }
 
+    @Query()
+    getOrganzation(@Args('id') Id): Promise<organizationDocument> {
+      return this.organizationService.getOrg(Id)
+    }
+
+    @Query()
+    getUserOrganizations(@Args('id') Id): Promise<organizationDocument[]> {
+      return this.organizationService.userOrgs(Id)
+    }
+
     // Mutations
 
     @UseGuards(GQLoginGuard)

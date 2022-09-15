@@ -16,6 +16,7 @@ exports.OrganizationService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
+const cloudinary_1 = require("../utils/cloudinary");
 const organization_schema_1 = require("./schema/organization.schema");
 let OrganizationService = class OrganizationService {
     constructor(OrganizationModel) {
@@ -25,14 +26,45 @@ let OrganizationService = class OrganizationService {
         const orgs = await this.OrganizationModel.find();
         return orgs;
     }
+    async getOrg(id) {
+        try {
+            const organization = await this.OrganizationModel.findById(id);
+            if (!organization) {
+                throw new common_1.BadRequestException(`Organization don't exist`);
+            }
+            return organization;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+    async userOrgs(id) {
+        try {
+            const orgs = await this.OrganizationModel.find({ author: id });
+            return orgs;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
     async createOrg(payload, user) {
         try {
             const nameExist = await this.OrganizationModel.findOne({ name: payload.name });
             if (nameExist) {
                 throw new common_1.BadRequestException('Name already exists');
             }
-            const organization = await this.OrganizationModel.create(Object.assign(Object.assign({}, payload), { image: 'payload.image', author: user._id, country: user.country, city: user.city }));
+            const image = await (0, cloudinary_1.cloudinaryUpload)(payload.uploadImage).catch((err) => {
+                throw err;
+            });
+            const organization = await this.OrganizationModel.create(Object.assign(Object.assign({}, payload), { image, author: user._id, country: user.country, city: user.city }));
             return organization;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+    async updateOrganization(payload, userId) {
+        try {
         }
         catch (error) {
             throw error;

@@ -28,6 +28,7 @@ type Ioperators {
 type Query {
   getOrganzations: [Organization!]!
   getOrganzation(id: ID!): Organization!
+  getUserOrganizations(id: ID!): [Organization!]!
 }
 
 input CreateOrgInput{
@@ -39,6 +40,19 @@ input CreateOrgInput{
   website: String!
   }
 
+  input UpdateInput{
+  name: String!
+  linkedIn: String!
+  facebook: String!
+  orgId: String!
+  email: String!
+  phone: String!
+  instagram: String!
+  twitter: String!
+  country: String!
+  state: String!  }
+
 type Mutation {
-  createOrg(input: CreateOrgInput): Organization!
+  createOrg(input: CreateOrgInput!): Organization!
+  updateOrganization(input: UpdateInput!) Organization!
 }

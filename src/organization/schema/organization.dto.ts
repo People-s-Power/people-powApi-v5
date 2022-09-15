@@ -72,7 +72,6 @@ export interface ICreateOrgDTO {
   country: string;
   city: string;
   website: string;
-  author: string
 }
 
 export class createOperators {

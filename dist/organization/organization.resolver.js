@@ -24,6 +24,12 @@ let OrganizationResolver = class OrganizationResolver {
     getOrganzations() {
         return this.organizationService.getOrganizations();
     }
+    getOrganzation(Id) {
+        return this.organizationService.getOrg(Id);
+    }
+    getUserOrganizations(Id) {
+        return this.organizationService.userOrgs(Id);
+    }
     createOrg(payload, user) {
         const { input } = payload;
         return this.organizationService.createOrg(input, user);
@@ -35,6 +41,20 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], OrganizationResolver.prototype, "getOrganzations", null);
+__decorate([
+    (0, graphql_1.Query)(),
+    __param(0, (0, graphql_1.Args)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], OrganizationResolver.prototype, "getOrganzation", null);
+__decorate([
+    (0, graphql_1.Query)(),
+    __param(0, (0, graphql_1.Args)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], OrganizationResolver.prototype, "getUserOrganizations", null);
 __decorate([
     (0, common_1.UseGuards)(graphql_guard_1.GQLoginGuard),
     (0, graphql_1.Mutation)(),

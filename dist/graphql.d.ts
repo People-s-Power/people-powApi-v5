@@ -88,6 +88,8 @@ export interface IQuery {
     getEnvs(): Nullable<Nullable<Env>[]> | Promise<Nullable<Nullable<Env>[]>>;
     getEnv(id?: Nullable<string>): Nullable<Env> | Promise<Nullable<Env>>;
     getOrganzations(): Organization[] | Promise<Organization[]>;
+    getOrganzation(id: string): Organization | Promise<Organization>;
+    getUserOrganizations(id: string): Organization[] | Promise<Organization[]>;
     getUsers(search?: Nullable<string>, limit?: Nullable<number>, skip?: Nullable<number>, accountType?: Nullable<string>, role?: Nullable<string>): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
     getStaffs(search?: Nullable<string>, limit?: Nullable<number>, skip?: Nullable<number>): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
     me(token?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
