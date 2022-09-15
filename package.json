@@ -39,6 +39,7 @@
     "@types/cors": "^2.8.12",
     "amqp-connection-manager": "^4.1.3",
     "amqplib": "^0.10.0",
+    "apollo-server-core": "^3.10.2",
     "apollo-server-express": "^3.8.2",
     "bcryptjs": "^2.4.3",
     "cache-manager": "^4.0.1",

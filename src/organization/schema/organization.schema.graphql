@@ -1,0 +1,44 @@
+type Organization {
+  _id: ID!
+  image: String!
+  author: String!
+  name: String!
+  email: String!
+  description: String!
+  phone: String!
+  followers: [String]!
+  following: [String]!
+  followersCount: Int!
+  followingCount: Int!
+  operators: [Ioperators]!
+  facebook: String!
+  linkedIn: String!
+  instagram: String!
+  twitter: String!
+  country: String!
+  city: String!
+  website: String!
+}
+
+type Ioperators {
+  userId: String
+  role: String
+}
+
+type Query {
+  getOrganzations: [Organization!]!
+  getOrganzation(id: ID!): Organization!
+}
+
+input CreateOrgInput{
+  uploadImage: String!
+  name: String!
+  email: String!
+  phone: String!
+  description: String!
+  website: String!
+  }
+
+type Mutation {
+  createOrg(input: CreateOrgInput): Organization!
+}

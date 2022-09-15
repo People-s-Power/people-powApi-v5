@@ -10,10 +10,17 @@ exports.OrganizationModule = void 0;
 const common_1 = require("@nestjs/common");
 const organization_service_1 = require("./organization.service");
 const organization_resolver_1 = require("./organization.resolver");
+const mongoose_1 = require("@nestjs/mongoose");
+const organization_schema_1 = require("./schema/organization.schema");
 let OrganizationModule = class OrganizationModule {
 };
 OrganizationModule = __decorate([
     (0, common_1.Module)({
+        imports: [
+            mongoose_1.MongooseModule.forFeature([{
+                    name: organization_schema_1.orgnaization.name, schema: organization_schema_1.orgnaizationSchema
+                }])
+        ],
         providers: [organization_resolver_1.OrganizationResolver, organization_service_1.OrganizationService]
     })
 ], OrganizationModule);

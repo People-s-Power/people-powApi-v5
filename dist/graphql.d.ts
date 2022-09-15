@@ -21,6 +21,14 @@ export interface EnvInput {
     value?: Nullable<string>;
     isPrivate?: Nullable<boolean>;
 }
+export interface CreateOrgInput {
+    uploadImage: string;
+    name: string;
+    email: string;
+    phone: string;
+    description: string;
+    website: string;
+}
 export interface UserInput {
     id?: Nullable<string>;
     firstName?: Nullable<string>;
@@ -79,6 +87,7 @@ export interface IQuery {
     getEndorsements(): Nullable<Nullable<Endorsement>[]> | Promise<Nullable<Nullable<Endorsement>[]>>;
     getEnvs(): Nullable<Nullable<Env>[]> | Promise<Nullable<Nullable<Env>[]>>;
     getEnv(id?: Nullable<string>): Nullable<Env> | Promise<Nullable<Env>>;
+    getOrganzations(): Organization[] | Promise<Organization[]>;
     getUsers(search?: Nullable<string>, limit?: Nullable<number>, skip?: Nullable<number>, accountType?: Nullable<string>, role?: Nullable<string>): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
     getStaffs(search?: Nullable<string>, limit?: Nullable<number>, skip?: Nullable<number>): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
     me(token?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
@@ -106,6 +115,7 @@ export interface IMutation {
     createEnv(input?: Nullable<EnvInput>): Nullable<Env> | Promise<Nullable<Env>>;
     updateEnv(input?: Nullable<EnvInput>): Nullable<Env> | Promise<Nullable<Env>>;
     deleteEnv(id?: Nullable<string>): Nullable<Env> | Promise<Nullable<Env>>;
+    createOrg(input?: Nullable<CreateOrgInput>): Organization | Promise<Organization>;
     registerWithEmail(input?: Nullable<UserInput>): Nullable<User> | Promise<Nullable<User>>;
     loginWithEmail(email?: Nullable<string>, password?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
     deleteUser(id?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
@@ -126,6 +136,31 @@ export interface Env {
     name?: Nullable<string>;
     value?: Nullable<string>;
     isPrivate?: Nullable<boolean>;
+}
+export interface Organization {
+    _id: string;
+    image: string;
+    author: string;
+    name: string;
+    email: string;
+    description: string;
+    phone: string;
+    followers: Nullable<string>[];
+    following: Nullable<string>[];
+    followersCount: number;
+    followingCount: number;
+    operators: Nullable<Ioperators>[];
+    facebook: string;
+    linkedIn: string;
+    instagram: string;
+    twitter: string;
+    country: string;
+    city: string;
+    website: string;
+}
+export interface Ioperators {
+    userId?: Nullable<string>;
+    role?: Nullable<string>;
 }
 export interface User {
     id?: Nullable<string>;
