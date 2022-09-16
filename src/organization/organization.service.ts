@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { OrgsController } from 'src/orgs/orgs.controller';
-import { UserDocument } from 'src/user/entity/user.schema';
+import { User, UserDocument } from 'src/user/entity/user.schema';
 import { cloudinaryUpload } from 'src/utils/cloudinary';
 import { OrganizationController } from './organization.controller';
 import { CreateOrgDTO, StaffRoleEnum } from './schema/organization.dto';
@@ -12,6 +12,7 @@ import { organizationDocument, orgnaization } from './schema/organization.schema
 export class OrganizationService {
   constructor(
     @InjectModel(orgnaization.name) private readonly OrganizationModel: Model<organizationDocument>,
+    @InjectModel(User.name) private readonly UserModel: Model<UserDocument>
   ) {}
 
   // Qurries
@@ -123,10 +124,51 @@ export class OrganizationService {
       org.operators = operatorList
 
       await org.save()
-      
+
+      // Add the organization to the user object
+      const user = await this.UserModel.findById(userId)
+      const orgList = user.orgOperating
+      orgList.push(org._id)
+      user.orgOperating = orgList
+      await user.save()
+
+
       return org
     } catch (error) {
       throw error
     }
   }
+
+  async deleteOperator(orgId, userId, adderId) {
+    try {
+      const org = await this.OrganizationModel.findById(orgId)
+      const user = await this.UserModel.findById(userId)
+      if (!user) {
+        throw new BadRequestException(`User doesn't exist`)
+      }
+      if (!org) {
+        throw new BadRequestException(`Organization doesn't exist`)
+      }
+
+      const operatorList = org.operators
+      const alreadyExistIndex = operatorList.findIndex(e => e.userId === userId)
+      operatorList.splice(alreadyExistIndex, 1)
+      org.operators = operatorList
+
+      await org.save()
+
+      // Remove org from user 
+      
+      const orgList = user.orgOperating
+      const orgIndex = orgList.findIndex(e => e === orgId)
+      orgList.splice(orgIndex, 1)
+      user.orgOperating = orgList
+      await user.save()
+
+      return org
+    } catch (error) {
+      throw error
+    }
+  }
+
 }

@@ -13,14 +13,18 @@ const organization_resolver_1 = require("./organization.resolver");
 const mongoose_1 = require("@nestjs/mongoose");
 const organization_schema_1 = require("./schema/organization.schema");
 const organization_controller_1 = require("./organization.controller");
+const user_schema_1 = require("../user/entity/user.schema");
 let OrganizationModule = class OrganizationModule {
 };
 OrganizationModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            mongoose_1.MongooseModule.forFeature([{
+            mongoose_1.MongooseModule.forFeature([
+                {
                     name: organization_schema_1.orgnaization.name, schema: organization_schema_1.orgnaizationSchema
-                }])
+                },
+                { name: user_schema_1.User.name, schema: user_schema_1.UserSchema }
+            ])
         ],
         providers: [organization_resolver_1.OrganizationResolver, organization_service_1.OrganizationService],
         controllers: [organization_controller_1.OrganizationController]

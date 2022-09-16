@@ -38,6 +38,10 @@ let OrganizationResolver = class OrganizationResolver {
         const { input } = payload;
         return this.organizationService.createOperator(input.role, input.userId, input.orgId, user._id);
     }
+    deleteOperator(payload, user) {
+        const { input } = payload;
+        return this.organizationService.deleteOperator(input.orgId, input.userId, user._id);
+    }
 };
 __decorate([
     (0, graphql_1.Query)(),
@@ -77,6 +81,15 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], OrganizationResolver.prototype, "addOperator", null);
+__decorate([
+    (0, common_1.UseGuards)(graphql_guard_1.GQLoginGuard),
+    (0, graphql_1.Mutation)(),
+    __param(0, (0, graphql_1.Args)()),
+    __param(1, (0, graphql_guard_1.CurrentUser)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", void 0)
+], OrganizationResolver.prototype, "deleteOperator", null);
 OrganizationResolver = __decorate([
     (0, graphql_1.Resolver)('Organization'),
     __metadata("design:paramtypes", [organization_service_1.OrganizationService])

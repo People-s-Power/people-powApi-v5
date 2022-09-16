@@ -44,5 +44,12 @@ export class OrganizationResolver {
      return this.organizationService.createOperator(input.role, input.userId, input.orgId, user._id)
     }
 
+    @UseGuards(GQLoginGuard)
+    @Mutation()
+    deleteOperator(@Args() payload, @CurrentUser() user: UserDocument) {
+      const { input } = payload
+      return this.organizationService.deleteOperator(input.orgId, input.userId, user._id)
+    }
+
 
 }

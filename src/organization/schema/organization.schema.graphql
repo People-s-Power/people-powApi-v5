@@ -71,9 +71,15 @@ input CreateOrgInput{
     orgId: ID!
   }
 
+  input DeleteOperator {
+    orgId: ID!
+    userId: ID!
+  }
+
 type Mutation {
   createOrg(input: CreateOrgInput!): Organization!
   updateOrganization(input: UpdateInput!): Organization!
   updateImage(input: UploadImageInput!): Organization!
   addOperator(input: CreateOperator!): Organization!
+  deleteOperator(input: DeleteOperator!): Organization!
 }

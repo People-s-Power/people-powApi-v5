@@ -16,10 +16,12 @@ exports.OrganizationService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
+const user_schema_1 = require("../user/entity/user.schema");
 const organization_schema_1 = require("./schema/organization.schema");
 let OrganizationService = class OrganizationService {
-    constructor(OrganizationModel) {
+    constructor(OrganizationModel, UserModel) {
         this.OrganizationModel = OrganizationModel;
+        this.UserModel = UserModel;
     }
     async getOrganizations() {
         const orgs = await this.OrganizationModel.find();
@@ -102,6 +104,37 @@ let OrganizationService = class OrganizationService {
             });
             org.operators = operatorList;
             await org.save();
+            const user = await this.UserModel.findById(userId);
+            const orgList = user.orgOperating;
+            orgList.push(org._id);
+            user.orgOperating = orgList;
+            await user.save();
+            return org;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+    async deleteOperator(orgId, userId, adderId) {
+        try {
+            const org = await this.OrganizationModel.findById(orgId);
+            const user = await this.UserModel.findById(userId);
+            if (!user) {
+                throw new common_1.BadRequestException(`User doesn't exist`);
+            }
+            if (!org) {
+                throw new common_1.BadRequestException(`Organization doesn't exist`);
+            }
+            const operatorList = org.operators;
+            const alreadyExistIndex = operatorList.findIndex(e => e.userId === userId);
+            operatorList.splice(alreadyExistIndex, 1);
+            org.operators = operatorList;
+            await org.save();
+            const orgList = user.orgOperating;
+            const orgIndex = orgList.findIndex(e => e === orgId);
+            orgList.splice(orgIndex, 1);
+            user.orgOperating = orgList;
+            await user.save();
             return org;
         }
         catch (error) {
@@ -112,7 +145,9 @@ let OrganizationService = class OrganizationService {
 OrganizationService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(organization_schema_1.orgnaization.name)),
-    __metadata("design:paramtypes", [mongoose_2.Model])
+    __param(1, (0, mongoose_1.InjectModel)(user_schema_1.User.name)),
+    __metadata("design:paramtypes", [mongoose_2.Model,
+        mongoose_2.Model])
 ], OrganizationService);
 exports.OrganizationService = OrganizationService;
 //# sourceMappingURL=organization.service.js.map
