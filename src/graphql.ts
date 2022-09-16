@@ -34,7 +34,6 @@ export interface EnvInput {
 }
 
 export interface CreateOrgInput {
-    uploadImage: string;
     name: string;
     email: string;
     phone: string;
@@ -53,6 +52,11 @@ export interface UpdateInput {
     twitter: string;
     country: string;
     state: string;
+}
+
+export interface UploadImageInput {
+    uploadImage: string;
+    orgId: string;
 }
 
 export interface UserInput {
@@ -150,6 +154,7 @@ export interface IMutation {
     deleteEnv(id?: Nullable<string>): Nullable<Env> | Promise<Nullable<Env>>;
     createOrg(input: CreateOrgInput): Organization | Promise<Organization>;
     updateOrganization(input: UpdateInput): Organization | Promise<Organization>;
+    updateImage(input: UploadImageInput): Organization | Promise<Organization>;
     registerWithEmail(input?: Nullable<UserInput>): Nullable<User> | Promise<Nullable<User>>;
     loginWithEmail(email?: Nullable<string>, password?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
     deleteUser(id?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;

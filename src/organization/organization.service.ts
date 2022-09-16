@@ -82,4 +82,24 @@ export class OrganizationService {
       throw error
     }
   }
+
+  async updateImage(uploadedImg, orgId): Promise<organizationDocument> {
+    try {
+      const organization = await this.OrganizationModel.findById(orgId)
+      if (!organization) {
+        throw new BadRequestException(`Organization doesn't exist`)
+      }
+      const image = await cloudinaryUpload(uploadedImg).catch((err) => {
+        throw err;
+      });
+      
+
+      organization.image = image
+      await organization.save()
+
+      return organization
+    } catch (error) {
+     throw error 
+    }
+  }
 }

@@ -31,8 +31,14 @@ type Query {
   getUserOrganizations(id: ID!): [Organization!]!
 }
 
+type File {
+    filename: String!
+    mimetype: String!
+    encoding: String!
+  }
+
 input CreateOrgInput{
-  uploadImage: String!
+  uploadImage: File!
   name: String!
   email: String!
   phone: String!
@@ -52,8 +58,13 @@ input CreateOrgInput{
   country: String!
   state: String!  
   }
+  input UploadImageInput {
+    uploadImage: String!
+    orgId: ID!
+  }
 
 type Mutation {
   createOrg(input: CreateOrgInput!): Organization!
   updateOrganization(input: UpdateInput!): Organization!
+  updateImage(input: UploadImageInput!): Organization!
 }

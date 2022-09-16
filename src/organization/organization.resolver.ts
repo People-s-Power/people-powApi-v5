@@ -18,7 +18,7 @@ export class OrganizationResolver {
       return this.organizationService.getOrganizations()
     }
 
-    @Query()
+    @Query() 
     getOrganzation(@Args('id') Id): Promise<organizationDocument> {
       return this.organizationService.getOrg(Id)
     }

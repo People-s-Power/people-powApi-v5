@@ -70,6 +70,23 @@ let OrganizationService = class OrganizationService {
             throw error;
         }
     }
+    async updateImage(uploadedImg, orgId) {
+        try {
+            const organization = await this.OrganizationModel.findById(orgId);
+            if (!organization) {
+                throw new common_1.BadRequestException(`Organization doesn't exist`);
+            }
+            const image = await (0, cloudinary_1.cloudinaryUpload)(uploadedImg).catch((err) => {
+                throw err;
+            });
+            organization.image = image;
+            await organization.save();
+            return organization;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
 };
 OrganizationService = __decorate([
     (0, common_1.Injectable)(),

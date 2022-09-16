@@ -15,4 +15,5 @@ export declare class OrganizationService {
     })[]>;
     createOrg(payload: CreateOrgDTO, user: UserDocument): Promise<organizationDocument>;
     updateOrganization(payload: any, userId: any): Promise<void>;
+    updateImage(uploadedImg: any, orgId: any): Promise<organizationDocument>;
 }
