@@ -20,6 +20,8 @@ type Organization {
   website: String!
 }
 
+scalar Upload
+
 type Ioperators {
   userId: String
   role: String
@@ -38,7 +40,7 @@ type File {
   }
 
 input CreateOrgInput{
-  uploadImage: File!
+  uploadImage: Upload!
   name: String!
   email: String!
   phone: String!

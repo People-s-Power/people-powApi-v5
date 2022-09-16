@@ -34,6 +34,7 @@ export interface EnvInput {
 }
 
 export interface CreateOrgInput {
+    uploadImage: Upload;
     name: string;
     email: string;
     phone: string;
@@ -206,6 +207,12 @@ export interface Ioperators {
     role?: Nullable<string>;
 }
 
+export interface File {
+    filename: string;
+    mimetype: string;
+    encoding: string;
+}
+
 export interface User {
     id?: Nullable<string>;
     name?: Nullable<string>;
@@ -237,4 +244,5 @@ export interface User {
     myUsers?: Nullable<Nullable<User>[]>;
 }
 
+export type Upload = any;
 type Nullable<T> = T | null;
