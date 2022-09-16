@@ -4,14 +4,13 @@ import { Model } from 'mongoose';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { User, UserDocument } from 'src/user/entity/user.schema';
 import { cloudinaryUpload } from 'src/utils/cloudinary';
+import { OrganizationService } from './organization.service';
 
 @Controller('api/v3/organization')
-export class OrgsController {
+export class OrganizationController {
   logger: Logger;
   constructor(
-  
-    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
-    // @InjectModel(Campaign.name) private readonly CampModel: Model<CampaignDocument>
+    private readonly organizationService: OrganizationService,
   ){
     this.logger = new Logger()
   }
@@ -30,6 +29,6 @@ export class OrgsController {
       img: image,
       orgId: param.orgId
     }
-    return 'Success'
+    return this.organizationService.updateImage(image, param.orgId)
   }
 }

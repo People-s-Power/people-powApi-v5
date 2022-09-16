@@ -34,7 +34,6 @@ export interface EnvInput {
 }
 
 export interface CreateOrgInput {
-    uploadImage: Upload;
     name: string;
     email: string;
     phone: string;

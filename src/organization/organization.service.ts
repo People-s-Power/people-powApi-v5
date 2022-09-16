@@ -60,7 +60,7 @@ export class OrganizationService {
 
     const organization = await this.OrganizationModel.create({
       ...payload,
-      image,
+      image: 'Upload Image',
       author: user._id,
       country: user.country,
       city: user.city
@@ -83,15 +83,12 @@ export class OrganizationService {
     }
   }
 
-  async updateImage(uploadedImg, orgId): Promise<organizationDocument> {
+  async updateImage(image, orgId): Promise<organizationDocument> {
     try {
       const organization = await this.OrganizationModel.findById(orgId)
       if (!organization) {
         throw new BadRequestException(`Organization doesn't exist`)
       }
-      const image = await cloudinaryUpload(uploadedImg).catch((err) => {
-        throw err;
-      });
       
 
       organization.image = image

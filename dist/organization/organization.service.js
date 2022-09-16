@@ -56,7 +56,7 @@ let OrganizationService = class OrganizationService {
             const image = await (0, cloudinary_1.cloudinaryUpload)(payload.uploadImage).catch((err) => {
                 throw err;
             });
-            const organization = await this.OrganizationModel.create(Object.assign(Object.assign({}, payload), { image, author: user._id, country: user.country, city: user.city }));
+            const organization = await this.OrganizationModel.create(Object.assign(Object.assign({}, payload), { image: 'Upload Image', author: user._id, country: user.country, city: user.city }));
             return organization;
         }
         catch (error) {
@@ -70,15 +70,12 @@ let OrganizationService = class OrganizationService {
             throw error;
         }
     }
-    async updateImage(uploadedImg, orgId) {
+    async updateImage(image, orgId) {
         try {
             const organization = await this.OrganizationModel.findById(orgId);
             if (!organization) {
                 throw new common_1.BadRequestException(`Organization doesn't exist`);
             }
-            const image = await (0, cloudinary_1.cloudinaryUpload)(uploadedImg).catch((err) => {
-                throw err;
-            });
             organization.image = image;
             await organization.save();
             return organization;

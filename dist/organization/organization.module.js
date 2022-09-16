@@ -12,6 +12,7 @@ const organization_service_1 = require("./organization.service");
 const organization_resolver_1 = require("./organization.resolver");
 const mongoose_1 = require("@nestjs/mongoose");
 const organization_schema_1 = require("./schema/organization.schema");
+const organization_controller_1 = require("./organization.controller");
 let OrganizationModule = class OrganizationModule {
 };
 OrganizationModule = __decorate([
@@ -21,7 +22,8 @@ OrganizationModule = __decorate([
                     name: organization_schema_1.orgnaization.name, schema: organization_schema_1.orgnaizationSchema
                 }])
         ],
-        providers: [organization_resolver_1.OrganizationResolver, organization_service_1.OrganizationService]
+        providers: [organization_resolver_1.OrganizationResolver, organization_service_1.OrganizationService],
+        controllers: [organization_controller_1.OrganizationController]
     })
 ], OrganizationModule);
 exports.OrganizationModule = OrganizationModule;

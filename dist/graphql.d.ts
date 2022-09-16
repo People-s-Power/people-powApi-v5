@@ -22,7 +22,6 @@ export interface EnvInput {
     isPrivate?: Nullable<boolean>;
 }
 export interface CreateOrgInput {
-    uploadImage: Upload;
     name: string;
     email: string;
     phone: string;

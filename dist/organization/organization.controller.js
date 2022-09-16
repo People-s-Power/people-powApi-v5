@@ -12,16 +12,14 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OrgsController = void 0;
+exports.OrganizationController = void 0;
 const common_1 = require("@nestjs/common");
-const mongoose_1 = require("@nestjs/mongoose");
-const mongoose_2 = require("mongoose");
 const jwt_guard_1 = require("../auth/guards/jwt.guard");
-const user_schema_1 = require("../user/entity/user.schema");
 const cloudinary_1 = require("../utils/cloudinary");
-let OrgsController = class OrgsController {
-    constructor(userModel) {
-        this.userModel = userModel;
+const organization_service_1 = require("./organization.service");
+let OrganizationController = class OrganizationController {
+    constructor(organizationService) {
+        this.organizationService = organizationService;
         this.logger = new common_1.Logger();
     }
     async uploadImage(data, param) {
@@ -33,7 +31,7 @@ let OrgsController = class OrgsController {
             img: image,
             orgId: param.orgId
         };
-        return 'Success';
+        return this.organizationService.updateImage(image, param.orgId);
     }
 };
 __decorate([
@@ -44,11 +42,10 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
-], OrgsController.prototype, "uploadImage", null);
-OrgsController = __decorate([
+], OrganizationController.prototype, "uploadImage", null);
+OrganizationController = __decorate([
     (0, common_1.Controller)('api/v3/organization'),
-    __param(0, (0, mongoose_1.InjectModel)(user_schema_1.User.name)),
-    __metadata("design:paramtypes", [mongoose_2.Model])
-], OrgsController);
-exports.OrgsController = OrgsController;
+    __metadata("design:paramtypes", [organization_service_1.OrganizationService])
+], OrganizationController);
+exports.OrganizationController = OrganizationController;
 //# sourceMappingURL=organization.controller.js.map

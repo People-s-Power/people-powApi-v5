@@ -40,7 +40,6 @@ type File {
   }
 
 input CreateOrgInput{
-  uploadImage: Upload!
   name: String!
   email: String!
   phone: String!
