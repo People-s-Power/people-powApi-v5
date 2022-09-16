@@ -52,11 +52,7 @@ export class OrganizationService {
     const nameExist = await this.OrganizationModel.findOne({ name: payload.name })
     if (nameExist) {
       throw new BadRequestException('Name already exists')
-    } 
-
-    const image = await cloudinaryUpload(payload.uploadImage).catch((err) => {
-      throw err;
-    });
+    }
 
     const organization = await this.OrganizationModel.create({
       ...payload,

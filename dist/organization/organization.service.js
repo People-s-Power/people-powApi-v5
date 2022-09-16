@@ -16,7 +16,6 @@ exports.OrganizationService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const cloudinary_1 = require("../utils/cloudinary");
 const organization_schema_1 = require("./schema/organization.schema");
 let OrganizationService = class OrganizationService {
     constructor(OrganizationModel) {
@@ -53,9 +52,6 @@ let OrganizationService = class OrganizationService {
             if (nameExist) {
                 throw new common_1.BadRequestException('Name already exists');
             }
-            const image = await (0, cloudinary_1.cloudinaryUpload)(payload.uploadImage).catch((err) => {
-                throw err;
-            });
             const organization = await this.OrganizationModel.create(Object.assign(Object.assign({}, payload), { image: 'Upload Image', author: user._id, country: user.country, city: user.city }));
             return organization;
         }
