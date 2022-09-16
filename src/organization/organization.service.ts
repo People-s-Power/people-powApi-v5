@@ -4,7 +4,8 @@ import { Model } from 'mongoose';
 import { OrgsController } from 'src/orgs/orgs.controller';
 import { UserDocument } from 'src/user/entity/user.schema';
 import { cloudinaryUpload } from 'src/utils/cloudinary';
-import { CreateOrgDTO } from './schema/organization.dto';
+import { OrganizationController } from './organization.controller';
+import { CreateOrgDTO, StaffRoleEnum } from './schema/organization.dto';
 import { organizationDocument, orgnaization } from './schema/organization.schema';
 
 @Injectable()
@@ -93,6 +94,39 @@ export class OrganizationService {
       return organization
     } catch (error) {
      throw error 
+    }
+  }
+
+  async checkIfAllowed(adderId): Promise<boolean> {
+    console.log(adderId)
+    return true
+  }
+
+  // Create operator
+  async createOperator(role: StaffRoleEnum, userId, orgId, adderId) {
+    try {
+      const org = await this.OrganizationModel.findById(orgId)
+      if (!org) {
+        throw new BadRequestException(`Organization doesn't exist`)
+      }
+      this.checkIfAllowed(adderId)
+      const operatorList = org.operators
+      const alreadyExist = operatorList.find(e => e.userId === userId)
+      if (alreadyExist) {
+        throw new BadRequestException('User already added')
+      }
+      operatorList.push({
+        userId: userId,
+        role: role
+      })
+
+      org.operators = operatorList
+
+      await org.save()
+      
+      return org
+    } catch (error) {
+      throw error
     }
   }
 }

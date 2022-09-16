@@ -80,6 +80,34 @@ let OrganizationService = class OrganizationService {
             throw error;
         }
     }
+    async checkIfAllowed(adderId) {
+        console.log(adderId);
+        return true;
+    }
+    async createOperator(role, userId, orgId, adderId) {
+        try {
+            const org = await this.OrganizationModel.findById(orgId);
+            if (!org) {
+                throw new common_1.BadRequestException(`Organization doesn't exist`);
+            }
+            this.checkIfAllowed(adderId);
+            const operatorList = org.operators;
+            const alreadyExist = operatorList.find(e => e.userId === userId);
+            if (alreadyExist) {
+                throw new common_1.BadRequestException('User already added');
+            }
+            operatorList.push({
+                userId: userId,
+                role: role
+            });
+            org.operators = operatorList;
+            await org.save();
+            return org;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
 };
 OrganizationService = __decorate([
     (0, common_1.Injectable)(),

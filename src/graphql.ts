@@ -59,6 +59,12 @@ export interface UploadImageInput {
     orgId: string;
 }
 
+export interface CreateOperator {
+    userId: string;
+    role: string;
+    orgId: string;
+}
+
 export interface UserInput {
     id?: Nullable<string>;
     firstName?: Nullable<string>;
@@ -155,6 +161,7 @@ export interface IMutation {
     createOrg(input: CreateOrgInput): Organization | Promise<Organization>;
     updateOrganization(input: UpdateInput): Organization | Promise<Organization>;
     updateImage(input: UploadImageInput): Organization | Promise<Organization>;
+    addOperator(input: CreateOperator): Organization | Promise<Organization>;
     registerWithEmail(input?: Nullable<UserInput>): Nullable<User> | Promise<Nullable<User>>;
     loginWithEmail(email?: Nullable<string>, password?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
     deleteUser(id?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;

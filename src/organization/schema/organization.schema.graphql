@@ -59,8 +59,15 @@ input CreateOrgInput{
   country: String!
   state: String!  
   }
+
   input UploadImageInput {
     uploadImage: String!
+    orgId: ID!
+  }
+
+  input CreateOperator {
+    userId: ID!
+    role: String!
     orgId: ID!
   }
 
@@ -68,4 +75,5 @@ type Mutation {
   createOrg(input: CreateOrgInput!): Organization!
   updateOrganization(input: UpdateInput!): Organization!
   updateImage(input: UploadImageInput!): Organization!
+  addOperator(input: CreateOperator!): Organization!
 }

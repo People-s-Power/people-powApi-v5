@@ -37,5 +37,12 @@ export class OrganizationResolver {
       return this.organizationService.createOrg(input, user)
     }
 
+    @UseGuards(GQLoginGuard)
+    @Mutation()
+    addOperator(@Args() payload, @CurrentUser() user: UserDocument) {
+      const { input } = payload
+     return this.organizationService.createOperator(input.role, input.userId, input.orgId, user._id)
+    }
+
 
 }
