@@ -21,6 +21,7 @@ type User {
   address: String
   reps: [User]
   suppervisor: User
+  orgOperating: [String!]!
   lastSeen: Date
   reportCount: Int
   bankName: String
