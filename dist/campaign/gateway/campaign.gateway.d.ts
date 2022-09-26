@@ -5,9 +5,10 @@
 /// <reference types="mongoose/types/cursor" />
 /// <reference types="mongoose/types/document" />
 /// <reference types="mongoose/types/error" />
+/// <reference types="mongoose/types/expressions" />
 /// <reference types="mongoose/types/helpers" />
 /// <reference types="mongoose/types/middlewares" />
-/// <reference types="mongoose/types/indizes" />
+/// <reference types="mongoose/types/indexes" />
 /// <reference types="mongoose/types/models" />
 /// <reference types="mongoose/types/mongooseoptions" />
 /// <reference types="mongoose/types/pipelinestage" />
@@ -19,6 +20,8 @@
 /// <reference types="mongoose/types/types" />
 /// <reference types="mongoose/types/utility" />
 /// <reference types="mongoose/types/validation" />
+/// <reference types="mongoose/types/virtuals" />
+/// <reference types="mongoose/types/inferschematype" />
 import { OnGatewayConnection, OnGatewayInit } from '@nestjs/websockets';
 import { Model } from 'mongoose';
 import { Notice, NoticeDocument } from 'src/notification/notification.schema';
@@ -38,7 +41,7 @@ export declare class CampaignGateway implements OnGatewayConnection, OnGatewayIn
     }): Promise<Notice & import("mongoose").Document<any, any, any> & {
         _doc: any;
     } & {
-        _id: any;
+        _id: import("mongoose").Types.ObjectId;
     }>;
     createdCampaignOrg(data: {
         campaignTitle: string;
@@ -47,7 +50,7 @@ export declare class CampaignGateway implements OnGatewayConnection, OnGatewayIn
     }): Promise<Notice & import("mongoose").Document<any, any, any> & {
         _doc: any;
     } & {
-        _id: any;
+        _id: import("mongoose").Types.ObjectId;
     }>;
     endorsedCampaign(data: {
         campaignTitle: string;
@@ -55,7 +58,7 @@ export declare class CampaignGateway implements OnGatewayConnection, OnGatewayIn
     }): Promise<Notice & import("mongoose").Document<any, any, any> & {
         _doc: any;
     } & {
-        _id: any;
+        _id: import("mongoose").Types.ObjectId;
     }>;
     getCampaignNotice(): Promise<any>;
     getAllNotice(model?: string): Promise<any>;

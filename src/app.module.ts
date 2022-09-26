@@ -15,7 +15,6 @@ import { CampaignModule } from './campaign/campaign.module';
 import { TransactionModule } from './transaction/transaction.module';
 import { ClientsModule, Transport } from  "@nestjs/microservices"
 import { View, ViewSchema } from './campaign/schema/campaign.schema';
-import { OrgsModule } from './orgs/orgs.module';
 import {corsOptions} from "./cors"
 import { OrganizationModule } from './organization/organization.module';
 
@@ -73,7 +72,6 @@ import { OrganizationModule } from './organization/organization.module';
     CampaignModule,
     TransactionModule,
     EnvModule,
-    OrgsModule,
     OrganizationModule
   ],
   controllers: [AppController],

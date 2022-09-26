@@ -1,7 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { OrgsController } from 'src/orgs/orgs.controller';
 import { User, UserDocument } from 'src/user/entity/user.schema';
 import { cloudinaryUpload } from 'src/utils/cloudinary';
 import { OrganizationController } from './organization.controller';

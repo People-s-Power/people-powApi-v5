@@ -218,6 +218,7 @@ export interface User {
     address?: Nullable<string>;
     reps?: Nullable<Nullable<User>[]>;
     suppervisor?: Nullable<User>;
+    orgOperating: string[];
     lastSeen?: Nullable<Date>;
     reportCount?: Nullable<number>;
     bankName?: Nullable<string>;

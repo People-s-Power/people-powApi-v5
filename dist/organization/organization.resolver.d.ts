@@ -12,12 +12,12 @@ export declare class OrganizationResolver {
         _id: any;
         _doc: any;
     } & {
-        _id: any;
+        _id: import("mongoose").Types.ObjectId;
     }>;
     deleteOperator(payload: any, user: UserDocument): Promise<import("./schema/organization.schema").orgnaization & import("mongoose").Document<any, any, any> & {
         _id: any;
         _doc: any;
     } & {
-        _id: any;
+        _id: import("mongoose").Types.ObjectId;
     }>;
 }

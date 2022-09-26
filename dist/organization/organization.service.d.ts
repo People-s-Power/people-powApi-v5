@@ -12,7 +12,7 @@ export declare class OrganizationService {
         _id: any;
         _doc: any;
     } & {
-        _id: any;
+        _id: import("mongoose").Types.ObjectId;
     })[]>;
     createOrg(payload: CreateOrgDTO, user: UserDocument): Promise<organizationDocument>;
     updateOrganization(payload: any, userId: any): Promise<void>;
@@ -22,12 +22,12 @@ export declare class OrganizationService {
         _id: any;
         _doc: any;
     } & {
-        _id: any;
+        _id: import("mongoose").Types.ObjectId;
     }>;
     deleteOperator(orgId: any, userId: any, adderId: any): Promise<orgnaization & import("mongoose").Document<any, any, any> & {
         _id: any;
         _doc: any;
     } & {
-        _id: any;
+        _id: import("mongoose").Types.ObjectId;
     }>;
 }
