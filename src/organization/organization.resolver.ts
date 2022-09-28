@@ -37,9 +37,18 @@ export class OrganizationResolver {
       return this.organizationService.createOrg(input, user)
     }
 
+
+    @UseGuards(GQLoginGuard)
+    @Mutation()
+    updateOrganization(@Args() payload, @CurrentUser() user: UserDocument) {
+      console.log(payload)
+      return this.organizationService.updateOrganization({...payload}, user._id)
+    }
+
     @UseGuards(GQLoginGuard)
     @Mutation()
     addOperator(@Args() payload, @CurrentUser() user: UserDocument) {
+      
       const { input } = payload
      return this.organizationService.createOperator(input.role, input.userId, input.orgId, user._id)
     }
@@ -48,7 +57,7 @@ export class OrganizationResolver {
     @Mutation()
     deleteOperator(@Args() payload, @CurrentUser() user: UserDocument) {
       const { input } = payload
-      return this.organizationService.deleteOperator(input.orgId, input.userId, user._id)
+      return this.organizationService.deleteOperator(input.orgId, input.userId, user)
     }
 
 

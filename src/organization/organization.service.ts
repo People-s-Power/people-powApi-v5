@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from 'src/user/entity/user.schema';
@@ -69,11 +69,29 @@ export class OrganizationService {
   }
  }
 
-  async updateOrganization(payload, userId) {
+  async updateOrganization(data, operatorId) {
     try {
-      // const { orgId } payload
-      // Check if user is qulified to update
-      // const org = this.OrganizationModel.findById()
+      const payload = data?.input
+      const org = await this.OrganizationModel.findById(payload.orgId)
+      if (!org) {
+        throw new BadRequestException(`Organization doesn't exist`)
+      }
+
+      // Check if user is allowed to do task
+      const authObj = {
+        userId: org.author,
+        role: 'Author'
+      }
+      const operators = org.operators
+      const allowedList = [...operators, authObj]
+      console.log(allowedList)
+      const isAllowed = allowedList.find(e => e.userId === operatorId.toString())
+      if(!isAllowed) throw new UnauthorizedException('Not Allowed')
+
+      await org.set({...payload})
+      await org.save()
+
+      return org
       
     } catch (error) {
       throw error
@@ -97,21 +115,29 @@ export class OrganizationService {
     }
   }
 
-  async checkIfAllowed(adderId): Promise<boolean> {
-    console.log(adderId)
-    return true
-  }
 
   // Create operator
-  async createOperator(role: StaffRoleEnum, userId, orgId, adderId) {
+  async createOperator(role: StaffRoleEnum, userId, orgId, operatorId) {
     try {
       const org = await this.OrganizationModel.findById(orgId)
       if (!org) {
         throw new BadRequestException(`Organization doesn't exist`)
       }
-      this.checkIfAllowed(adderId)
+
+      // Check if user is allowed to do task
+      const authObj = {
+        userId: org.author,
+        role: 'Author'
+      }
+      const operators = org.operators
+      const allowedList = [...operators, authObj]
+      console.log(allowedList)
+      const isAllowed = allowedList.find(e => e.userId === operatorId.toString())
+      if(!isAllowed) throw new UnauthorizedException('Not Allowed')
+
+
       const operatorList = org.operators
-      const alreadyExist = operatorList.find(e => e.userId === userId)
+      const alreadyExist = allowedList.find(e => e.userId === userId)
       if (alreadyExist) {
         throw new BadRequestException('User already added')
       }
@@ -138,19 +164,15 @@ export class OrganizationService {
     }
   }
 
-  async deleteOperator(orgId, userId, adderId) {
+  async deleteOperator(orgId, user, operatorId) {
     try {
       const org = await this.OrganizationModel.findById(orgId)
-      const user = await this.UserModel.findById(userId)
-      if (!user) {
-        throw new BadRequestException(`User doesn't exist`)
-      }
       if (!org) {
         throw new BadRequestException(`Organization doesn't exist`)
       }
 
       const operatorList = org.operators
-      const alreadyExistIndex = operatorList.findIndex(e => e.userId === userId)
+      const alreadyExistIndex = operatorList.findIndex(e => e.userId === user._id.toString)
       operatorList.splice(alreadyExistIndex, 1)
       org.operators = operatorList
 
@@ -159,7 +181,7 @@ export class OrganizationService {
       // Remove org from user 
       
       const orgList = user.orgOperating
-      const orgIndex = orgList.findIndex(e => e === orgId)
+      const orgIndex = orgList.findIndex(e => e === orgId.toString)
       orgList.splice(orgIndex, 1)
       user.orgOperating = orgList
       await user.save()

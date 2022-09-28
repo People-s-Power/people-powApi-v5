@@ -15,16 +15,20 @@ export declare class OrganizationService {
         _id: import("mongoose").Types.ObjectId;
     })[]>;
     createOrg(payload: CreateOrgDTO, user: UserDocument): Promise<organizationDocument>;
-    updateOrganization(payload: any, userId: any): Promise<void>;
-    updateImage(image: any, orgId: any): Promise<organizationDocument>;
-    checkIfAllowed(adderId: any): Promise<boolean>;
-    createOperator(role: StaffRoleEnum, userId: any, orgId: any, adderId: any): Promise<orgnaization & import("mongoose").Document<any, any, any> & {
+    updateOrganization(data: any, operatorId: any): Promise<orgnaization & import("mongoose").Document<any, any, any> & {
         _id: any;
         _doc: any;
     } & {
         _id: import("mongoose").Types.ObjectId;
     }>;
-    deleteOperator(orgId: any, userId: any, adderId: any): Promise<orgnaization & import("mongoose").Document<any, any, any> & {
+    updateImage(image: any, orgId: any): Promise<organizationDocument>;
+    createOperator(role: StaffRoleEnum, userId: any, orgId: any, operatorId: any): Promise<orgnaization & import("mongoose").Document<any, any, any> & {
+        _id: any;
+        _doc: any;
+    } & {
+        _id: import("mongoose").Types.ObjectId;
+    }>;
+    deleteOperator(orgId: any, user: any, operatorId: any): Promise<orgnaization & import("mongoose").Document<any, any, any> & {
         _id: any;
         _doc: any;
     } & {

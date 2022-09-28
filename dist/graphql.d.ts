@@ -39,6 +39,7 @@ export interface UpdateInput {
     twitter: string;
     country: string;
     state: string;
+    website: string;
 }
 export interface UploadImageInput {
     uploadImage: string;

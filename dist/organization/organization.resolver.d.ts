@@ -8,6 +8,12 @@ export declare class OrganizationResolver {
     getOrganzation(Id: any): Promise<organizationDocument>;
     getUserOrganizations(Id: any): Promise<organizationDocument[]>;
     createOrg(payload: any, user: UserDocument): Promise<organizationDocument>;
+    updateOrganization(payload: any, user: UserDocument): Promise<import("./schema/organization.schema").orgnaization & import("mongoose").Document<any, any, any> & {
+        _id: any;
+        _doc: any;
+    } & {
+        _id: import("mongoose").Types.ObjectId;
+    }>;
     addOperator(payload: any, user: UserDocument): Promise<import("./schema/organization.schema").orgnaization & import("mongoose").Document<any, any, any> & {
         _id: any;
         _doc: any;

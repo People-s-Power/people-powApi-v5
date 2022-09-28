@@ -61,8 +61,26 @@ let OrganizationService = class OrganizationService {
             throw error;
         }
     }
-    async updateOrganization(payload, userId) {
+    async updateOrganization(data, operatorId) {
         try {
+            const payload = data === null || data === void 0 ? void 0 : data.input;
+            const org = await this.OrganizationModel.findById(payload.orgId);
+            if (!org) {
+                throw new common_1.BadRequestException(`Organization doesn't exist`);
+            }
+            const authObj = {
+                userId: org.author,
+                role: 'Author'
+            };
+            const operators = org.operators;
+            const allowedList = [...operators, authObj];
+            console.log(allowedList);
+            const isAllowed = allowedList.find(e => e.userId === operatorId.toString());
+            if (!isAllowed)
+                throw new common_1.UnauthorizedException('Not Allowed');
+            await org.set(Object.assign({}, payload));
+            await org.save();
+            return org;
         }
         catch (error) {
             throw error;
@@ -82,19 +100,24 @@ let OrganizationService = class OrganizationService {
             throw error;
         }
     }
-    async checkIfAllowed(adderId) {
-        console.log(adderId);
-        return true;
-    }
-    async createOperator(role, userId, orgId, adderId) {
+    async createOperator(role, userId, orgId, operatorId) {
         try {
             const org = await this.OrganizationModel.findById(orgId);
             if (!org) {
                 throw new common_1.BadRequestException(`Organization doesn't exist`);
             }
-            this.checkIfAllowed(adderId);
+            const authObj = {
+                userId: org.author,
+                role: 'Author'
+            };
+            const operators = org.operators;
+            const allowedList = [...operators, authObj];
+            console.log(allowedList);
+            const isAllowed = allowedList.find(e => e.userId === operatorId.toString());
+            if (!isAllowed)
+                throw new common_1.UnauthorizedException('Not Allowed');
             const operatorList = org.operators;
-            const alreadyExist = operatorList.find(e => e.userId === userId);
+            const alreadyExist = allowedList.find(e => e.userId === userId);
             if (alreadyExist) {
                 throw new common_1.BadRequestException('User already added');
             }
@@ -115,23 +138,19 @@ let OrganizationService = class OrganizationService {
             throw error;
         }
     }
-    async deleteOperator(orgId, userId, adderId) {
+    async deleteOperator(orgId, user, operatorId) {
         try {
             const org = await this.OrganizationModel.findById(orgId);
-            const user = await this.UserModel.findById(userId);
-            if (!user) {
-                throw new common_1.BadRequestException(`User doesn't exist`);
-            }
             if (!org) {
                 throw new common_1.BadRequestException(`Organization doesn't exist`);
             }
             const operatorList = org.operators;
-            const alreadyExistIndex = operatorList.findIndex(e => e.userId === userId);
+            const alreadyExistIndex = operatorList.findIndex(e => e.userId === user._id.toString);
             operatorList.splice(alreadyExistIndex, 1);
             org.operators = operatorList;
             await org.save();
             const orgList = user.orgOperating;
-            const orgIndex = orgList.findIndex(e => e === orgId);
+            const orgIndex = orgList.findIndex(e => e === orgId.toString);
             orgList.splice(orgIndex, 1);
             user.orgOperating = orgList;
             await user.save();

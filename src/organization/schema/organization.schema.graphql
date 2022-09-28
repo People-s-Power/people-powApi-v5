@@ -57,7 +57,9 @@ input CreateOrgInput{
   instagram: String!
   twitter: String!
   country: String!
-  state: String!  
+  state: String!
+  city: String!
+  website: String!
   }
 
   input UploadImageInput {
