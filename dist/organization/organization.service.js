@@ -144,6 +144,8 @@ let OrganizationService = class OrganizationService {
             if (!org) {
                 throw new common_1.BadRequestException(`Organization doesn't exist`);
             }
+            if (user._id.toString() !== org.author)
+                throw new common_1.UnauthorizedException('Not Allowed');
             const operatorList = org.operators;
             const alreadyExistIndex = operatorList.findIndex(e => e.userId === user._id.toString);
             operatorList.splice(alreadyExistIndex, 1);
