@@ -10,7 +10,6 @@ import { join } from 'path';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
-import { EnvModule } from './env/env.module';
 import { CampaignModule } from './campaign/campaign.module';
 import { TransactionModule } from './transaction/transaction.module';
 import { ClientsModule, Transport } from  "@nestjs/microservices"
@@ -71,7 +70,6 @@ import { OrganizationModule } from './organization/organization.module';
     UserModule,
     CampaignModule,
     TransactionModule,
-    EnvModule,
     OrganizationModule
   ],
   controllers: [AppController],

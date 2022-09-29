@@ -18,7 +18,6 @@ const path_1 = require("path");
 const mongoose_1 = require("@nestjs/mongoose");
 const auth_module_1 = require("./auth/auth.module");
 const user_module_1 = require("./user/user.module");
-const env_module_1 = require("./env/env.module");
 const campaign_module_1 = require("./campaign/campaign.module");
 const transaction_module_1 = require("./transaction/transaction.module");
 const microservices_1 = require("@nestjs/microservices");
@@ -67,7 +66,6 @@ AppModule = __decorate([
             user_module_1.UserModule,
             campaign_module_1.CampaignModule,
             transaction_module_1.TransactionModule,
-            env_module_1.EnvModule,
             organization_module_1.OrganizationModule
         ],
         controllers: [app_controller_1.AppController],

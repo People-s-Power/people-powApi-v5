@@ -27,13 +27,6 @@ export interface EndorsementInput {
     body?: Nullable<string>;
 }
 
-export interface EnvInput {
-    id?: Nullable<string>;
-    name?: Nullable<string>;
-    value?: Nullable<string>;
-    isPrivate?: Nullable<boolean>;
-}
-
 export interface CreateOrgInput {
     name: string;
     email: string;
@@ -133,8 +126,6 @@ export interface IQuery {
     getActiveCampaignsOtherRegion(): Nullable<Nullable<Campaign>[]> | Promise<Nullable<Nullable<Campaign>[]>>;
     getEndorsementsByCampaign(campaign_id?: Nullable<string>): Nullable<Nullable<Endorsement>[]> | Promise<Nullable<Nullable<Endorsement>[]>>;
     getEndorsements(): Nullable<Nullable<Endorsement>[]> | Promise<Nullable<Nullable<Endorsement>[]>>;
-    getEnvs(): Nullable<Nullable<Env>[]> | Promise<Nullable<Nullable<Env>[]>>;
-    getEnv(id?: Nullable<string>): Nullable<Env> | Promise<Nullable<Env>>;
     getOrganzations(): Organization[] | Promise<Organization[]>;
     getOrganzation(id: string): Organization | Promise<Organization>;
     getUserOrganizations(id: string): Organization[] | Promise<Organization[]>;
@@ -163,9 +154,6 @@ export interface IMutation {
     deleteAllCampNotice(): Nullable<boolean> | Promise<Nullable<boolean>>;
     createEndorsement(input?: Nullable<EndorsementInput>): Nullable<Endorsement> | Promise<Nullable<Endorsement>>;
     deleteEndorsement(id?: Nullable<string>): Nullable<Endorsement> | Promise<Nullable<Endorsement>>;
-    createEnv(input?: Nullable<EnvInput>): Nullable<Env> | Promise<Nullable<Env>>;
-    updateEnv(input?: Nullable<EnvInput>): Nullable<Env> | Promise<Nullable<Env>>;
-    deleteEnv(id?: Nullable<string>): Nullable<Env> | Promise<Nullable<Env>>;
     createOrg(input: CreateOrgInput): Organization | Promise<Organization>;
     updateOrganization(input: UpdateInput): Organization | Promise<Organization>;
     updateImage(input: UploadImageInput): Organization | Promise<Organization>;
@@ -186,13 +174,6 @@ export interface Endorsement {
     likes?: Nullable<Nullable<string>[]>;
     createdAt?: Nullable<Date>;
     updatedAt?: Nullable<Date>;
-}
-
-export interface Env {
-    id?: Nullable<string>;
-    name?: Nullable<string>;
-    value?: Nullable<string>;
-    isPrivate?: Nullable<boolean>;
 }
 
 export interface Organization {
