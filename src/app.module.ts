@@ -16,6 +16,7 @@ import { ClientsModule, Transport } from  "@nestjs/microservices"
 import { View, ViewSchema } from './campaign/schema/campaign.schema';
 import {corsOptions} from "./cors"
 import { OrganizationModule } from './organization/organization.module';
+import { ActivitiesModule } from './activities/activities.module';
 
 @Module({
 
@@ -70,7 +71,8 @@ import { OrganizationModule } from './organization/organization.module';
     UserModule,
     CampaignModule,
     TransactionModule,
-    OrganizationModule
+    OrganizationModule,
+    ActivitiesModule
   ],
   controllers: [AppController],
   providers: [AppService],
