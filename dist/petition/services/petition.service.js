@@ -50,7 +50,7 @@ let PetitionService = class PetitionService {
         }
         try {
             const Petition = await this.PetitionModel.create(Object.assign(Object.assign({}, data), { authorId: user.id, authorName: user.name, authorImg: user.image || 'No img', excerpt,
-                image, slug: data.title.split(" ").join("-"), numberOfPaidEndorsementCount: 0, numberOfPaidViewsCount: 0, region: user.country }));
+                image, slug: data.title.split(" ").join("-").toLowerCase(), numberOfPaidEndorsementCount: 0, numberOfPaidViewsCount: 0, region: user.country }));
             this.PetitionGateway.createdPetition({
                 PetitionTitle: Petition.title,
                 user,

@@ -67,7 +67,7 @@ export class PetitionService {
         authorImg: user.image || 'No img',
         excerpt,
         image,
-        slug: data.title.split(" ").join("-"),
+        slug: data.title.split(" ").join("-").toLowerCase(),
         numberOfPaidEndorsementCount: 0,
         numberOfPaidViewsCount: 0,
         region: user.country,
