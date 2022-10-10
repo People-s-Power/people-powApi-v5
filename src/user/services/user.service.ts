@@ -8,7 +8,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Cache } from 'cache-manager';
 import { Model } from 'mongoose';
-import { Campaign, CampaignDocument } from 'src/campaign/schema/campaign.schema';
+import { Petition, PetitionDocument } from 'src/petition/schema/petition.schema';
 import { cloudinaryUpload } from 'src/utils/cloudinary';
 import { connectOldDB } from 'src/utils/connectDb';
 import {
@@ -50,8 +50,8 @@ export class UserService {
   constructor(
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
-    @InjectModel(Campaign.name)
-    private readonly campaignModel: Model<CampaignDocument>,
+    @InjectModel(Petition.name)
+    private readonly PetitionModel: Model<PetitionDocument>,
   ) {}
   async getUsers(
     accountType?: AccountTypeEnum,
@@ -115,13 +115,13 @@ export class UserService {
         .findById(id)
         .select('-password');
 
-      const campaigns = await this.campaignModel.find()
-      const userCamp  = campaigns.filter(e => e.authorId === id)
+      const Petitions = await this.PetitionModel.find()
+      const userCamp  = Petitions.filter(e => e.authorId === id)
       if (!user) throw new NotFoundException('No user found');
 
       const payload = {
         user: user,
-        campaigns: userCamp
+        Petitions: userCamp
       }
       return payload;
     } catch (error) {

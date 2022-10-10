@@ -10,13 +10,12 @@ import { join } from 'path';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
-import { CampaignModule } from './campaign/campaign.module';
+import { PetitionModule } from './petition/petition.module';
 import { TransactionModule } from './transaction/transaction.module';
 import { ClientsModule, Transport } from  "@nestjs/microservices"
-import { View, ViewSchema } from './campaign/schema/campaign.schema';
+import { View, ViewSchema } from './petition/schema/petition.schema';
 import {corsOptions} from "./cors"
 import { OrganizationModule } from './organization/organization.module';
-import { ActivitiesModule } from './activities/activities.module';
 
 @Module({
 
@@ -69,10 +68,9 @@ import { ActivitiesModule } from './activities/activities.module';
 
     AuthModule,
     UserModule,
-    CampaignModule,
+    PetitionModule,
     TransactionModule,
-    OrganizationModule,
-    ActivitiesModule
+    OrganizationModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -9,7 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TransactionModule = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
-const campaign_schema_1 = require("../campaign/schema/campaign.schema");
+const petition_schema_1 = require("../petition/schema/petition.schema");
 const transaction_controller_1 = require("./transaction.controller");
 const transaction_schema_1 = require("./transaction.schema");
 const transaction_service_1 = require("./transaction.service");
@@ -20,7 +20,7 @@ TransactionModule = __decorate([
         imports: [
             mongoose_1.MongooseModule.forFeature([
                 { name: transaction_schema_1.Transaction.name, schema: transaction_schema_1.TransactionSchema },
-                { name: campaign_schema_1.Campaign.name, schema: campaign_schema_1.CampaignSchema },
+                { name: petition_schema_1.Petition.name, schema: petition_schema_1.PetitionSchema },
             ]),
         ],
         controllers: [transaction_controller_1.TransactionController],

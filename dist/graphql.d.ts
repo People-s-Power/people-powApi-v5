@@ -1,20 +1,3 @@
-export interface CampaignInput {
-    id?: Nullable<string>;
-    title?: Nullable<string>;
-    video?: Nullable<string>;
-    image?: Nullable<string>;
-    aim?: Nullable<string>;
-    target?: Nullable<string>;
-    body?: Nullable<string>;
-    slug?: Nullable<string>;
-    status?: Nullable<string>;
-    author?: Nullable<string>;
-    addedFrom?: Nullable<string>;
-}
-export interface EndorsementInput {
-    campaign?: Nullable<string>;
-    body?: Nullable<string>;
-}
 export interface CreateOrgInput {
     name: string;
     email: string;
@@ -49,6 +32,23 @@ export interface DeleteOperator {
     orgId: string;
     userId: string;
 }
+export interface EndorsementInput {
+    petition?: Nullable<string>;
+    body?: Nullable<string>;
+}
+export interface PetitionInput {
+    id?: Nullable<string>;
+    title?: Nullable<string>;
+    video?: Nullable<string>;
+    image?: Nullable<string>;
+    aim?: Nullable<string>;
+    target?: Nullable<string>;
+    body?: Nullable<string>;
+    slug?: Nullable<string>;
+    status?: Nullable<string>;
+    author?: Nullable<string>;
+    addedFrom?: Nullable<string>;
+}
 export interface UserInput {
     id?: Nullable<string>;
     firstName?: Nullable<string>;
@@ -59,7 +59,94 @@ export interface UserInput {
     isActive?: Nullable<boolean>;
     name?: Nullable<string>;
 }
-export interface Campaign {
+export interface Organization {
+    _id: string;
+    image: string;
+    author: string;
+    name: string;
+    email: string;
+    description: string;
+    phone: string;
+    followers: Nullable<string>[];
+    following: Nullable<string>[];
+    followersCount: number;
+    followingCount: number;
+    operators: Nullable<Ioperators>[];
+    facebook: string;
+    linkedIn: string;
+    instagram: string;
+    twitter: string;
+    country: string;
+    city: string;
+    website: string;
+}
+export interface Ioperators {
+    userId?: Nullable<string>;
+    role?: Nullable<string>;
+}
+export interface IQuery {
+    getOrganzations(): Organization[] | Promise<Organization[]>;
+    getOrganzation(id: string): Organization | Promise<Organization>;
+    getUserOrganizations(id: string): Organization[] | Promise<Organization[]>;
+    getEndorsementsByPetition(petition_id?: Nullable<string>): Nullable<Nullable<Endorsement>[]> | Promise<Nullable<Nullable<Endorsement>[]>>;
+    getEndorsements(): Nullable<Nullable<Endorsement>[]> | Promise<Nullable<Nullable<Endorsement>[]>>;
+    getPetitions(limit?: Nullable<number>): Nullable<Nullable<Petition>[]> | Promise<Nullable<Nullable<Petition>[]>>;
+    getPetitionsOtherRegion(limit?: Nullable<number>): Nullable<Nullable<Petition>[]> | Promise<Nullable<Nullable<Petition>[]>>;
+    getPetition(slug?: Nullable<string>): Nullable<Petition> | Promise<Nullable<Petition>>;
+    myPetition(): Nullable<Nullable<Petition>[]> | Promise<Nullable<Nullable<Petition>[]>>;
+    getPetitionNotice(): Nullable<Nullable<PetitionNotice>[]> | Promise<Nullable<Nullable<PetitionNotice>[]>>;
+    getActivePetitions(): Nullable<Nullable<Petition>[]> | Promise<Nullable<Nullable<Petition>[]>>;
+    getActivePetitionsOtherRegion(): Nullable<Nullable<Petition>[]> | Promise<Nullable<Nullable<Petition>[]>>;
+    getUsers(search?: Nullable<string>, limit?: Nullable<number>, skip?: Nullable<number>, accountType?: Nullable<string>, role?: Nullable<string>): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
+    getStaffs(search?: Nullable<string>, limit?: Nullable<number>, skip?: Nullable<number>): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
+    me(token?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
+    auth(): Nullable<User> | Promise<Nullable<User>>;
+    getUser(id?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
+    getStaff(id?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
+    getLimitedUsers(limit?: Nullable<number>, skip?: Nullable<number>): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
+    countUsers(): Nullable<number> | Promise<Nullable<number>>;
+    countLawyers(): Nullable<number> | Promise<Nullable<number>>;
+    countPaidCases(): Nullable<number> | Promise<Nullable<number>>;
+    searchUsers(text?: Nullable<string>): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
+    getLawyers(search?: Nullable<string>): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
+    getTopLawyers(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
+    getTopReps(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
+    getMyUsers(search?: Nullable<string>): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
+    seedUsers(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
+}
+export interface File {
+    filename: string;
+    mimetype: string;
+    encoding: string;
+}
+export interface IMutation {
+    createOrg(input: CreateOrgInput): Organization | Promise<Organization>;
+    updateOrganization(input: UpdateInput): Organization | Promise<Organization>;
+    updateImage(input: UploadImageInput): Organization | Promise<Organization>;
+    addOperator(input: CreateOperator): Organization | Promise<Organization>;
+    deleteOperator(input: DeleteOperator): Organization | Promise<Organization>;
+    createEndorsement(input?: Nullable<EndorsementInput>): Nullable<Endorsement> | Promise<Nullable<Endorsement>>;
+    deleteEndorsement(id?: Nullable<string>): Nullable<Endorsement> | Promise<Nullable<Endorsement>>;
+    addPetition(input?: Nullable<PetitionInput>): Nullable<Petition> | Promise<Nullable<Petition>>;
+    deletePetition(id?: Nullable<string>): Nullable<Petition> | Promise<Nullable<Petition>>;
+    updatePetition(input?: Nullable<PetitionInput>): Nullable<Petition> | Promise<Nullable<Petition>>;
+    deleteAllCampNotice(): Nullable<boolean> | Promise<Nullable<boolean>>;
+    registerWithEmail(input?: Nullable<UserInput>): Nullable<User> | Promise<Nullable<User>>;
+    loginWithEmail(email?: Nullable<string>, password?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
+    deleteUser(id?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
+    deleteManyUser(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
+    updateUser(input?: Nullable<UserInput>): Nullable<User> | Promise<Nullable<User>>;
+}
+export interface Endorsement {
+    id?: Nullable<string>;
+    author?: Nullable<User>;
+    petition?: Nullable<Petition>;
+    body?: Nullable<string>;
+    likes?: Nullable<Nullable<string>[]>;
+    createdAt?: Nullable<Date>;
+    updatedAt?: Nullable<Date>;
+}
+export interface Petition {
     id?: Nullable<string>;
     title?: Nullable<string>;
     image?: Nullable<string>;
@@ -87,100 +174,13 @@ export interface Campaign {
 export interface View {
     user?: Nullable<string>;
 }
-export interface CampaignNotice {
+export interface PetitionNotice {
     id?: Nullable<string>;
     action?: Nullable<string>;
     author?: Nullable<User>;
-    data?: Nullable<Campaign>;
+    data?: Nullable<Petition>;
     createdAt?: Nullable<Date>;
     read?: Nullable<boolean>;
-}
-export interface IQuery {
-    getCampaigns(limit?: Nullable<number>): Nullable<Nullable<Campaign>[]> | Promise<Nullable<Nullable<Campaign>[]>>;
-    getCampaignsOtherRegion(limit?: Nullable<number>): Nullable<Nullable<Campaign>[]> | Promise<Nullable<Nullable<Campaign>[]>>;
-    getCampaign(slug?: Nullable<string>): Nullable<Campaign> | Promise<Nullable<Campaign>>;
-    myCampaign(): Nullable<Nullable<Campaign>[]> | Promise<Nullable<Nullable<Campaign>[]>>;
-    getCampaignNotice(): Nullable<Nullable<CampaignNotice>[]> | Promise<Nullable<Nullable<CampaignNotice>[]>>;
-    getActiveCampaigns(): Nullable<Nullable<Campaign>[]> | Promise<Nullable<Nullable<Campaign>[]>>;
-    getActiveCampaignsOtherRegion(): Nullable<Nullable<Campaign>[]> | Promise<Nullable<Nullable<Campaign>[]>>;
-    getEndorsementsByCampaign(campaign_id?: Nullable<string>): Nullable<Nullable<Endorsement>[]> | Promise<Nullable<Nullable<Endorsement>[]>>;
-    getEndorsements(): Nullable<Nullable<Endorsement>[]> | Promise<Nullable<Nullable<Endorsement>[]>>;
-    getOrganzations(): Organization[] | Promise<Organization[]>;
-    getOrganzation(id: string): Organization | Promise<Organization>;
-    getUserOrganizations(id: string): Organization[] | Promise<Organization[]>;
-    getUsers(search?: Nullable<string>, limit?: Nullable<number>, skip?: Nullable<number>, accountType?: Nullable<string>, role?: Nullable<string>): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
-    getStaffs(search?: Nullable<string>, limit?: Nullable<number>, skip?: Nullable<number>): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
-    me(token?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
-    auth(): Nullable<User> | Promise<Nullable<User>>;
-    getUser(id?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
-    getStaff(id?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
-    getLimitedUsers(limit?: Nullable<number>, skip?: Nullable<number>): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
-    countUsers(): Nullable<number> | Promise<Nullable<number>>;
-    countLawyers(): Nullable<number> | Promise<Nullable<number>>;
-    countPaidCases(): Nullable<number> | Promise<Nullable<number>>;
-    searchUsers(text?: Nullable<string>): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
-    getLawyers(search?: Nullable<string>): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
-    getTopLawyers(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
-    getTopReps(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
-    getMyUsers(search?: Nullable<string>): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
-    seedUsers(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
-}
-export interface IMutation {
-    addCampaign(input?: Nullable<CampaignInput>): Nullable<Campaign> | Promise<Nullable<Campaign>>;
-    deleteCampaign(id?: Nullable<string>): Nullable<Campaign> | Promise<Nullable<Campaign>>;
-    updateCampaign(input?: Nullable<CampaignInput>): Nullable<Campaign> | Promise<Nullable<Campaign>>;
-    deleteAllCampNotice(): Nullable<boolean> | Promise<Nullable<boolean>>;
-    createEndorsement(input?: Nullable<EndorsementInput>): Nullable<Endorsement> | Promise<Nullable<Endorsement>>;
-    deleteEndorsement(id?: Nullable<string>): Nullable<Endorsement> | Promise<Nullable<Endorsement>>;
-    createOrg(input: CreateOrgInput): Organization | Promise<Organization>;
-    updateOrganization(input: UpdateInput): Organization | Promise<Organization>;
-    updateImage(input: UploadImageInput): Organization | Promise<Organization>;
-    addOperator(input: CreateOperator): Organization | Promise<Organization>;
-    deleteOperator(input: DeleteOperator): Organization | Promise<Organization>;
-    registerWithEmail(input?: Nullable<UserInput>): Nullable<User> | Promise<Nullable<User>>;
-    loginWithEmail(email?: Nullable<string>, password?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
-    deleteUser(id?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
-    deleteManyUser(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
-    updateUser(input?: Nullable<UserInput>): Nullable<User> | Promise<Nullable<User>>;
-}
-export interface Endorsement {
-    id?: Nullable<string>;
-    author?: Nullable<User>;
-    campaign?: Nullable<Campaign>;
-    body?: Nullable<string>;
-    likes?: Nullable<Nullable<string>[]>;
-    createdAt?: Nullable<Date>;
-    updatedAt?: Nullable<Date>;
-}
-export interface Organization {
-    _id: string;
-    image: string;
-    author: string;
-    name: string;
-    email: string;
-    description: string;
-    phone: string;
-    followers: Nullable<string>[];
-    following: Nullable<string>[];
-    followersCount: number;
-    followingCount: number;
-    operators: Nullable<Ioperators>[];
-    facebook: string;
-    linkedIn: string;
-    instagram: string;
-    twitter: string;
-    country: string;
-    city: string;
-    website: string;
-}
-export interface Ioperators {
-    userId?: Nullable<string>;
-    role?: Nullable<string>;
-}
-export interface File {
-    filename: string;
-    mimetype: string;
-    encoding: string;
 }
 export interface User {
     id?: Nullable<string>;

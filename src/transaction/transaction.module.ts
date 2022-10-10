@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Campaign, CampaignSchema } from 'src/campaign/schema/campaign.schema';
+import { Petition, PetitionSchema } from 'src/petition/schema/petition.schema';
 import { TransactionController } from './transaction.controller';
 import { Transaction, TransactionSchema } from './transaction.schema';
 import { TransactionService } from './transaction.service';
@@ -9,7 +9,7 @@ import { TransactionService } from './transaction.service';
   imports: [
     MongooseModule.forFeature([
       { name: Transaction.name, schema: TransactionSchema },
-      { name: Campaign.name, schema: CampaignSchema },
+      { name: Petition.name, schema: PetitionSchema },
     ]),
   ],
   controllers: [TransactionController],

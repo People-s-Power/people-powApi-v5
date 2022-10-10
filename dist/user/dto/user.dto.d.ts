@@ -1,5 +1,5 @@
 import { Document } from 'mongoose';
-import { CampaignDocument } from 'src/campaign/schema/campaign.schema';
+import { PetitionDocument } from 'src/petition/schema/petition.schema';
 import { IGeo } from 'src/interfaces';
 import { UserDocument } from '../entity/user.schema';
 export declare enum StaffRoleEnum {
@@ -111,6 +111,6 @@ export declare class ChangePasswordDTO {
 }
 export declare class UserAndCampDTO {
     user: UserDocument;
-    campaigns: CampaignDocument;
+    campaigns: PetitionDocument;
 }
 export {};

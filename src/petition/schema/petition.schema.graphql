@@ -1,0 +1,71 @@
+type Petition {
+  id: ID
+  title: String
+  image: String
+  excerpt: String
+  aim: String
+  target: String
+  body: String
+  slug: String
+  status: String
+  authorId: ID
+  authorName: String
+  authorImg: String 
+  createdAt: Date
+  updatedAt: Date
+  addedFrom: String
+  numberOfPaidViewsCount: Int
+  numberOfPaidEndorsementCount: Int
+  endorsements: [Endorsement]
+  likes: [String]
+  promoted: Boolean
+  views: [String]
+  category: String
+  region: String
+}
+
+type View {
+  user: String
+}
+
+type PetitionNotice {
+  id: ID
+  action: String
+  author: User
+  data: Petition
+  createdAt: Date
+  read: Boolean
+}
+
+type Query {
+  # Reports
+  getPetitions(limit: Int): [Petition]
+  getPetitionsOtherRegion(limit: Int): [Petition]
+  getPetition(slug: String): Petition
+  myPetition: [Petition]
+  getPetitionNotice: [PetitionNotice]
+  getActivePetitions: [Petition]
+  getActivePetitionsOtherRegion: [Petition]
+}
+
+type Mutation {
+  # Reports Mutation
+  addPetition(input: PetitionInput): Petition
+  deletePetition(id: ID): Petition
+  updatePetition(input: PetitionInput): Petition
+  deleteAllCampNotice: Boolean
+}
+
+input PetitionInput {
+  id: ID
+  title: String
+  video: String
+  image: String
+  aim: String
+  target: String
+  body: String
+  slug: String
+  status: String
+  author: ID
+  addedFrom: String
+}

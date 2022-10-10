@@ -16,16 +16,16 @@ exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const campaign_schema_1 = require("../../campaign/schema/campaign.schema");
+const petition_schema_1 = require("../../petition/schema/petition.schema");
 const cloudinary_1 = require("../../utils/cloudinary");
 const connectDb_1 = require("../../utils/connectDb");
 const user_dto_1 = require("../dto/user.dto");
 const user_schema_1 = require("../entity/user.schema");
 let UserService = class UserService {
-    constructor(cacheManager, userModel, campaignModel) {
+    constructor(cacheManager, userModel, PetitionModel) {
         this.cacheManager = cacheManager;
         this.userModel = userModel;
-        this.campaignModel = campaignModel;
+        this.PetitionModel = PetitionModel;
     }
     async getUsers(accountType, role, user) {
         let data = await this.cacheManager.get('users');
@@ -78,13 +78,13 @@ let UserService = class UserService {
             const user = await this.userModel
                 .findById(id)
                 .select('-password');
-            const campaigns = await this.campaignModel.find();
-            const userCamp = campaigns.filter(e => e.authorId === id);
+            const Petitions = await this.PetitionModel.find();
+            const userCamp = Petitions.filter(e => e.authorId === id);
             if (!user)
                 throw new common_1.NotFoundException('No user found');
             const payload = {
                 user: user,
-                campaigns: userCamp
+                Petitions: userCamp
             };
             return payload;
         }
@@ -269,7 +269,7 @@ UserService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, common_1.Inject)(common_1.CACHE_MANAGER)),
     __param(1, (0, mongoose_1.InjectModel)(user_schema_1.User.name)),
-    __param(2, (0, mongoose_1.InjectModel)(campaign_schema_1.Campaign.name)),
+    __param(2, (0, mongoose_1.InjectModel)(petition_schema_1.Petition.name)),
     __metadata("design:paramtypes", [Object, mongoose_2.Model,
         mongoose_2.Model])
 ], UserService);

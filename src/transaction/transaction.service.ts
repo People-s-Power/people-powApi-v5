@@ -3,9 +3,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import axios from 'axios';
 import { Model } from 'mongoose';
 import {
-  Campaign,
-  CampaignDocument,
-} from 'src/campaign/schema/campaign.schema';
+  Petition,
+  PetitionDocument,
+} from 'src/petition/schema/petition.schema';
 import config from 'src/utils/config';
 import {
   PaymentPurposeEnum,
@@ -18,8 +18,8 @@ export class TransactionService {
   constructor(
     @InjectModel(Transaction.name)
     private readonly transactionModel: Model<TransactionDocument>,
-    @InjectModel(Campaign.name)
-    private readonly campaignModel: Model<CampaignDocument>,
+    @InjectModel(Petition.name)
+    private readonly PetitionModel: Model<PetitionDocument>,
   ) {}
 
   async webhook(e: TransactionPaymentResponse) {
@@ -35,7 +35,7 @@ export class TransactionService {
       console.log(e)
       console.log(transaction)
       if (transaction.purpose === PaymentPurposeEnum.VIEWS || transaction.purpose === PaymentPurposeEnum.ENDORSEMENT) {
-        await this.campaignModel
+        await this.PetitionModel
           .findByIdAndUpdate(
             transaction.key,
             {
@@ -49,19 +49,19 @@ export class TransactionService {
       }
       const _id = e.data.metadata.key
       let value
-      const campaign = await this.campaignModel.findById(_id)
+      const Petition = await this.PetitionModel.findById(_id)
       if(transaction.purpose === PaymentPurposeEnum.VIEWS) {
         value = e.data.metadata?.numberOfViews
         const numViews = parseInt(value)
-        campaign.numberOfPaidViewsCount += numViews
-        await campaign.save()
+        Petition.numberOfPaidViewsCount += numViews
+        await Petition.save()
         return true
       }
 
       value = e.data.metadata?.numberOfEndorsements
       const numEd = parseInt(value)
-      campaign.numberOfPaidEndorsementCount += numEd
-      await campaign.save()
+      Petition.numberOfPaidEndorsementCount += numEd
+      await Petition.save()
 
       return true;
     } catch (error) {
@@ -87,7 +87,7 @@ export class TransactionService {
         name: res.data.metadata.name
       });
       if (transaction.purpose === PaymentPurposeEnum.VIEWS || transaction.purpose === PaymentPurposeEnum.ENDORSEMENT) {
-        await this.campaignModel
+        await this.PetitionModel
           .findByIdAndUpdate(
             transaction.key,
             {

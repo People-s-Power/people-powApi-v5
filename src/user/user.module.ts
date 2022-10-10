@@ -5,7 +5,7 @@ import { FollowerController } from './controllers/follower.controller';
 import { UserResolver } from './user.resolver';
 import { UserService } from './services/user.service';
 import { FollowersService } from './services/follower.service';
-import { Campaign, CampaignSchema } from 'src/campaign/schema/campaign.schema';
+import { Petition, PetitionSchema } from 'src/petition/schema/petition.schema';
 import { Follower, FollowerSchema } from './entity/followers.schema';
 import { User, UserSchema} from './entity/user.schema';
 
@@ -16,7 +16,7 @@ import { User, UserSchema} from './entity/user.schema';
         name: User.name,
         schema: UserSchema,
       },
-      { name: Campaign.name, schema: CampaignSchema },
+      { name: Petition.name, schema: PetitionSchema },
       { name: Follower.name, schema: FollowerSchema }
     ]),
     CacheModule.register(),

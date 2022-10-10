@@ -18,12 +18,11 @@ const path_1 = require("path");
 const mongoose_1 = require("@nestjs/mongoose");
 const auth_module_1 = require("./auth/auth.module");
 const user_module_1 = require("./user/user.module");
-const campaign_module_1 = require("./campaign/campaign.module");
+const petition_module_1 = require("./petition/petition.module");
 const transaction_module_1 = require("./transaction/transaction.module");
 const microservices_1 = require("@nestjs/microservices");
-const campaign_schema_1 = require("./campaign/schema/campaign.schema");
+const petition_schema_1 = require("./petition/schema/petition.schema");
 const organization_module_1 = require("./organization/organization.module");
-const activities_module_1 = require("./activities/activities.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -43,7 +42,7 @@ AppModule = __decorate([
                     },
                 },
             ]),
-            mongoose_1.MongooseModule.forFeature([{ name: campaign_schema_1.View.name, schema: campaign_schema_1.ViewSchema }]),
+            mongoose_1.MongooseModule.forFeature([{ name: petition_schema_1.View.name, schema: petition_schema_1.ViewSchema }]),
             graphql_1.GraphQLModule.forRoot({
                 driver: apollo_1.ApolloDriver,
                 typePaths: ['./**/*.graphql'],
@@ -65,10 +64,9 @@ AppModule = __decorate([
             common_1.CacheModule.register({ ttl: 500 }),
             auth_module_1.AuthModule,
             user_module_1.UserModule,
-            campaign_module_1.CampaignModule,
+            petition_module_1.PetitionModule,
             transaction_module_1.TransactionModule,
-            organization_module_1.OrganizationModule,
-            activities_module_1.ActivitiesModule
+            organization_module_1.OrganizationModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

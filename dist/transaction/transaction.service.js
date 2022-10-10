@@ -17,14 +17,14 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const axios_1 = require("axios");
 const mongoose_2 = require("mongoose");
-const campaign_schema_1 = require("../campaign/schema/campaign.schema");
+const petition_schema_1 = require("../petition/schema/petition.schema");
 const config_1 = require("../utils/config");
 const transaction_interface_1 = require("./transaction.interface");
 const transaction_schema_1 = require("./transaction.schema");
 let TransactionService = class TransactionService {
-    constructor(transactionModel, campaignModel) {
+    constructor(transactionModel, PetitionModel) {
         this.transactionModel = transactionModel;
-        this.campaignModel = campaignModel;
+        this.PetitionModel = PetitionModel;
     }
     async webhook(e) {
         var _a, _b, _c, _d, _e, _f, _g;
@@ -33,7 +33,7 @@ let TransactionService = class TransactionService {
             console.log(e);
             console.log(transaction);
             if (transaction.purpose === transaction_interface_1.PaymentPurposeEnum.VIEWS || transaction.purpose === transaction_interface_1.PaymentPurposeEnum.ENDORSEMENT) {
-                await this.campaignModel
+                await this.PetitionModel
                     .findByIdAndUpdate(transaction.key, {
                     $set: { promoted: true },
                 }, { new: true })
@@ -43,18 +43,18 @@ let TransactionService = class TransactionService {
             }
             const _id = e.data.metadata.key;
             let value;
-            const campaign = await this.campaignModel.findById(_id);
+            const Petition = await this.PetitionModel.findById(_id);
             if (transaction.purpose === transaction_interface_1.PaymentPurposeEnum.VIEWS) {
                 value = (_f = e.data.metadata) === null || _f === void 0 ? void 0 : _f.numberOfViews;
                 const numViews = parseInt(value);
-                campaign.numberOfPaidViewsCount += numViews;
-                await campaign.save();
+                Petition.numberOfPaidViewsCount += numViews;
+                await Petition.save();
                 return true;
             }
             value = (_g = e.data.metadata) === null || _g === void 0 ? void 0 : _g.numberOfEndorsements;
             const numEd = parseInt(value);
-            campaign.numberOfPaidEndorsementCount += numEd;
-            await campaign.save();
+            Petition.numberOfPaidEndorsementCount += numEd;
+            await Petition.save();
             return true;
         }
         catch (error) {
@@ -72,7 +72,7 @@ let TransactionService = class TransactionService {
             const res = data;
             const transaction = await this.transactionModel.create(Object.assign(Object.assign({}, res.data), { transactionId: res.data.id, purpose: (_a = res.data.metadata) === null || _a === void 0 ? void 0 : _a.purpose, key: (_b = res.data.metadata) === null || _b === void 0 ? void 0 : _b.key, name: res.data.metadata.name }));
             if (transaction.purpose === transaction_interface_1.PaymentPurposeEnum.VIEWS || transaction.purpose === transaction_interface_1.PaymentPurposeEnum.ENDORSEMENT) {
-                await this.campaignModel
+                await this.PetitionModel
                     .findByIdAndUpdate(transaction.key, {
                     $set: { promoted: true },
                 }, { new: true })
@@ -99,7 +99,7 @@ let TransactionService = class TransactionService {
 TransactionService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(transaction_schema_1.Transaction.name)),
-    __param(1, (0, mongoose_1.InjectModel)(campaign_schema_1.Campaign.name)),
+    __param(1, (0, mongoose_1.InjectModel)(petition_schema_1.Petition.name)),
     __metadata("design:paramtypes", [mongoose_2.Model,
         mongoose_2.Model])
 ], TransactionService);

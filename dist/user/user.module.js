@@ -14,7 +14,7 @@ const follower_controller_1 = require("./controllers/follower.controller");
 const user_resolver_1 = require("./user.resolver");
 const user_service_1 = require("./services/user.service");
 const follower_service_1 = require("./services/follower.service");
-const campaign_schema_1 = require("../campaign/schema/campaign.schema");
+const petition_schema_1 = require("../petition/schema/petition.schema");
 const followers_schema_1 = require("./entity/followers.schema");
 const user_schema_1 = require("./entity/user.schema");
 let UserModule = class UserModule {
@@ -27,7 +27,7 @@ UserModule = __decorate([
                     name: user_schema_1.User.name,
                     schema: user_schema_1.UserSchema,
                 },
-                { name: campaign_schema_1.Campaign.name, schema: campaign_schema_1.CampaignSchema },
+                { name: petition_schema_1.Petition.name, schema: petition_schema_1.PetitionSchema },
                 { name: followers_schema_1.Follower.name, schema: followers_schema_1.FollowerSchema }
             ]),
             common_1.CacheModule.register(),

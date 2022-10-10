@@ -1,0 +1,26 @@
+type Endorsement {
+  id: ID
+  author: User
+  petition: Petition
+  body: String
+  likes: [String]
+  createdAt: Date
+  updatedAt: Date
+}
+
+input EndorsementInput {
+  petition: ID
+  body: String
+}
+
+type Query {
+  # Reports
+
+  getEndorsementsByPetition(petition_id: ID): [Endorsement]
+  getEndorsements: [Endorsement]
+}
+
+type Mutation {
+  createEndorsement(input: EndorsementInput): Endorsement
+  deleteEndorsement(id: ID): Endorsement
+}

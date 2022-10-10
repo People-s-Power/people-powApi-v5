@@ -13,7 +13,7 @@ async function bootstrap() {
         credentials: true,
     }));
     app.use(location_middleware_1.locationLogger);
-    const PORT = process.env.PORT || 8000;
+    const PORT = process.env.PORT || 8005;
     app.use(express.json({ limit: '50mb' }));
     app.useGlobalPipes(new common_1.ValidationPipe());
     await app.listen(PORT, () => {
