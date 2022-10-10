@@ -36,7 +36,7 @@ export class User {
     default: AccountTypeEnum.Campaigner,
   })
   accountType: AccountTypeEnum;
-  @Prop()
+  @Prop({ default: 'https://static.vecteezy.com/system/resources/previews/002/002/427/large_2x/man-avatar-character-isolated-icon-free-vector.jpg' })
   image: string;
   @Prop()
   firstName: string;

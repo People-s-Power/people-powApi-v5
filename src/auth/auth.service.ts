@@ -55,7 +55,6 @@ export class AuthService {
       ...data,
       password: bcrypt.hashSync(password, 10),
       emailToken: (Math.floor(Math.random() * 90000) + 10000).toString(),
-      // name: `${data?.firstName} ${data?.lastName}`,
       firstName: data?.name?.split(' ')?.[0],
       lastName: data?.name?.split(' ')?.[1],
       country: location.country_name,

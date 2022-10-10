@@ -1,6 +1,5 @@
 import { Document } from 'mongoose';
 import { PetitionDocument } from 'src/petition/schema/petition.schema';
-import { IGeo } from 'src/interfaces';
 import { UserDocument } from '../entity/user.schema';
 export declare enum StaffRoleEnum {
     Admin = "Admin",
@@ -48,18 +47,9 @@ export declare class IUser extends Document {
     city: string;
 }
 export declare class RegisterWithEmailDTO {
-    image: string;
-    firstName: string;
-    lastName: string;
     name: string;
     email: string;
     password: string;
-    otherName?: string;
-    phone?: string;
-    country?: string;
-    state?: string;
-    city?: string;
-    location: IGeo;
 }
 declare const RegisterWithGoogleDTO_base: import("@nestjs/common").Type<Partial<RegisterWithEmailDTO>>;
 export declare class RegisterWithGoogleDTO extends RegisterWithGoogleDTO_base {

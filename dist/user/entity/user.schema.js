@@ -36,7 +36,7 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "accountType", void 0);
 __decorate([
-    (0, mongoose_1.Prop)(),
+    (0, mongoose_1.Prop)({ default: 'https://static.vecteezy.com/system/resources/previews/002/002/427/large_2x/man-avatar-character-isolated-icon-free-vector.jpg' }),
     __metadata("design:type", String)
 ], User.prototype, "image", void 0);
 __decorate([

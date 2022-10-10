@@ -53,18 +53,9 @@ export class IUser extends Document {
 }
 
 export class RegisterWithEmailDTO {
-  image: string;
-  firstName: string;
-  lastName: string;
   name: string;
   email: string;
   password: string;
-  otherName?: string;
-  phone?: string;
-  country?: string;
-  state?: string;
-  city?: string;
-  location: IGeo;
 }
 
 export class RegisterWithGoogleDTO extends PartialType(RegisterWithEmailDTO) {
