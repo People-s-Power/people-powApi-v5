@@ -49,10 +49,10 @@ let PetitionService = class PetitionService {
             excerpt = body.split(' ').splice(0, 36).join(' ');
         }
         try {
-            const Petition = await this.PetitionModel.create(Object.assign(Object.assign({}, data), { authorId: user.id, authorName: user.name, authorImg: user.image || 'No img', excerpt,
+            const petition = await this.PetitionModel.create(Object.assign(Object.assign({}, data), { authorId: user.id, authorName: user.name, authorImg: user.image || 'No img', excerpt,
                 image, slug: data.title.split(" ").join("-").toLowerCase(), numberOfPaidEndorsementCount: 0, numberOfPaidViewsCount: 0, region: user.country }));
             this.PetitionGateway.createdPetition({
-                PetitionTitle: Petition.title,
+                PetitionTitle: petition.title,
                 user,
             });
             const users = await this.userModel.find();
@@ -62,11 +62,11 @@ let PetitionService = class PetitionService {
             const allPetitions = await this.PetitionModel.find();
             const mailPayload = {
                 users: usersEmails,
-                Petition: Petition,
+                Petition: petition_schema_1.Petition,
                 Petitions: allPetitions
             };
             this.client.emit('Petition-created', mailPayload);
-            return Petition;
+            return petition;
         }
         catch (error) {
             throw error;
@@ -83,10 +83,10 @@ let PetitionService = class PetitionService {
             excerpt = body.split(' ').splice(0, 36).join(' ');
         }
         try {
-            const Petition = await this.PetitionModel.create(Object.assign(Object.assign({}, data), { excerpt,
+            const petition = await this.PetitionModel.create(Object.assign(Object.assign({}, data), { excerpt,
                 image, slug: data.title.split(" ").join("-"), numberOfPaidEndorsementCount: 0, numberOfPaidViewsCount: 0, region: data.country }));
             this.PetitionGateway.createdPetitionOrg({
-                PetitionTitle: Petition.title,
+                PetitionTitle: petition.title,
                 orgName: data.authorName,
                 orgId: data.authorId
             });
@@ -97,11 +97,11 @@ let PetitionService = class PetitionService {
             const allPetitions = await this.PetitionModel.find();
             const mailPayload = {
                 users: usersEmails,
-                Petition: Petition,
+                Petition: petition_schema_1.Petition,
                 Petitions: allPetitions
             };
             this.client.emit('Petition-created', mailPayload);
-            return Petition;
+            return petition;
         }
         catch (error) {
             throw error;
@@ -109,13 +109,13 @@ let PetitionService = class PetitionService {
     }
     async findAll(region, limit) {
         try {
-            const Petitions = await this.PetitionModel
+            const petitions = await this.PetitionModel
                 .find({ region: region })
                 .sort({ createdAt: -1 })
                 .limit(limit)
                 .populate('endorsements', 'id')
                 .populate('views');
-            return Petitions;
+            return petitions;
         }
         catch (error) {
             throw error;
@@ -123,13 +123,13 @@ let PetitionService = class PetitionService {
     }
     async findAllOtherRegions(limit) {
         try {
-            const Petitions = await this.PetitionModel
+            const petitions = await this.PetitionModel
                 .find()
                 .sort({ createdAt: -1 })
                 .limit(limit)
                 .populate('endorsements', 'id')
                 .populate('views');
-            return Petitions;
+            return petitions;
         }
         catch (error) {
             throw error;
@@ -137,11 +137,12 @@ let PetitionService = class PetitionService {
     }
     async findAllActive(region, limit) {
         try {
-            const Petitions = await this.PetitionModel
+            const petitions = await this.PetitionModel
                 .find({ status: petition_interface_1.PetitionStatusEnum.Active })
                 .sort({ createdAt: -1 })
                 .populate('endorsements', 'id');
-            const regionCampains = Petitions.filter(camp => camp.region === region);
+            console.log(petitions);
+            const regionCampains = petitions.filter(camp => camp.region === region);
             return regionCampains;
         }
         catch (error) {
@@ -150,11 +151,11 @@ let PetitionService = class PetitionService {
     }
     async findAllActiveOtherRegions(region, limit) {
         try {
-            const Petitions = await this.PetitionModel
+            const petitions = await this.PetitionModel
                 .find({ status: petition_interface_1.PetitionStatusEnum.Active })
                 .sort({ createdAt: -1 })
                 .populate('endorsements', 'id');
-            return Petitions;
+            return petitions;
         }
         catch (error) {
             throw error;
@@ -162,10 +163,10 @@ let PetitionService = class PetitionService {
     }
     async findOne(slug) {
         try {
-            const Petitions = await this.PetitionModel
+            const petitions = await this.PetitionModel
                 .findOne({ slug })
                 .populate('endorsements');
-            return Petitions;
+            return petitions;
         }
         catch (error) {
             throw error;
@@ -173,8 +174,8 @@ let PetitionService = class PetitionService {
     }
     async update(data) {
         try {
-            const Petition = await this.PetitionModel.findOneAndUpdate({ _id: data.id }, data, { new: true });
-            return Petition;
+            const petition = await this.PetitionModel.findOneAndUpdate({ _id: data.id }, data, { new: true });
+            return petition;
         }
         catch (error) {
             throw error;
@@ -182,12 +183,12 @@ let PetitionService = class PetitionService {
     }
     async delete(id) {
         try {
-            const Petition = await this.PetitionModel.findById(id);
-            if (!Petition)
+            const petition = await this.PetitionModel.findById(id);
+            if (!petition)
                 throw new common_1.NotFoundException('Record not found');
             await this.endorsementModel.deleteMany({ Petition: id });
-            Petition.remove();
-            return Petition;
+            petition.remove();
+            return petition;
         }
         catch (error) {
             throw error;
@@ -195,9 +196,9 @@ let PetitionService = class PetitionService {
     }
     async updateSession(id, sessionID) {
         try {
-            let Petition = await this.PetitionModel.findById(id);
+            let petition = await this.PetitionModel.findById(id);
             const session = await this.session(sessionID);
-            if (!Petition)
+            if (!petition)
                 throw new common_1.NotFoundException();
             let view = await this.connection.models.View.findOne({
                 sessionId: session.id,
@@ -210,30 +211,30 @@ let PetitionService = class PetitionService {
                 });
             }
             else {
-                if (!Petition.views.some((v) => v.sessionId === session.id)) {
-                    Petition = await this.PetitionModel.findByIdAndUpdate(id, {
+                if (!petition.views.some((v) => v.sessionId === session.id)) {
+                    petition = await this.PetitionModel.findByIdAndUpdate(id, {
                         $addToSet: {
                             views: view.id,
                         },
                     }, { new: true });
                 }
             }
-            return Petition;
+            return petition;
         }
         catch (error) {
             throw error;
         }
     }
-    async like(Petition_id, user) {
+    async like(petition_id, user) {
         var _a;
-        const Petition = await this.PetitionModel.findById(Petition_id);
-        if ((_a = Petition === null || Petition === void 0 ? void 0 : Petition.likes) === null || _a === void 0 ? void 0 : _a.includes(user.id)) {
-            return await this.unLike(Petition_id, user);
+        const petition = await this.PetitionModel.findById(petition_id);
+        if ((_a = petition === null || petition === void 0 ? void 0 : petition.likes) === null || _a === void 0 ? void 0 : _a.includes(user.id)) {
+            return await this.unLike(petition_id, user);
         }
         else {
             try {
-                const Petition = await this.PetitionModel.findOneAndUpdate({ _id: Petition_id }, { $addToSet: { likes: user === null || user === void 0 ? void 0 : user.id } }, { new: true });
-                return Petition;
+                const petition = await this.PetitionModel.findOneAndUpdate({ _id: petition_id }, { $addToSet: { likes: user === null || user === void 0 ? void 0 : user.id } }, { new: true });
+                return petition;
             }
             catch (error) {
                 throw error;
@@ -242,8 +243,8 @@ let PetitionService = class PetitionService {
     }
     async unLike(Petition_id, user) {
         try {
-            const Petition = await this.PetitionModel.findOneAndUpdate({ _id: Petition_id }, { $pull: { likes: user === null || user === void 0 ? void 0 : user.id } }, { new: true });
-            return Petition;
+            const petition = await this.PetitionModel.findOneAndUpdate({ _id: Petition_id }, { $pull: { likes: user === null || user === void 0 ? void 0 : user.id } }, { new: true });
+            return petition;
         }
         catch (error) {
             throw error;
@@ -251,28 +252,28 @@ let PetitionService = class PetitionService {
     }
     async myPetitions(user_id) {
         try {
-            const Petitions = await this.PetitionModel
+            const petitions = await this.PetitionModel
                 .find({
                 authorId: user_id,
             })
                 .sort({ createdAt: -1 });
-            return Petitions;
+            return petitions;
         }
         catch (error) {
             throw error;
         }
     }
     async approvePetition(Petition_id) {
-        let Petition = await this.PetitionModel.findById(Petition_id);
+        let petition = await this.PetitionModel.findById(Petition_id);
         try {
-            Petition = await this.PetitionModel.findOneAndUpdate({ _id: Petition_id }, {
+            petition = await this.PetitionModel.findOneAndUpdate({ _id: Petition_id }, {
                 $set: {
-                    status: Petition.status === petition_interface_1.PetitionStatusEnum.Active
+                    status: petition.status === petition_interface_1.PetitionStatusEnum.Active
                         ? petition_interface_1.PetitionStatusEnum.Pending
                         : petition_interface_1.PetitionStatusEnum.Active,
                 },
             }, { new: true });
-            return Petition;
+            return petition;
         }
         catch (error) {
             throw error;
@@ -280,18 +281,18 @@ let PetitionService = class PetitionService {
     }
     async viewPetition(id, userId) {
         try {
-            const Petition = await this.PetitionModel.findById(id);
+            const petition = await this.PetitionModel.findById(id);
             const user = await this.userModel.findById(userId);
-            if (!Petition || !user)
+            if (!petition || !user)
                 throw new Error('Not found');
-            if (Petition.authorId.toString() === userId.toString())
+            if (petition.authorId.toString() === userId.toString())
                 return 'Author Viewed';
-            if (Petition.views.includes(userId))
+            if (petition.views.includes(userId))
                 return 'Viewed';
-            const author = await this.userModel.findById(Petition.authorId);
-            Petition.views.push(userId);
-            await Petition.save();
-            return Petition;
+            const author = await this.userModel.findById(petition.authorId);
+            petition.views.push(userId);
+            await petition.save();
+            return petition;
         }
         catch (error) {
             console.log(error);
@@ -328,10 +329,10 @@ let PetitionService = class PetitionService {
         }
     }
     async feature(Petition_id) {
-        let Petition = await this.PetitionModel.findById(Petition_id);
+        let petition = await this.PetitionModel.findById(Petition_id);
         try {
-            Petition = await this.PetitionModel.findOneAndUpdate({ _id: Petition_id }, { $set: { featured: !Petition.featured } });
-            return Petition;
+            petition = await this.PetitionModel.findOneAndUpdate({ _id: Petition_id }, { $set: { featured: !petition.featured } });
+            return petition;
         }
         catch (error) {
             throw error;

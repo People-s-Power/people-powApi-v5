@@ -182,6 +182,19 @@ export interface PetitionNotice {
     createdAt?: Nullable<Date>;
     read?: Nullable<boolean>;
 }
+export interface Post {
+    body: string;
+    petition: Petition;
+    authorId: string;
+    likes: number;
+    comments: Comment[];
+    shares: number;
+    isPetition?: Nullable<boolean>;
+}
+export interface Comment {
+    authorId: string;
+    body: string;
+}
 export interface User {
     id?: Nullable<string>;
     name?: Nullable<string>;

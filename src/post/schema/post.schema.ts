@@ -26,20 +26,22 @@ export type CommentDocument = Comment & Document & {
 export class Post {
   @Prop({ type: Types.ObjectId, ref: 'Petition' })
   petition: Record<string, Petition>;
-  @Prop({ type: Types.ObjectId, ref: 'User' })
-  author: Record<string, User>;
+  @Prop()
+  authorId: string;
   @Prop({ required: true })
   body: string;
-  @Prop({ type: [{ type: Types.ObjectId, ref: 'User', autopopulate: true }] })
-  likes: User[];
+  @Prop()
+  likes: string[];
   @Prop({
     type: [{ type: Types.ObjectId, ref: 'Comment', autopopulate: true }],
   })
   comments: CommentDocument[];
-  @Prop({ type: [{ type: Types.ObjectId, ref: 'User', autopopulate: true }] })
-  shares: User[];
+  @Prop()
+  shares: string[];
   @Prop({default: false})
   isPetition: boolean
+  @Prop({ default: '//fsdsdf' })
+  image: string;
 
 }
 
@@ -55,9 +57,9 @@ export class Post {
 })
 export class Comment {
   @Prop({ type: Types.ObjectId, ref: 'User' })
-  user: UserDocument;
+  authorId: UserDocument;
   @Prop({ required: true })
-  comment: string
+  body: string
 }
 
 export const CommentSchema = SchemaFactory.createForClass(Comment);

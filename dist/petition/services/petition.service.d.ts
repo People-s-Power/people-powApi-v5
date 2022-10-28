@@ -34,7 +34,7 @@ export declare class PetitionService {
     update(data: Partial<UpdatePetitionDTO>): Promise<Petition>;
     delete(id: string): Promise<PetitionDocument>;
     updateSession(id: string, sessionID: string): Promise<PetitionDocument>;
-    like(Petition_id: string, user: UserDocument): Promise<PetitionDocument>;
+    like(petition_id: string, user: UserDocument): Promise<PetitionDocument>;
     unLike(Petition_id: string, user: UserDocument): Promise<PetitionDocument>;
     myPetitions(user_id: string): Promise<Petition[]>;
     approvePetition(Petition_id: string): Promise<PetitionDocument>;

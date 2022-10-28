@@ -20,15 +20,15 @@ __decorate([
     __metadata("design:type", Object)
 ], Post.prototype, "petition", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'User' }),
-    __metadata("design:type", Object)
-], Post.prototype, "author", void 0);
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Post.prototype, "authorId", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
 ], Post.prototype, "body", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: [{ type: mongoose_2.Types.ObjectId, ref: 'User', autopopulate: true }] }),
+    (0, mongoose_1.Prop)(),
     __metadata("design:type", Array)
 ], Post.prototype, "likes", void 0);
 __decorate([
@@ -38,13 +38,17 @@ __decorate([
     __metadata("design:type", Array)
 ], Post.prototype, "comments", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: [{ type: mongoose_2.Types.ObjectId, ref: 'User', autopopulate: true }] }),
+    (0, mongoose_1.Prop)(),
     __metadata("design:type", Array)
 ], Post.prototype, "shares", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ default: false }),
     __metadata("design:type", Boolean)
 ], Post.prototype, "isPetition", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ default: '//fsdsdf' }),
+    __metadata("design:type", String)
+], Post.prototype, "image", void 0);
 Post = __decorate([
     (0, graphql_1.ObjectType)(),
     (0, mongoose_1.Schema)({
@@ -64,11 +68,11 @@ let Comment = class Comment {
 __decorate([
     (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'User' }),
     __metadata("design:type", Object)
-], Comment.prototype, "user", void 0);
+], Comment.prototype, "authorId", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
-], Comment.prototype, "comment", void 0);
+], Comment.prototype, "body", void 0);
 Comment = __decorate([
     (0, mongoose_1.Schema)({
         timestamps: true,
