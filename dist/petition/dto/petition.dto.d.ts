@@ -21,5 +21,10 @@ export declare class CreatePetitionOrgDTO {
 declare const UpdatePetitionDTO_base: import("@nestjs/common").Type<Partial<CreatePetitionDTO>>;
 export declare class UpdatePetitionDTO extends UpdatePetitionDTO_base {
     id: string;
+    title: string;
+    category: string;
+    aim: string;
+    target: string;
+    body: string;
 }
 export {};

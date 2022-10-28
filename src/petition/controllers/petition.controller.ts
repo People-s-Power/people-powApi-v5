@@ -41,18 +41,6 @@ export class PetitionController {
     return this.petitionService.createForOrg(data);
   }
 
-
-  @Get('session/:id')
-  async getSession(
-    @Param('id') id: string,
-    @Req() req: Request,
-  ): Promise<ISessionResponseData> {
-    const petition = await this.petitionService.updateSession(
-      id,
-      req.sessionID,
-    );
-    return petition.id;
-  }
   // @Get('notice')
   // getAllnotice() {
   //   console.log('hello from controller');

@@ -23,6 +23,10 @@ export class CreatePetitionOrgDTO {
 }
 
 export class UpdatePetitionDTO extends PartialType(CreatePetitionDTO) {
-  @ApiProperty()
   id: string;
+  title: string;
+  category: string;
+  aim: string;
+  target: string;
+  body: string;
 }

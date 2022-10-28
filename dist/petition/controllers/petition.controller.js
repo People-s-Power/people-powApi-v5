@@ -29,10 +29,6 @@ let PetitionController = class PetitionController {
     createCampForOrg(data, param) {
         return this.petitionService.createForOrg(data);
     }
-    async getSession(id, req) {
-        const petition = await this.petitionService.updateSession(id, req.sessionID);
-        return petition.id;
-    }
     findAll() {
         return this.petitionService.findAll();
     }
@@ -87,14 +83,6 @@ __decorate([
     __metadata("design:paramtypes", [petition_dto_1.CreatePetitionOrgDTO, Object]),
     __metadata("design:returntype", void 0)
 ], PetitionController.prototype, "createCampForOrg", null);
-__decorate([
-    (0, common_1.Get)('session/:id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Req)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
-    __metadata("design:returntype", Promise)
-], PetitionController.prototype, "getSession", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
