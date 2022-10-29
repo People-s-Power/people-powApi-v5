@@ -3,12 +3,9 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { User, UserDocument } from 'src/user/entity/user.schema';
 import { Petition } from 'src/petition/schema/petition.schema';
+import { PostCommentDTO } from './post.dto';
 
 export type PostDocument = Post & Document & {
-  _doc: any;
-};
-
-export type CommentDocument = Comment & Document & {
   _doc: any;
 };
 
@@ -32,10 +29,8 @@ export class Post {
   body: string;
   @Prop()
   likes: string[];
-  @Prop({
-    type: [{ type: Types.ObjectId, ref: 'Comment', autopopulate: true }],
-  })
-  comments: Comment[];
+  @Prop()
+  comments: PostCommentDTO[];
   @Prop()
   shares: string[];
   @Prop({default: false})
@@ -45,23 +40,5 @@ export class Post {
 
 }
 
-@Schema({
-  timestamps: true,
-  toJSON: {
-    transform: (doc, ret) => {
-      ret.id = ret._id;
-      delete ret._id;
-      return ret;
-    },
-  },
-})
-export class Comment {
-  @Prop({ type: Types.ObjectId, ref: 'User', autopopulate: true })
-  author: User;
-  @Prop({ required: true })
-  body: string
-}
-
-export const CommentSchema = SchemaFactory.createForClass(Comment);
 
 export const PostSchema = SchemaFactory.createForClass(Post);

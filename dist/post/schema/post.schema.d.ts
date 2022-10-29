@@ -25,10 +25,8 @@
 import { Document } from 'mongoose';
 import { User } from 'src/user/entity/user.schema';
 import { Petition } from 'src/petition/schema/petition.schema';
+import { PostCommentDTO } from './post.dto';
 export declare type PostDocument = Post & Document & {
-    _doc: any;
-};
-export declare type CommentDocument = Comment & Document & {
     _doc: any;
 };
 export declare class Post {
@@ -36,14 +34,9 @@ export declare class Post {
     author: User;
     body: string;
     likes: string[];
-    comments: Comment[];
+    comments: PostCommentDTO[];
     shares: string[];
     isPetition: boolean;
     image: string;
 }
-export declare class Comment {
-    author: User;
-    body: string;
-}
-export declare const CommentSchema: import("mongoose").Schema<Comment, import("mongoose").Model<Comment, any, any, any, any>, {}, {}, {}, {}, "type", Comment>;
 export declare const PostSchema: import("mongoose").Schema<Post, import("mongoose").Model<Post, any, any, any, any>, {}, {}, {}, {}, "type", Post>;

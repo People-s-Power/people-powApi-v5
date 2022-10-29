@@ -1,11 +1,11 @@
+import { Document, ObjectId } from "mongoose";
 import { IPetition } from "src/petition/dto/petition.dto";
 import { IUser } from "src/user/dto/user.dto";
 
-export class PostDTO {
+export class IPostDTO  extends Document{
   body: string;
   petition: IPetition;
   author: IUser;
-  
   likes: number;
   comments: PostCommentDTO[]
   shares: number;
@@ -13,7 +13,13 @@ export class PostDTO {
   image: string;
 }
 
+export class CreatePostDTO {
+  body: string;
+  imageFile: string;
+  user: IUser;
+}
+
 export class PostCommentDTO {
-  author: IUser;
+  author: string;
   body: string;
 }

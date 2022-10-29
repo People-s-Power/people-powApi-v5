@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PostSchema = exports.CommentSchema = exports.Comment = exports.Post = void 0;
+exports.PostSchema = exports.Post = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
@@ -33,9 +33,7 @@ __decorate([
     __metadata("design:type", Array)
 ], Post.prototype, "likes", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({
-        type: [{ type: mongoose_2.Types.ObjectId, ref: 'Comment', autopopulate: true }],
-    }),
+    (0, mongoose_1.Prop)(),
     __metadata("design:type", Array)
 ], Post.prototype, "comments", void 0);
 __decorate([
@@ -64,29 +62,5 @@ Post = __decorate([
     })
 ], Post);
 exports.Post = Post;
-let Comment = class Comment {
-};
-__decorate([
-    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'User', autopopulate: true }),
-    __metadata("design:type", user_schema_1.User)
-], Comment.prototype, "author", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ required: true }),
-    __metadata("design:type", String)
-], Comment.prototype, "body", void 0);
-Comment = __decorate([
-    (0, mongoose_1.Schema)({
-        timestamps: true,
-        toJSON: {
-            transform: (doc, ret) => {
-                ret.id = ret._id;
-                delete ret._id;
-                return ret;
-            },
-        },
-    })
-], Comment);
-exports.Comment = Comment;
-exports.CommentSchema = mongoose_1.SchemaFactory.createForClass(Comment);
 exports.PostSchema = mongoose_1.SchemaFactory.createForClass(Post);
 //# sourceMappingURL=post.schema.js.map

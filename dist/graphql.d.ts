@@ -97,6 +97,8 @@ export interface IQuery {
     getPetitionNotice(): Nullable<Nullable<PetitionNotice>[]> | Promise<Nullable<Nullable<PetitionNotice>[]>>;
     getActivePetitions(): Nullable<Nullable<Petition>[]> | Promise<Nullable<Nullable<Petition>[]>>;
     getActivePetitionsOtherRegion(): Nullable<Nullable<Petition>[]> | Promise<Nullable<Nullable<Petition>[]>>;
+    getPosts(limit?: Nullable<number>): Post[] | Promise<Post[]>;
+    getPost(id: string): Post | Promise<Post>;
     getUsers(search?: Nullable<string>, limit?: Nullable<number>, skip?: Nullable<number>, accountType?: Nullable<string>, role?: Nullable<string>): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
     getStaffs(search?: Nullable<string>, limit?: Nullable<number>, skip?: Nullable<number>): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
     me(token?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
@@ -131,6 +133,7 @@ export interface IMutation {
     deletePetition(id?: Nullable<string>): Nullable<Petition> | Promise<Nullable<Petition>>;
     updatePetition(input?: Nullable<PetitionInput>): Nullable<Petition> | Promise<Nullable<Petition>>;
     deleteAllCampNotice(): Nullable<boolean> | Promise<Nullable<boolean>>;
+    createPost(body?: Nullable<string>, imageFile?: Nullable<string>): Post | Promise<Post>;
     registerWithEmail(input?: Nullable<UserInput>): Nullable<User> | Promise<Nullable<User>>;
     loginWithEmail(email?: Nullable<string>, password?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
     deleteUser(id?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
@@ -183,6 +186,7 @@ export interface PetitionNotice {
     read?: Nullable<boolean>;
 }
 export interface Post {
+    _id?: Nullable<string>;
     body: string;
     petition: Petition;
     author: User;
@@ -191,6 +195,8 @@ export interface Post {
     shares: number;
     isPetition?: Nullable<boolean>;
     image: string;
+    createdAt?: Nullable<Date>;
+    updatedAt?: Nullable<Date>;
 }
 export interface Comment {
     author: string;

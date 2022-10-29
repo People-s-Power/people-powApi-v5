@@ -40,8 +40,8 @@ export class IUser extends Document {
   isActive: boolean;
   role: StaffRoleEnum;
   address: string;
-  admin: IUser;
-  userId: IUser;
+  // admin: IUser;
+  // userId: IUser;
   reportCount: number;
   applicantCount: number;
   bankName: string;
