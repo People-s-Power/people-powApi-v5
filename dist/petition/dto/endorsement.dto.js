@@ -9,8 +9,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LikeEndorsementDTO = exports.UpdateEndorsementDTO = exports.CreateEndorsementDTO = void 0;
+exports.IEndorsement = exports.LikeEndorsementDTO = exports.UpdateEndorsementDTO = exports.CreateEndorsementDTO = void 0;
 const swagger_1 = require("@nestjs/swagger");
+const mongoose_1 = require("mongoose");
 class CreateEndorsementDTO {
 }
 __decorate([
@@ -40,4 +41,7 @@ __decorate([
     __metadata("design:type", String)
 ], LikeEndorsementDTO.prototype, "id", void 0);
 exports.LikeEndorsementDTO = LikeEndorsementDTO;
+class IEndorsement extends mongoose_1.Document {
+}
+exports.IEndorsement = IEndorsement;
 //# sourceMappingURL=endorsement.dto.js.map

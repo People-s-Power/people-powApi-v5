@@ -1,14 +1,17 @@
 type Post {
   body: String!
   petition: Petition!
-  authorId: String!
+  author: User!
   likes: Int!
   comments: [Comment!]!
   shares: Int!
   isPetition: Boolean
+  image: String!
 }
 
 type Comment {
-  authorId: String!
+  author: String!
   body: String! 
-} 
+}
+
+

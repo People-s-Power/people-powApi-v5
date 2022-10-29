@@ -185,14 +185,15 @@ export interface PetitionNotice {
 export interface Post {
     body: string;
     petition: Petition;
-    authorId: string;
+    author: User;
     likes: number;
     comments: Comment[];
     shares: number;
     isPetition?: Nullable<boolean>;
+    image: string;
 }
 export interface Comment {
-    authorId: string;
+    author: string;
     body: string;
 }
 export interface User {

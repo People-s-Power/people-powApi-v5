@@ -26,8 +26,8 @@ export type CommentDocument = Comment & Document & {
 export class Post {
   @Prop({ type: Types.ObjectId, ref: 'Petition' })
   petition: Record<string, Petition>;
-  @Prop()
-  authorId: string;
+  @Prop({ type: Types.ObjectId, ref: 'User', autopopulate: true  })
+  author: User;
   @Prop({ required: true })
   body: string;
   @Prop()
@@ -35,7 +35,7 @@ export class Post {
   @Prop({
     type: [{ type: Types.ObjectId, ref: 'Comment', autopopulate: true }],
   })
-  comments: CommentDocument[];
+  comments: Comment[];
   @Prop()
   shares: string[];
   @Prop({default: false})
@@ -56,8 +56,8 @@ export class Post {
   },
 })
 export class Comment {
-  @Prop({ type: Types.ObjectId, ref: 'User' })
-  authorId: UserDocument;
+  @Prop({ type: Types.ObjectId, ref: 'User', autopopulate: true })
+  author: User;
   @Prop({ required: true })
   body: string
 }

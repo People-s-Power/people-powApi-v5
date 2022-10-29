@@ -13,6 +13,7 @@ exports.PostSchema = exports.CommentSchema = exports.Comment = exports.Post = vo
 const graphql_1 = require("@nestjs/graphql");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
+const user_schema_1 = require("../../user/entity/user.schema");
 let Post = class Post {
 };
 __decorate([
@@ -20,9 +21,9 @@ __decorate([
     __metadata("design:type", Object)
 ], Post.prototype, "petition", void 0);
 __decorate([
-    (0, mongoose_1.Prop)(),
-    __metadata("design:type", String)
-], Post.prototype, "authorId", void 0);
+    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'User', autopopulate: true }),
+    __metadata("design:type", user_schema_1.User)
+], Post.prototype, "author", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
@@ -66,9 +67,9 @@ exports.Post = Post;
 let Comment = class Comment {
 };
 __decorate([
-    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'User' }),
-    __metadata("design:type", Object)
-], Comment.prototype, "authorId", void 0);
+    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'User', autopopulate: true }),
+    __metadata("design:type", user_schema_1.User)
+], Comment.prototype, "author", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)

@@ -1,4 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Document } from 'mongoose';
+import { IUser } from 'src/user/dto/user.dto';
+import { IPetition } from './petition.interface';
 
 export class CreateEndorsementDTO {
   @ApiProperty()
@@ -17,4 +20,11 @@ export class UpdateEndorsementDTO {
 export class LikeEndorsementDTO {
   @ApiProperty()
   id: string;
+}
+
+export class IEndorsement extends Document {
+  author: IUser
+  petition: IPetition;
+  body: string;
+  likes: string[];
 }

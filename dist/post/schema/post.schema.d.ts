@@ -23,7 +23,7 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import { Document } from 'mongoose';
-import { UserDocument } from 'src/user/entity/user.schema';
+import { User } from 'src/user/entity/user.schema';
 import { Petition } from 'src/petition/schema/petition.schema';
 export declare type PostDocument = Post & Document & {
     _doc: any;
@@ -33,16 +33,16 @@ export declare type CommentDocument = Comment & Document & {
 };
 export declare class Post {
     petition: Record<string, Petition>;
-    authorId: string;
+    author: User;
     body: string;
     likes: string[];
-    comments: CommentDocument[];
+    comments: Comment[];
     shares: string[];
     isPetition: boolean;
     image: string;
 }
 export declare class Comment {
-    authorId: UserDocument;
+    author: User;
     body: string;
 }
 export declare const CommentSchema: import("mongoose").Schema<Comment, import("mongoose").Model<Comment, any, any, any, any>, {}, {}, {}, {}, "type", Comment>;
