@@ -18,6 +18,11 @@ export class CreatePostDTO {
   imageFile: string;
   user: IUser;
 }
+export class UpdatePostDTO {
+  body: string;
+  userId: string;
+  postId: string
+}
 
 export class PostCommentDTO {
   author: string;

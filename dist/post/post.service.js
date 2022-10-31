@@ -57,6 +57,18 @@ let PostService = class PostService {
             throw error;
         }
     }
+    async user(userId) {
+        try {
+            const posts = await this.postModel.find({
+                author: userId
+            });
+            return posts;
+        }
+        catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
     async create({ body, user, imageFile }) {
         const image = await (0, cloudinary_1.cloudinaryUpload)(imageFile).catch((err) => {
             throw err;
@@ -88,6 +100,43 @@ let PostService = class PostService {
         }
         catch (error) {
             console.log();
+            throw error;
+        }
+    }
+    async update({ body, userId, postId }) {
+        try {
+            const post = await this.postModel.findById(postId)
+                .populate('author')
+                .populate('petition');
+            const author = post.author;
+            if ((author === null || author === void 0 ? void 0 : author._id.toString()) !== userId)
+                throw new common_1.UnauthorizedException('Your not allowed to update');
+            post.body = body;
+            await post.save();
+            return Object.assign(Object.assign({}, post._doc), { shares: post.shares.length, likes: post.likes.length });
+        }
+        catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+    async image(imageFile, postId, userId) {
+        try {
+            const post = await this.postModel.findById(postId)
+                .populate('author')
+                .populate('petition');
+            const author = post.author;
+            if ((author === null || author === void 0 ? void 0 : author._id.toString()) !== userId)
+                throw new common_1.UnauthorizedException('Your not allowed to update');
+            const image = await (0, cloudinary_1.cloudinaryUpload)(imageFile).catch((err) => {
+                throw err;
+            });
+            post.image = image;
+            await post.save();
+            return Object.assign(Object.assign({}, post._doc), { shares: post.shares.length, likes: post.likes.length });
+        }
+        catch (error) {
+            console.log(error);
             throw error;
         }
     }

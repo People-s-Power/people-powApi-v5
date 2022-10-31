@@ -1,10 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Petition, PetitionDocument } from 'src/petition/schema/petition.schema';
+import { IUser } from 'src/user/dto/user.dto';
 import { User, UserDocument } from 'src/user/entity/user.schema';
 import { cloudinaryUpload } from 'src/utils/cloudinary';
-import { CreatePostDTO, IPostDTO } from './schema/post.dto';
+import { CreatePostDTO, IPostDTO, UpdatePostDTO } from './schema/post.dto';
 import { Post, PostDocument } from './schema/post.schema';
 
 @Injectable()
@@ -60,6 +61,19 @@ export class PostService {
   }
 
 
+  async user(userId): Promise<Post[]> {
+    try {
+      const posts = await this.postModel.find({
+        author: userId
+      })
+      return posts
+    } catch (error) {
+      console.log(error)
+      throw error
+    }
+  }
+
+
   async create({ body, user, imageFile }: CreatePostDTO): Promise<PostDocument> {
     const image = await cloudinaryUpload(imageFile).catch((err) => {
       throw err;
@@ -95,4 +109,61 @@ export class PostService {
       throw error
     }
   }
+
+  async update({ body, userId, postId }: UpdatePostDTO) {
+    try {
+      const post = await this.postModel.findById(postId)
+        .populate('author')
+        .populate('petition')
+
+        const author: Partial<IUser> = post.author
+      if(author?._id.toString() !== userId) throw new UnauthorizedException('Your not allowed to update')
+      
+
+      post.body = body
+
+      await post.save()
+
+      return {
+        ...post._doc,
+        shares: post.shares.length,
+        likes: post.likes.length
+      }
+
+    } catch (error) {
+      console.log(error)
+      throw error
+    }
+  }
+
+  async image(imageFile: string, postId, userId) {
+    try {
+
+      const post = await this.postModel.findById(postId)
+        .populate('author')
+        .populate('petition')
+
+      const author: Partial<IUser> = post.author
+      if(author?._id.toString() !== userId) throw new UnauthorizedException('Your not allowed to update')
+
+      const image = await cloudinaryUpload(imageFile).catch((err) => {
+        throw err;
+      });
+
+      post.image = image
+
+      await post.save()
+
+      return {
+        ...post._doc,
+        shares: post.shares.length,
+        likes: post.likes.length
+      }
+
+    } catch (error) {
+      console.log(error)
+      throw error
+    }
+  }
+
 }

@@ -29,9 +29,22 @@ let PostResolver = class PostResolver {
         const post = await this.postService.findOne(id);
         return post;
     }
+    async myPosts(user) {
+        const userId = user._id.toString();
+        const posts = await this.postService.user(userId);
+        return posts;
+    }
     async createPost({ body, imageFile }, user) {
-        console.log({ body, imageFile });
         const post = await this.postService.create({ body, imageFile, user });
+        return post;
+    }
+    async updatePost({ body, postId }, user) {
+        const userId = user._id.toString();
+        const post = await this.postService.update({ body, postId, userId });
+        return post;
+    }
+    async updateImg({ imageFile, postId }, user) {
+        const post = await this.postService.image(imageFile, postId, user._id);
         return post;
     }
 };
@@ -50,6 +63,14 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], PostResolver.prototype, "getPost", null);
 __decorate([
+    (0, common_1.UseGuards)(),
+    (0, graphql_1.Query)(),
+    __param(0, (0, graphql_guard_1.CurrentUser)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], PostResolver.prototype, "myPosts", null);
+__decorate([
     (0, common_1.UseGuards)(graphql_guard_1.GQLoginGuard),
     (0, graphql_1.Mutation)(),
     __param(0, (0, graphql_1.Args)()),
@@ -58,6 +79,24 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], PostResolver.prototype, "createPost", null);
+__decorate([
+    (0, common_1.UseGuards)(graphql_guard_1.GQLoginGuard),
+    (0, graphql_1.Mutation)(),
+    __param(0, (0, graphql_1.Args)()),
+    __param(1, (0, graphql_guard_1.CurrentUser)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], PostResolver.prototype, "updatePost", null);
+__decorate([
+    (0, common_1.UseGuards)(graphql_guard_1.GQLoginGuard),
+    (0, graphql_1.Mutation)(),
+    __param(0, (0, graphql_1.Args)()),
+    __param(1, (0, graphql_guard_1.CurrentUser)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], PostResolver.prototype, "updateImg", null);
 PostResolver = __decorate([
     (0, graphql_1.Resolver)('Post'),
     __metadata("design:paramtypes", [post_service_1.PostService])

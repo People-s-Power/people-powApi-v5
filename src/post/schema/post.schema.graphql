@@ -20,8 +20,11 @@ type Comment {
 type Query {
   getPosts(limit: Int): [Post!]!
   getPost(id: ID!): Post!
+  myPosts: [Post!]!
 }
 
 type Mutation {
   createPost(body: String, imageFile: String): Post!
+  updatePost(body: String, postId: ID): Post!
+  updateImg(imageFile: String, postId: ID): Post!
 }

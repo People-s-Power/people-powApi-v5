@@ -57,7 +57,11 @@ let AuthService = class AuthService {
             this.client.emit('confirm-user', mailUser);
             const token = this.jwtService.sign(payloadJWT);
             return {
-                user,
+                user: {
+                    _id: user._id,
+                    name: user.name,
+                    email,
+                },
                 token,
             };
         }
