@@ -135,8 +135,9 @@ export interface IMutation {
     updatePetition(input?: Nullable<PetitionInput>): Nullable<Petition> | Promise<Nullable<Petition>>;
     deleteAllCampNotice(): Nullable<boolean> | Promise<Nullable<boolean>>;
     createPost(body?: Nullable<string>, imageFile?: Nullable<string>): Post | Promise<Post>;
-    updatePost(body?: Nullable<string>, postId?: Nullable<string>): Post | Promise<Post>;
-    updateImg(imageFile?: Nullable<string>, postId?: Nullable<string>): Post | Promise<Post>;
+    updatePost(body?: Nullable<string>, postId?: Nullable<string>, authorId?: Nullable<string>): Post | Promise<Post>;
+    updateImg(imageFile?: Nullable<string>, postId?: Nullable<string>, authorId?: Nullable<string>): Post | Promise<Post>;
+    deletePost(postId?: Nullable<string>, authorId?: Nullable<string>): Nullable<Post> | Promise<Nullable<Post>>;
     registerWithEmail(input?: Nullable<UserInput>): Nullable<User> | Promise<Nullable<User>>;
     loginWithEmail(email?: Nullable<string>, password?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
     deleteUser(id?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
@@ -192,7 +193,7 @@ export interface Post {
     _id?: Nullable<string>;
     body: string;
     petition: Petition;
-    author: User;
+    author: Author;
     likes: number;
     comments: Comment[];
     shares: number;
@@ -200,6 +201,12 @@ export interface Post {
     image: string;
     createdAt?: Nullable<Date>;
     updatedAt?: Nullable<Date>;
+}
+export interface Author {
+    _id?: Nullable<string>;
+    name?: Nullable<string>;
+    email?: Nullable<string>;
+    image?: Nullable<string>;
 }
 export interface Comment {
     author: string;

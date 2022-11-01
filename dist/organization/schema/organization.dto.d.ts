@@ -4,7 +4,6 @@ export declare enum StaffRoleEnum {
     Editor = "Editor"
 }
 export declare class IOrg extends Document {
-    _doc: any;
     author: string;
     name: string;
     linkedIn: string;

@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PostService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
+const console_1 = require("console");
 const mongoose_2 = require("mongoose");
 const petition_schema_1 = require("../petition/schema/petition.schema");
 const user_schema_1 = require("../user/entity/user.schema");
@@ -35,11 +36,16 @@ let PostService = class PostService {
                 .populate('author')
                 .populate('petition');
             return posts.map(post => {
-                return Object.assign(Object.assign({}, post._doc), { shares: post.shares.length, likes: post.likes.length });
+                return Object.assign(Object.assign({}, post._doc), { author: {
+                        _id: post.author._id || post.org._id,
+                        name: post.author.name || post.org.name,
+                        email: post.author.email || post.org.email,
+                        image: post.author.image || post.org.image
+                    }, shares: post.shares.length, likes: post.likes.length });
             });
         }
         catch (error) {
-            console.log(error);
+            console_1.default.log(error);
             throw error;
         }
     }
@@ -53,19 +59,18 @@ let PostService = class PostService {
             return Object.assign(Object.assign({}, post._doc), { shares: post.shares.length, likes: post.likes.length });
         }
         catch (error) {
-            console.log(error);
+            console_1.default.log(error);
             throw error;
         }
     }
     async user(userId) {
         try {
-            const posts = await this.postModel.find({
-                author: userId
-            });
-            return posts;
+            const posts = await this.postModel.find();
+            const userPost = await posts.filter(item => item.author._id.toString() === userId);
+            return userPost;
         }
         catch (error) {
-            console.log(error);
+            console_1.default.log(error);
             throw error;
         }
     }
@@ -99,44 +104,74 @@ let PostService = class PostService {
             return post;
         }
         catch (error) {
-            console.log();
+            console_1.default.log();
             throw error;
         }
     }
-    async update({ body, userId, postId }) {
+    async update({ body, postId, authorId }) {
         try {
             const post = await this.postModel.findById(postId)
                 .populate('author')
                 .populate('petition');
-            const author = post.author;
-            if ((author === null || author === void 0 ? void 0 : author._id.toString()) !== userId)
+            const author = post.author || post.org;
+            if ((author === null || author === void 0 ? void 0 : author._id.toString()) !== authorId)
                 throw new common_1.UnauthorizedException('Your not allowed to update');
             post.body = body;
             await post.save();
-            return Object.assign(Object.assign({}, post._doc), { shares: post.shares.length, likes: post.likes.length });
+            return Object.assign(Object.assign({}, post._doc), { author: {
+                    _id: author._id,
+                    name: author.name,
+                    email: author.email,
+                    image: author.image
+                }, shares: post.shares.length, likes: post.likes.length });
         }
         catch (error) {
-            console.log(error);
+            console_1.default.log(error);
             throw error;
         }
     }
-    async image(imageFile, postId, userId) {
+    async image(imageFile, postId, authorId) {
         try {
             const post = await this.postModel.findById(postId)
                 .populate('author')
+                .populate('org')
                 .populate('petition');
-            const author = post.author;
-            if ((author === null || author === void 0 ? void 0 : author._id.toString()) !== userId)
+            const author = post.author || post.org;
+            console_1.default.log({
+                author: author._id,
+                authorId
+            });
+            if ((author === null || author === void 0 ? void 0 : author._id.toString()) !== authorId)
                 throw new common_1.UnauthorizedException('Your not allowed to update');
             const image = await (0, cloudinary_1.cloudinaryUpload)(imageFile).catch((err) => {
                 throw err;
             });
             post.image = image;
             await post.save();
-            return Object.assign(Object.assign({}, post._doc), { shares: post.shares.length, likes: post.likes.length });
+            return Object.assign(Object.assign({}, post._doc), { author: {
+                    _id: author._id,
+                    name: author.name,
+                    email: author.email,
+                    image: author.image
+                }, shares: post.shares.length, likes: post.likes.length });
         }
         catch (error) {
-            console.log(error);
+            console_1.default.log(error);
+            throw error;
+        }
+    }
+    async delete(postId, authorId) {
+        try {
+            const post = await this.postModel.findById(postId);
+            if (!post)
+                throw new common_1.BadRequestException(`Post don't exist`);
+            const author = post.author || post.org;
+            if ((author === null || author === void 0 ? void 0 : author._id.toString()) !== authorId)
+                throw new common_1.UnauthorizedException('Your not allowed to delete');
+            const del = await this.postModel.deleteOne({ _di: postId });
+            return del;
+        }
+        catch (error) {
             throw error;
         }
     }

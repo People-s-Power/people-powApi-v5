@@ -22,7 +22,7 @@ export class PostResolver {
     return post
   }
 
-  @UseGuards()
+  @UseGuards(GQLoginGuard)
   @Query()
   async myPosts(@CurrentUser() user: UserDocument) {
     const userId = user._id.toString()
@@ -39,16 +39,24 @@ export class PostResolver {
 
   @UseGuards(GQLoginGuard)
   @Mutation()
-  async updatePost(@Args() { body, postId }, @CurrentUser() user: UserDocument): Promise<PostDocument> {
+  async updatePost(@Args() { body, postId, authorId }, @CurrentUser() user: UserDocument): Promise<PostDocument> {
     const userId = user._id.toString()
-    const post = await this.postService.update({ body, postId, userId })
+    const post = await this.postService.update({ body, postId, authorId })
     return post
   }
 
   @UseGuards(GQLoginGuard)
   @Mutation()
-  async updateImg(@Args() { imageFile, postId }, @CurrentUser() user: UserDocument) {
-    const post = await this.postService.image(imageFile, postId, user._id)
+  async updateImg(@Args() { imageFile, postId, authorId, }) {
+    const post = await this.postService.image(imageFile, postId , authorId)
+    return post
+  }
+
+
+  @UseGuards(GQLoginGuard)
+  @Mutation()
+  async deletePost(@Args() { postId, authorId, }) {
+    const post = await this.postService.delete(postId, authorId)
     return post
   }
 }

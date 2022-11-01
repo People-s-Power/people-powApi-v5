@@ -12,6 +12,7 @@ export declare class PostService {
     findOne(postId: any): Promise<any>;
     user(userId: any): Promise<Post[]>;
     create({ body, user, imageFile }: CreatePostDTO): Promise<PostDocument>;
-    update({ body, userId, postId }: UpdatePostDTO): Promise<any>;
-    image(imageFile: string, postId: any, userId: any): Promise<any>;
+    update({ body, postId, authorId }: UpdatePostDTO): Promise<any>;
+    image(imageFile: string, postId: any, authorId: any): Promise<any>;
+    delete(postId: any, authorId: any): Promise<import("mongodb").DeleteResult>;
 }

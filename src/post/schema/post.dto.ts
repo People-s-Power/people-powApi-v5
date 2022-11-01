@@ -20,7 +20,7 @@ export class CreatePostDTO {
 }
 export class UpdatePostDTO {
   body: string;
-  userId: string;
+  authorId: string;
   postId: string
 }
 

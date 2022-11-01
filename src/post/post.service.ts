@@ -1,6 +1,9 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import console from 'console';
 import { Model } from 'mongoose';
+import { IOrg } from 'src/organization/schema/organization.dto';
+import { organizationDocument } from 'src/organization/schema/organization.schema';
 import { Petition, PetitionDocument } from 'src/petition/schema/petition.schema';
 import { IUser } from 'src/user/dto/user.dto';
 import { User, UserDocument } from 'src/user/entity/user.schema';
@@ -27,9 +30,17 @@ export class PostService {
         .populate('author')
         .populate('petition')
 
+        // const author: Partial<IUser | IOrg> = post.author || post.org
+
         return posts.map(post => {
           return {
             ...post._doc,
+            author: {
+              _id: post.author._id || post.org._id,
+              name: post.author.name || post.org.name,
+              email: post.author.email || post.org.email,
+              image: post.author.image || post.org.image
+            },
             shares: post.shares.length,
             likes: post.likes.length
           }
@@ -63,10 +74,9 @@ export class PostService {
 
   async user(userId): Promise<Post[]> {
     try {
-      const posts = await this.postModel.find({
-        author: userId
-      })
-      return posts
+      const posts = await this.postModel.find()
+      const userPost = await posts.filter(item => item.author._id.toString() === userId)
+      return userPost
     } catch (error) {
       console.log(error)
       throw error
@@ -110,14 +120,14 @@ export class PostService {
     }
   }
 
-  async update({ body, userId, postId }: UpdatePostDTO) {
+  async update({ body, postId, authorId }: UpdatePostDTO) {
     try {
       const post = await this.postModel.findById(postId)
         .populate('author')
         .populate('petition')
 
-        const author: Partial<IUser> = post.author
-      if(author?._id.toString() !== userId) throw new UnauthorizedException('Your not allowed to update')
+        const author: Partial<UserDocument | organizationDocument> = post.author || post.org
+      if(author?._id.toString() !== authorId) throw new UnauthorizedException('Your not allowed to update')
       
 
       post.body = body
@@ -126,6 +136,12 @@ export class PostService {
 
       return {
         ...post._doc,
+        author: {
+          _id: author._id,
+          name: author.name,
+          email: author.email,
+          image: author.image
+        },
         shares: post.shares.length,
         likes: post.likes.length
       }
@@ -136,15 +152,20 @@ export class PostService {
     }
   }
 
-  async image(imageFile: string, postId, userId) {
+  async image(imageFile: string, postId, authorId) {
     try {
 
       const post = await this.postModel.findById(postId)
         .populate('author')
+        .populate('org')
         .populate('petition')
 
-      const author: Partial<IUser> = post.author
-      if(author?._id.toString() !== userId) throw new UnauthorizedException('Your not allowed to update')
+      const author: Partial<UserDocument | organizationDocument> = post.author || post.org
+      console.log({
+        author: author._id,
+        authorId
+      })
+      if(author?._id.toString() !== authorId) throw new UnauthorizedException('Your not allowed to update')
 
       const image = await cloudinaryUpload(imageFile).catch((err) => {
         throw err;
@@ -156,12 +177,34 @@ export class PostService {
 
       return {
         ...post._doc,
+        author: {
+          _id: author._id,
+          name: author.name,
+          email: author.email,
+          image: author.image
+        },
         shares: post.shares.length,
         likes: post.likes.length
       }
 
     } catch (error) {
       console.log(error)
+      throw error
+    }
+  }
+
+
+  async delete(postId, authorId) {
+    try {
+      const post = await this.postModel.findById(postId)
+      if(!post) throw new BadRequestException(`Post don't exist`)
+
+      const author: Partial<UserDocument | organizationDocument> = post.author || post.org
+      if(author?._id.toString() !== authorId) throw new UnauthorizedException('Your not allowed to delete')
+
+      const del = await this.postModel.deleteOne({_di: postId})
+      return del
+    } catch (error) {
       throw error
     }
   }

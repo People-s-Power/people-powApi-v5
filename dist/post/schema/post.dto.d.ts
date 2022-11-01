@@ -18,7 +18,7 @@ export declare class CreatePostDTO {
 }
 export declare class UpdatePostDTO {
     body: string;
-    userId: string;
+    authorId: string;
     postId: string;
 }
 export declare class PostCommentDTO {

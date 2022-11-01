@@ -11,12 +11,18 @@ export declare class PostResolver {
         body: any;
         imageFile: any;
     }, user: UserDocument): Promise<PostDocument>;
-    updatePost({ body, postId }: {
+    updatePost({ body, postId, authorId }: {
         body: any;
         postId: any;
+        authorId: any;
     }, user: UserDocument): Promise<PostDocument>;
-    updateImg({ imageFile, postId }: {
+    updateImg({ imageFile, postId, authorId, }: {
         imageFile: any;
         postId: any;
-    }, user: UserDocument): Promise<any>;
+        authorId: any;
+    }): Promise<any>;
+    deletePost({ postId, authorId, }: {
+        postId: any;
+        authorId: any;
+    }): Promise<import("mongodb").DeleteResult>;
 }

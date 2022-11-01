@@ -23,15 +23,17 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import { Document } from 'mongoose';
-import { User } from 'src/user/entity/user.schema';
+import { UserDocument } from 'src/user/entity/user.schema';
 import { Petition } from 'src/petition/schema/petition.schema';
 import { PostCommentDTO } from './post.dto';
+import { organizationDocument } from 'src/organization/schema/organization.schema';
 export declare type PostDocument = Post & Document & {
     _doc: any;
 };
 export declare class Post {
     petition: Record<string, Petition>;
-    author: User;
+    author: UserDocument;
+    org: organizationDocument;
     body: string;
     likes: string[];
     comments: PostCommentDTO[];

@@ -4,6 +4,7 @@ import { Document, Types } from 'mongoose';
 import { User, UserDocument } from 'src/user/entity/user.schema';
 import { Petition } from 'src/petition/schema/petition.schema';
 import { PostCommentDTO } from './post.dto';
+import { organizationDocument, orgnaization } from 'src/organization/schema/organization.schema';
 
 export type PostDocument = Post & Document & {
   _doc: any;
@@ -24,7 +25,9 @@ export class Post {
   @Prop({ type: Types.ObjectId, ref: 'Petition' })
   petition: Record<string, Petition>;
   @Prop({ type: Types.ObjectId, ref: 'User', autopopulate: true  })
-  author: User;
+  author: UserDocument;
+  @Prop({ type: Types.ObjectId, ref: 'orgnaization', autopopulate: true })
+  org: organizationDocument;
   @Prop({ required: true })
   body: string;
   @Prop()

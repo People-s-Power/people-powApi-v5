@@ -2,7 +2,7 @@ type Post {
   _id: ID
   body: String!
   petition: Petition!
-  author: User!
+  author: Author!
   likes: Int!
   comments: [Comment!]!
   shares: Int!
@@ -10,6 +10,13 @@ type Post {
   image: String!
   createdAt: Date
   updatedAt: Date
+}
+
+type Author {
+  _id: ID
+  name: String
+  email: String
+  image: String
 }
 
 type Comment {
@@ -25,6 +32,7 @@ type Query {
 
 type Mutation {
   createPost(body: String, imageFile: String): Post!
-  updatePost(body: String, postId: ID): Post!
-  updateImg(imageFile: String, postId: ID): Post!
+  updatePost(body: String, postId: ID, authorId: ID): Post!
+  updateImg(imageFile: String, postId: ID, authorId: ID): Post!
+  deletePost(postId: ID, authorId: ID): Post
 }

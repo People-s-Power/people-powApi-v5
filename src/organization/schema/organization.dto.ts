@@ -9,7 +9,6 @@ export enum StaffRoleEnum {
 }
 
 export class IOrg extends Document {
-  _doc: any;
   author: string;
   name: string;
   linkedIn: string;

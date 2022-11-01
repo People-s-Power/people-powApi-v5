@@ -13,7 +13,6 @@ exports.PostSchema = exports.Post = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const user_schema_1 = require("../../user/entity/user.schema");
 let Post = class Post {
 };
 __decorate([
@@ -22,8 +21,12 @@ __decorate([
 ], Post.prototype, "petition", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'User', autopopulate: true }),
-    __metadata("design:type", user_schema_1.User)
+    __metadata("design:type", Object)
 ], Post.prototype, "author", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'orgnaization', autopopulate: true }),
+    __metadata("design:type", Object)
+], Post.prototype, "org", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
