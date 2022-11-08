@@ -45,7 +45,7 @@ export declare class UserService {
     } & {
         _id: import("mongoose").Types.ObjectId;
     }>;
-    seedUsers(): Promise<(Omit<any, keyof User | keyof import("mongoose").Document<any, any, any> | "_doc"> & User & import("mongoose").Document<any, any, any> & {
+    seedUsers(): Promise<(Omit<any, keyof User | "_doc" | keyof import("mongoose").Document<any, any, any>> & User & import("mongoose").Document<any, any, any> & {
         _id: any;
         _doc: any;
     } & {

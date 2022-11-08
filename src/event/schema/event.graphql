@@ -1,0 +1,40 @@
+type Event {
+  _id: ID
+  name: String!
+  description: String!
+  time: String!
+  image: String!
+  type: String! #online or offline
+  audience: String # Everyone or My Connections or Location
+  startDate: String!
+  endDate: String!
+  interested: [Interested!]!
+  shares: Int!
+  likes: Int!
+  createdAt: Date
+  updatedAt: Date
+  author: Author!
+}
+
+
+type Interested {
+  authorId: ID!
+  authorImg: String!
+  name: String!
+}
+
+
+type Query {
+  events(page: Int, limit: Int, filter: String): [Event!]!
+  event(eventId: ID!): Event!
+  myEvents: [Event!]!
+  interestedEvent(authorId: ID!): [Event!]!
+}
+
+
+type Mutation {
+  createEvent(name: String!, description: String!, time: String!, startDate: String!, endDate: String!, imageFile: String!, type: String!): Event!
+  updateEvent(name: String!, description: String!, time: String!, startDate: String!, endDate: String!, imageFile: String!, type: String!): Event!
+  interested(authorId: ID!): Event!
+  deleteEvent(eventId: ID!): String!
+}

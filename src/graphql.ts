@@ -77,34 +77,54 @@ export interface UserInput {
     name?: Nullable<string>;
 }
 
-export interface Organization {
-    _id: string;
-    image: string;
-    author: string;
-    name: string;
-    email: string;
-    description: string;
-    phone: string;
-    followers: Nullable<string>[];
-    following: Nullable<string>[];
-    followersCount: number;
-    followingCount: number;
-    operators: Nullable<Ioperators>[];
-    facebook: string;
-    linkedIn: string;
-    instagram: string;
-    twitter: string;
-    country: string;
-    city: string;
-    website: string;
+export interface CreateVictoryInput {
+    exampleField?: Nullable<number>;
 }
 
-export interface Ioperators {
-    userId?: Nullable<string>;
-    role?: Nullable<string>;
+export interface UpdateVictoryInput {
+    id: number;
+}
+
+export interface Advert {
+    _id?: Nullable<string>;
+    caption: string;
+    message: string;
+    email: string;
+    duration: string;
+    link: string;
+    action: string;
+    audience?: Nullable<string>;
+    image: string;
+}
+
+export interface Event {
+    _id?: Nullable<string>;
+    name: string;
+    description: string;
+    time: string;
+    image: string;
+    type: string;
+    audience?: Nullable<string>;
+    startDate: string;
+    endDate: string;
+    interested: Interested[];
+    shares: number;
+    likes: number;
+    createdAt?: Nullable<Date>;
+    updatedAt?: Nullable<Date>;
+}
+
+export interface Interested {
+    authorId: string;
+    authorImg: string;
+    name: string;
 }
 
 export interface IQuery {
+    events(page?: Nullable<number>, limit?: Nullable<number>, filter?: Nullable<string>): Event[] | Promise<Event[]>;
+    event(eventId: string): Event | Promise<Event>;
+    createdEvents(): Event[] | Promise<Event[]>;
+    interestedEvent(authorId: string): Event[] | Promise<Event[]>;
     getOrganzations(): Organization[] | Promise<Organization[]>;
     getOrganzation(id: string): Organization | Promise<Organization>;
     getUserOrganizations(id: string): Organization[] | Promise<Organization[]>;
@@ -136,15 +156,15 @@ export interface IQuery {
     getTopReps(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
     getMyUsers(search?: Nullable<string>): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
     seedUsers(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
-}
-
-export interface File {
-    filename: string;
-    mimetype: string;
-    encoding: string;
+    victories(): Nullable<Victory>[] | Promise<Nullable<Victory>[]>;
+    victory(id: number): Nullable<Victory> | Promise<Nullable<Victory>>;
 }
 
 export interface IMutation {
+    createEvent(name: string, description: string, time: string, startDate: string, endDate: string, imageFile: string, type: string): Event | Promise<Event>;
+    updateEvent(name: string, description: string, time: string, startDate: string, endDate: string, imageFile: string, type: string): Event | Promise<Event>;
+    interested(authorId?: Nullable<string>): Event | Promise<Event>;
+    deleteEvent(eventId?: Nullable<string>): string | Promise<string>;
     createOrg(input: CreateOrgInput): Organization | Promise<Organization>;
     updateOrganization(input: UpdateInput): Organization | Promise<Organization>;
     updateImage(input: UploadImageInput): Organization | Promise<Organization>;
@@ -165,6 +185,42 @@ export interface IMutation {
     deleteUser(id?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
     deleteManyUser(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
     updateUser(input?: Nullable<UserInput>): Nullable<User> | Promise<Nullable<User>>;
+    createVictory(createVictoryInput: CreateVictoryInput): Victory | Promise<Victory>;
+    updateVictory(updateVictoryInput: UpdateVictoryInput): Victory | Promise<Victory>;
+    removeVictory(id: number): Nullable<Victory> | Promise<Nullable<Victory>>;
+}
+
+export interface Organization {
+    _id: string;
+    image: string;
+    author: string;
+    name: string;
+    email: string;
+    description: string;
+    phone: string;
+    followers: Nullable<string>[];
+    following: Nullable<string>[];
+    followersCount: number;
+    followingCount: number;
+    operators: Nullable<Ioperators>[];
+    facebook: string;
+    linkedIn: string;
+    instagram: string;
+    twitter: string;
+    country: string;
+    city: string;
+    website: string;
+}
+
+export interface Ioperators {
+    userId?: Nullable<string>;
+    role?: Nullable<string>;
+}
+
+export interface File {
+    filename: string;
+    mimetype: string;
+    encoding: string;
 }
 
 export interface Endorsement {
@@ -272,6 +328,10 @@ export interface User {
     createdAt?: Nullable<Date>;
     updatedAt?: Nullable<Date>;
     myUsers?: Nullable<Nullable<User>[]>;
+}
+
+export interface Victory {
+    exampleField?: Nullable<number>;
 }
 
 export type Upload = any;

@@ -24,6 +24,9 @@ const microservices_1 = require("@nestjs/microservices");
 const petition_schema_1 = require("./petition/schema/petition.schema");
 const organization_module_1 = require("./organization/organization.module");
 const post_module_1 = require("./post/post.module");
+const event_module_1 = require("./event/event.module");
+const advert_module_1 = require("./advert/advert.module");
+const victory_module_1 = require("./victory/victory.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -68,7 +71,10 @@ AppModule = __decorate([
             petition_module_1.PetitionModule,
             transaction_module_1.TransactionModule,
             organization_module_1.OrganizationModule,
-            post_module_1.PostModule
+            post_module_1.PostModule,
+            event_module_1.EventModule,
+            advert_module_1.AdvertModule,
+            victory_module_1.VictoryModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

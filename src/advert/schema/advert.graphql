@@ -1,0 +1,31 @@
+type Advert {
+  _id: ID
+  caption: String!
+  message: String!
+  email: String!
+  duration: String!
+  link: String!
+  action: String!
+  audience: String # Everyone or My Connections or Location
+  image: String!
+  shares: Int!
+  likes: Int!
+  createdAt: Date
+  updatedAt: Date
+  author: Author!
+}
+
+
+type Query {
+  adverts(page: Int, limit: Int, filter: String): [Advert!]!
+  advert(advertId: ID): Advert!
+  myAdverts: [Advert!]!
+}
+
+
+type Mutation {
+  createdAd(caption: String!, message: String!, email: String!, duration: String!, link: String!, action: String!, audience: String!, imageFile: String!): Advert!
+  updateAd(caption: String!, message: String!, email: String!, duration: String!, link: String!, action: String!, audience: String!, imageFile: String!): Advert!
+  deleteAd(advertId: ID!) Advert
+}
+

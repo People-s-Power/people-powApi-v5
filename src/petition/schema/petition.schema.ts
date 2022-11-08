@@ -1,6 +1,5 @@
 import { ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { transpileModule } from '@ts-morph/common/lib/typescript';
 import { Document, Types } from 'mongoose';
 import { User, UserDocument } from 'src/user/entity/user.schema';
 import { PetitionStatusEnum, IEndorsement } from '../dto/petition.interface';

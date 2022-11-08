@@ -17,6 +17,9 @@ import { View, ViewSchema } from './petition/schema/petition.schema';
 import {corsOptions} from "./cors"
 import { OrganizationModule } from './organization/organization.module';
 import { PostModule } from './post/post.module';
+import { EventModule } from './event/event.module';
+import { AdvertModule } from './advert/advert.module';
+import { VictoryModule } from './victory/victory.module';
 
 @Module({
 
@@ -72,7 +75,10 @@ import { PostModule } from './post/post.module';
     PetitionModule,
     TransactionModule,
     OrganizationModule,
-    PostModule
+    PostModule,
+    EventModule,
+    AdvertModule,
+    VictoryModule
   ],
   controllers: [AppController],
   providers: [AppService],

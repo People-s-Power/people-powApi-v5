@@ -1,0 +1,24 @@
+type Victory {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input CreateVictoryInput {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input UpdateVictoryInput {
+  id: Int!
+}
+
+type Query {
+  victories: [Victory]!
+  victory(id: Int!): Victory
+}
+
+type Mutation {
+  createVictory(createVictoryInput: CreateVictoryInput!): Victory!
+  updateVictory(updateVictoryInput: UpdateVictoryInput!): Victory!
+  removeVictory(id: Int!): Victory
+}
