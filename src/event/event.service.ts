@@ -19,11 +19,14 @@ export class EventService {
   async findAll(
     page?: number,
     limit?: number,
-    filter?: string) {
+    filter?: string,
+    authorId?: string
+    ) {
     const events = await this.eventModel.find({
       ...(filter && {
         $or: [{ name: filter }, { description: filter }, { audience: filter }],
-      })
+      }),
+      ...(authorId && { authorId: authorId }),
     })
     .sort("-createdAt")
       .limit(limit)
@@ -63,6 +66,41 @@ export class EventService {
     )
 
     return result
+  }
+
+
+  async findOne(eventId) {
+    const event = await this.eventModel.findOne({
+      ...(eventId && { _id: eventId })
+    })
+    
+    if (event.author === 'User') {
+      const user = await this.userModel.findById(event.authorId)
+      return {
+        ...event._doc,
+        author: {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          image: user.image
+        },
+        shares: event.shares.length,
+        likes: event.likes.length
+      }
+    }
+
+    const org = await this.orgModel.findById(event.authorId)
+    return {
+      ...event._doc,
+      author: {
+        _id: org._id,
+        name: org.name,
+        email: org.email,
+        image: org.image
+      },
+      shares: event.shares.length,
+      likes: event.likes.length
+    }
   }
 
 
@@ -159,18 +197,62 @@ export class EventService {
     }
 
     const org = await this.orgModel.findById(eventItem.authorId)
-        return {
-          ...eventItem._doc,
-          author: {
-            _id: org._id,
-            name: org.name,
-            email: org.email,
-            image: org.image
-          },
-          shares: eventItem.shares.length,
-          likes: eventItem.likes.length
-        }
+    return {
+      ...eventItem._doc,
+      author: {
+        _id: org._id,
+        name: org.name,
+        email: org.email,
+        image: org.image
+      },
+      shares: eventItem.shares.length,
+      likes: eventItem.likes.length
+    }
 
+  }
+
+  async interested(eventId, authorId, authorImg, name) {
+    const event = await this.eventModel.findById(eventId)
+    if (!event) {
+      throw new NotFoundException('Event not found')
+    }
+    const interested = event.interested
+    interested.push({
+      authorId,
+      authorImg,
+      name
+    })
+    event.interested = interested
+
+    await event.save()
+
+    if (event.author === 'User') {
+      const user = await this.userModel.findById(event.authorId)
+      return {
+        ...event._doc,
+        author: {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          image: user.image
+        },
+        shares: event.shares.length,
+        likes: event.likes.length
+      }
+    }
+
+    const org = await this.orgModel.findById(event.authorId)
+    return {
+      ...event._doc,
+      author: {
+        _id: org._id,
+        name: org.name,
+        email: org.email,
+        image: org.image
+      },
+      shares: event.shares.length,
+      likes: event.likes.length
+    }
   }
 
 

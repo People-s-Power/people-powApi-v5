@@ -32,10 +32,12 @@ export declare class EventService {
     private readonly userModel;
     private readonly orgModel;
     constructor(eventModel: Model<EventDocument>, userModel: Model<UserDocument>, orgModel: Model<organizationDocument>);
-    findAll(page?: number, limit?: number, filter?: string): Promise<any[]>;
+    findAll(page?: number, limit?: number, filter?: string, authorId?: string): Promise<any[]>;
+    findOne(eventId: any): Promise<any>;
     create(data: EventInput, user: any): Promise<any>;
     createOrg(data: EventInput, authorId: any): Promise<any>;
     update(data: EventInput, eventId: any, authorId: any): Promise<any>;
+    interested(eventId: any, authorId: any, authorImg: any, name: any): Promise<any>;
     remove(eventId: any, authorId: any): Promise<import("mongoose").Document<unknown, any, EventDocument> & import("./schema/event.dto").IEvent & Document & {
         _id: any;
         _doc: any;

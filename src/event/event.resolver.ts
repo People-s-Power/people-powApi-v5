@@ -15,6 +15,19 @@ export class EventResolver {
     return events
   }
 
+  @Query('authorEvents')
+  async authorEvents(authorId, page, limit, filter) {
+    console.log(authorId, page, limit, filter)
+    const event = await this.eventService.findAll(page, limit, filter, authorId)
+    return event
+  }
+
+  @Query()
+  async event(@Args('eventId') eventId) {
+    const event = await this.eventService.findOne(eventId)
+    return event
+  }
+
 
 
   @UseGuards(GQLoginGuard)
@@ -28,6 +41,13 @@ export class EventResolver {
   @Mutation('createEventOrg')
   async createEventOrg(@Args() { name, description, time, startDate, endDate, imageFile, type, authorId }) {
     const event = await this.eventService.createOrg({ name, description, time, startDate, endDate, imageFile, type }, authorId)
+    return event
+  }
+
+  @UseGuards(GQLoginGuard)
+  @Mutation()
+  async interested(@Args() { eventId, authorId, authorImg, name }) {
+    const event = await this.eventService.interested(eventId, authorId, authorImg, name)
     return event
   }
 

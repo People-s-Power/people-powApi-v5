@@ -87,7 +87,8 @@ export interface IQuery {
     myAdverts(): Advert[] | Promise<Advert[]>;
     events(page?: Nullable<number>, limit?: Nullable<number>, filter?: Nullable<string>): Event[] | Promise<Event[]>;
     event(eventId: string): Event | Promise<Event>;
-    myEvents(): Event[] | Promise<Event[]>;
+    myEvents(authorId: string, page?: Nullable<number>, limit?: Nullable<number>, filter?: Nullable<string>): Event[] | Promise<Event[]>;
+    authorEvents(authorId: string, page?: Nullable<number>, limit?: Nullable<number>, filter?: Nullable<string>): Event[] | Promise<Event[]>;
     interestedEvent(authorId: string): Event[] | Promise<Event[]>;
     getOrganzations(): Organization[] | Promise<Organization[]>;
     getOrganzation(id: string): Organization | Promise<Organization>;
@@ -130,7 +131,7 @@ export interface IMutation {
     createEvent(name: string, description: string, time: string, startDate: string, endDate: string, imageFile: string, type: string): Event | Promise<Event>;
     createEventOrg(name: string, description: string, time: string, startDate: string, endDate: string, imageFile: string, type: string, authorId: string): Event | Promise<Event>;
     updateEvent(name: string, description: string, time: string, startDate: string, endDate: string, imageFile: string, type: string, eventId: string, authorId: string): Event | Promise<Event>;
-    interested(authorId: string): Event | Promise<Event>;
+    interested(eventId: string, authorId: string, authorImg: string, name: string): Event | Promise<Event>;
     deleteEvent(eventId: string): Nullable<string> | Promise<Nullable<string>>;
     createOrg(input: CreateOrgInput): Organization | Promise<Organization>;
     updateOrganization(input: UpdateInput): Organization | Promise<Organization>;

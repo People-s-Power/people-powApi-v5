@@ -26,10 +26,10 @@ let EventService = class EventService {
         this.userModel = userModel;
         this.orgModel = orgModel;
     }
-    async findAll(page, limit, filter) {
-        const events = await this.eventModel.find(Object.assign({}, (filter && {
+    async findAll(page, limit, filter, authorId) {
+        const events = await this.eventModel.find(Object.assign(Object.assign({}, (filter && {
             $or: [{ name: filter }, { description: filter }, { audience: filter }],
-        })))
+        })), (authorId && { authorId: authorId })))
             .sort("-createdAt")
             .limit(limit)
             .skip(limit * (page - 1))
@@ -53,6 +53,25 @@ let EventService = class EventService {
                 }, shares: item.shares.length, likes: item.likes.length });
         }));
         return result;
+    }
+    async findOne(eventId) {
+        const event = await this.eventModel.findOne(Object.assign({}, (eventId && { _id: eventId })));
+        if (event.author === 'User') {
+            const user = await this.userModel.findById(event.authorId);
+            return Object.assign(Object.assign({}, event._doc), { author: {
+                    _id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    image: user.image
+                }, shares: event.shares.length, likes: event.likes.length });
+        }
+        const org = await this.orgModel.findById(event.authorId);
+        return Object.assign(Object.assign({}, event._doc), { author: {
+                _id: org._id,
+                name: org.name,
+                email: org.email,
+                image: org.image
+            }, shares: event.shares.length, likes: event.likes.length });
     }
     async create(data, user) {
         const image = await (0, cloudinary_1.cloudinaryUpload)(data.imageFile).catch((err) => {
@@ -107,6 +126,36 @@ let EventService = class EventService {
                 email: org.email,
                 image: org.image
             }, shares: eventItem.shares.length, likes: eventItem.likes.length });
+    }
+    async interested(eventId, authorId, authorImg, name) {
+        const event = await this.eventModel.findById(eventId);
+        if (!event) {
+            throw new common_1.NotFoundException('Event not found');
+        }
+        const interested = event.interested;
+        interested.push({
+            authorId,
+            authorImg,
+            name
+        });
+        event.interested = interested;
+        await event.save();
+        if (event.author === 'User') {
+            const user = await this.userModel.findById(event.authorId);
+            return Object.assign(Object.assign({}, event._doc), { author: {
+                    _id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    image: user.image
+                }, shares: event.shares.length, likes: event.likes.length });
+        }
+        const org = await this.orgModel.findById(event.authorId);
+        return Object.assign(Object.assign({}, event._doc), { author: {
+                _id: org._id,
+                name: org.name,
+                email: org.email,
+                image: org.image
+            }, shares: event.shares.length, likes: event.likes.length });
     }
     async remove(eventId, authorId) {
         const event = await this.eventModel.findById(eventId);

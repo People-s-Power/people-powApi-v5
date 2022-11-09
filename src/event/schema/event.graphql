@@ -28,7 +28,7 @@ type Interested {
 type Query {
   events(page: Int, limit: Int, filter: String): [Event!]!
   event(eventId: ID!): Event!
-  myEvents: [Event!]!
+  authorEvents(authorId: ID!, page: Int, limit: Int, filter: String): [Event!]!
   interestedEvent(authorId: ID!): [Event!]!
 }
 
@@ -37,6 +37,6 @@ type Mutation {
   createEvent(name: String!, description: String!, time: String!, startDate: String!, endDate: String!, imageFile: String!, type: String!): Event!
   createEventOrg(name: String!, description: String!, time: String!, startDate: String!, endDate: String!, imageFile: String!, type: String!, authorId: ID!): Event!
   updateEvent(name: String!, description: String!, time: String!, startDate: String!, endDate: String!, imageFile: String!, type: String!, eventId: ID!, authorId: ID!): Event!
-  interested(authorId: ID!): Event!
+  interested(eventId: String!, authorId: ID!, authorImg: String!, name: String!): Event!
   deleteEvent(eventId: ID!): String
 }

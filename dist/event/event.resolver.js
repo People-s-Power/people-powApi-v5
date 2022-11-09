@@ -25,12 +25,25 @@ let EventResolver = class EventResolver {
         const events = await this.eventService.findAll(page, limit, filter);
         return events;
     }
+    async authorEvents(authorId, page, limit, filter) {
+        console.log(authorId, page, limit, filter);
+        const event = await this.eventService.findAll(page, limit, filter, authorId);
+        return event;
+    }
+    async event(eventId) {
+        const event = await this.eventService.findOne(eventId);
+        return event;
+    }
     async createEvent({ name, description, time, startDate, endDate, imageFile, type }, user) {
         const event = await this.eventService.create({ name, description, time, startDate, endDate, imageFile, type }, user);
         return event;
     }
     async createEventOrg({ name, description, time, startDate, endDate, imageFile, type, authorId }) {
         const event = await this.eventService.createOrg({ name, description, time, startDate, endDate, imageFile, type }, authorId);
+        return event;
+    }
+    async interested({ eventId, authorId, authorImg, name }) {
+        const event = await this.eventService.interested(eventId, authorId, authorImg, name);
         return event;
     }
     async updateEvent({ name, description, time, startDate, endDate, imageFile, type, eventId, authorId }) {
@@ -50,6 +63,19 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EventResolver.prototype, "findAll", null);
 __decorate([
+    (0, graphql_1.Query)('authorEvents'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object, Object, Object]),
+    __metadata("design:returntype", Promise)
+], EventResolver.prototype, "authorEvents", null);
+__decorate([
+    (0, graphql_1.Query)(),
+    __param(0, (0, graphql_1.Args)('eventId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], EventResolver.prototype, "event", null);
+__decorate([
     (0, common_1.UseGuards)(graphql_guard_1.GQLoginGuard),
     (0, graphql_1.Mutation)('createEvent'),
     __param(0, (0, graphql_1.Args)()),
@@ -66,6 +92,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], EventResolver.prototype, "createEventOrg", null);
+__decorate([
+    (0, common_1.UseGuards)(graphql_guard_1.GQLoginGuard),
+    (0, graphql_1.Mutation)(),
+    __param(0, (0, graphql_1.Args)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], EventResolver.prototype, "interested", null);
 __decorate([
     (0, common_1.UseGuards)(graphql_guard_1.GQLoginGuard),
     (0, graphql_1.Mutation)(),
