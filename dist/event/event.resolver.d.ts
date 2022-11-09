@@ -17,6 +17,16 @@ export declare class EventResolver {
         imageFile: any;
         type: any;
     }, user: UserDocument): Promise<any>;
+    createEventOrg({ name, description, time, startDate, endDate, imageFile, type, authorId }: {
+        name: any;
+        description: any;
+        time: any;
+        startDate: any;
+        endDate: any;
+        imageFile: any;
+        type: any;
+        authorId: any;
+    }): Promise<any>;
     updateEvent({ name, description, time, startDate, endDate, imageFile, type, eventId, authorId }: {
         name: any;
         description: any;

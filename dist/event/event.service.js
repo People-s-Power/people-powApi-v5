@@ -66,6 +66,22 @@ let EventService = class EventService {
                 image: user.image
             }, shares: event.shares.length, likes: event.likes.length });
     }
+    async createOrg(data, authorId) {
+        const org = await this.orgModel.findById(authorId);
+        if (!org) {
+            throw new common_1.NotFoundException('Orgnaization not found');
+        }
+        const image = await (0, cloudinary_1.cloudinaryUpload)(data.imageFile).catch((err) => {
+            throw err;
+        });
+        const event = await this.eventModel.create(Object.assign(Object.assign({}, data), { image, authorId: org._id, author: 'orgnaization' }));
+        return Object.assign(Object.assign({}, event._doc), { author: {
+                _id: org._id,
+                name: org.name,
+                email: org.email,
+                image: org.image
+            }, shares: event.shares.length, likes: event.likes.length });
+    }
     async update(data, eventId, authorId) {
         const event = await this.eventModel.findById(eventId);
         if (event.authorId.toString() !== authorId.toString()) {

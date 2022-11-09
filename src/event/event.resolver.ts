@@ -25,6 +25,13 @@ export class EventResolver {
   }
 
   @UseGuards(GQLoginGuard)
+  @Mutation('createEventOrg')
+  async createEventOrg(@Args() { name, description, time, startDate, endDate, imageFile, type, authorId }) {
+    const event = await this.eventService.createOrg({ name, description, time, startDate, endDate, imageFile, type }, authorId)
+    return event
+  }
+
+  @UseGuards(GQLoginGuard)
   @Mutation()
   async updateEvent(@Args() { name, description, time, startDate, endDate, imageFile, type, eventId, authorId }){
     const event = await this.eventService.update({ name, description, time, startDate, endDate, imageFile, type }, eventId, authorId)

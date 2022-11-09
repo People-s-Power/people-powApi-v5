@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { organizationDocument, orgnaization } from 'src/organization/schema/organization.schema';
@@ -87,6 +87,36 @@ export class EventService {
         name: user.name,
         email: user.email,
         image: user.image
+      },
+      shares: event.shares.length,
+      likes: event.likes.length
+    }
+
+  }
+
+  async createOrg(data: EventInput, authorId){
+    const org = await this.orgModel.findById(authorId)
+    if (!org) {
+      throw new NotFoundException('Orgnaization not found')
+    }
+    const image = await cloudinaryUpload(data.imageFile).catch((err) => {
+      throw err;
+    });
+
+    const event = await this.eventModel.create({
+      ...data,
+      image,
+      authorId: org._id,
+      author: 'orgnaization'
+    })
+
+    return {
+      ...event._doc,
+      author: {
+        _id: org._id,
+        name: org.name,
+        email: org.email,
+        image: org.image
       },
       shares: event.shares.length,
       likes: event.likes.length

@@ -128,6 +128,7 @@ export interface IMutation {
     updateAd(caption: string, message: string, email: string, duration: string, link: string, action: string, audience: string, imageFile: string): Advert | Promise<Advert>;
     deleteAd(advertId: string): Nullable<Advert> | Promise<Nullable<Advert>>;
     createEvent(name: string, description: string, time: string, startDate: string, endDate: string, imageFile: string, type: string): Event | Promise<Event>;
+    createEventOrg(name: string, description: string, time: string, startDate: string, endDate: string, imageFile: string, type: string, authorId: string): Event | Promise<Event>;
     updateEvent(name: string, description: string, time: string, startDate: string, endDate: string, imageFile: string, type: string, eventId: string, authorId: string): Event | Promise<Event>;
     interested(authorId: string): Event | Promise<Event>;
     deleteEvent(eventId: string): Nullable<string> | Promise<Nullable<string>>;
