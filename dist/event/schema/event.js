@@ -8,8 +8,23 @@ exports.eventSchema = new mongoose_1.Schema({
         required: true,
     },
     description: String,
-    audience: String,
-    authorId: String,
+    audience: {
+        type: String,
+        required: true,
+        enum: ['Everyone', 'Connections', 'Interest', 'Location'],
+        default: 'Everyone'
+    },
+    authorId: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        required: true,
+        refPath: 'author'
+    },
+    author: {
+        type: String,
+        required: true,
+        enum: ['orgnaization', 'User'],
+        default: 'User'
+    },
     endDate: String,
     image: String,
     interested: [],
@@ -20,7 +35,9 @@ exports.eventSchema = new mongoose_1.Schema({
         enum: ['online', 'offline'],
         default: 'offline',
         required: true
-    }
+    },
+    shares: [],
+    likes: []
 });
 exports.event = mongoose_1.default.model('event', exports.eventSchema);
 //# sourceMappingURL=event.js.map

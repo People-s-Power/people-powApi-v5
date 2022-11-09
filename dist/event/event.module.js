@@ -12,13 +12,17 @@ const event_service_1 = require("./event.service");
 const event_resolver_1 = require("./event.resolver");
 const mongoose_1 = require("@nestjs/mongoose");
 const event_1 = require("./schema/event");
+const user_schema_1 = require("../user/entity/user.schema");
+const organization_schema_1 = require("../organization/schema/organization.schema");
 let EventModule = class EventModule {
 };
 EventModule = __decorate([
     (0, common_1.Module)({
         imports: [
             mongoose_1.MongooseModule.forFeature([
-                { name: event_1.event.name, schema: event_1.eventSchema }
+                { name: event_1.event.name, schema: event_1.eventSchema },
+                { name: user_schema_1.User.name, schema: user_schema_1.UserSchema },
+                { name: organization_schema_1.orgnaization.name, schema: organization_schema_1.orgnaizationSchema }
             ])
         ],
         providers: [event_resolver_1.EventResolver, event_service_1.EventService]

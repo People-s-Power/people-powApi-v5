@@ -26,6 +26,6 @@ type Query {
 type Mutation {
   createdAd(caption: String!, message: String!, email: String!, duration: String!, link: String!, action: String!, audience: String!, imageFile: String!): Advert!
   updateAd(caption: String!, message: String!, email: String!, duration: String!, link: String!, action: String!, audience: String!, imageFile: String!): Advert!
-  deleteAd(advertId: ID!) Advert
+  deleteAd(advertId: ID!): Advert
 }
 

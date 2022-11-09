@@ -8,8 +8,23 @@ export const eventSchema: Schema = new Schema<IEvent>({
     required: true,
   },
   description: String,
-  audience: String,
-  authorId: String,
+  audience: {
+    type: String,
+    required: true,
+    enum: ['Everyone', 'Connections', 'Interest', 'Location'],
+    default: 'Everyone'
+  },
+  authorId: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    refPath: 'author'
+  },
+  author: {
+    type: String,
+    required: true,
+    enum: ['orgnaization', 'User'],
+    default: 'User'
+  },
   endDate: String,
   image: String,
   interested: [],
@@ -20,7 +35,15 @@ export const eventSchema: Schema = new Schema<IEvent>({
     enum: ['online', 'offline'],
     default: 'offline',
     required: true
-  }
+  },
+  shares: [],
+  likes: []
 })
 
 export const event = mongoose.model('event', eventSchema) 
+
+export type EventDocument = IEvent &
+  Document & {
+    _id: any;
+    _doc: any;
+  };

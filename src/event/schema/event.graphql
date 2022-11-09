@@ -13,6 +13,7 @@ type Event {
   likes: Int!
   createdAt: Date
   updatedAt: Date
+  authorId: String!
   author: Author!
 }
 
@@ -34,7 +35,8 @@ type Query {
 
 type Mutation {
   createEvent(name: String!, description: String!, time: String!, startDate: String!, endDate: String!, imageFile: String!, type: String!): Event!
-  updateEvent(name: String!, description: String!, time: String!, startDate: String!, endDate: String!, imageFile: String!, type: String!): Event!
+  createEventOrg(name: String!, description: String!, time: String!, startDate: String!, endDate: String!, imageFile: String!, type: String!, authorId: ID!): Event!
+  updateEvent(name: String!, description: String!, time: String!, startDate: String!, endDate: String!, imageFile: String!, type: String!, eventId: ID!, authorId: ID!): Event!
   interested(authorId: ID!): Event!
-  deleteEvent(eventId: ID!): String!
+  deleteEvent(eventId: ID!): String
 }

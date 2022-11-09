@@ -202,7 +202,7 @@ export class PostService {
       const author: Partial<UserDocument | organizationDocument> = post.author || post.org
       if(author?._id.toString() !== authorId) throw new UnauthorizedException('Your not allowed to delete')
 
-      const del = await this.postModel.deleteOne({_di: postId})
+      const del = await this.postModel.deleteOne({_id: postId})
       return del
     } catch (error) {
       throw error

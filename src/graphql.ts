@@ -95,35 +95,20 @@ export interface Advert {
     action: string;
     audience?: Nullable<string>;
     image: string;
-}
-
-export interface Event {
-    _id?: Nullable<string>;
-    name: string;
-    description: string;
-    time: string;
-    image: string;
-    type: string;
-    audience?: Nullable<string>;
-    startDate: string;
-    endDate: string;
-    interested: Interested[];
     shares: number;
     likes: number;
     createdAt?: Nullable<Date>;
     updatedAt?: Nullable<Date>;
-}
-
-export interface Interested {
-    authorId: string;
-    authorImg: string;
-    name: string;
+    author: Author;
 }
 
 export interface IQuery {
+    adverts(page?: Nullable<number>, limit?: Nullable<number>, filter?: Nullable<string>): Advert[] | Promise<Advert[]>;
+    advert(advertId?: Nullable<string>): Advert | Promise<Advert>;
+    myAdverts(): Advert[] | Promise<Advert[]>;
     events(page?: Nullable<number>, limit?: Nullable<number>, filter?: Nullable<string>): Event[] | Promise<Event[]>;
     event(eventId: string): Event | Promise<Event>;
-    createdEvents(): Event[] | Promise<Event[]>;
+    myEvents(): Event[] | Promise<Event[]>;
     interestedEvent(authorId: string): Event[] | Promise<Event[]>;
     getOrganzations(): Organization[] | Promise<Organization[]>;
     getOrganzation(id: string): Organization | Promise<Organization>;
@@ -161,10 +146,13 @@ export interface IQuery {
 }
 
 export interface IMutation {
+    createdAd(caption: string, message: string, email: string, duration: string, link: string, action: string, audience: string, imageFile: string): Advert | Promise<Advert>;
+    updateAd(caption: string, message: string, email: string, duration: string, link: string, action: string, audience: string, imageFile: string): Advert | Promise<Advert>;
+    deleteAd(advertId: string): Nullable<Advert> | Promise<Nullable<Advert>>;
     createEvent(name: string, description: string, time: string, startDate: string, endDate: string, imageFile: string, type: string): Event | Promise<Event>;
-    updateEvent(name: string, description: string, time: string, startDate: string, endDate: string, imageFile: string, type: string): Event | Promise<Event>;
-    interested(authorId?: Nullable<string>): Event | Promise<Event>;
-    deleteEvent(eventId?: Nullable<string>): string | Promise<string>;
+    updateEvent(name: string, description: string, time: string, startDate: string, endDate: string, imageFile: string, type: string, eventId: string, authorId: string): Event | Promise<Event>;
+    interested(authorId: string): Event | Promise<Event>;
+    deleteEvent(eventId: string): Nullable<string> | Promise<Nullable<string>>;
     createOrg(input: CreateOrgInput): Organization | Promise<Organization>;
     updateOrganization(input: UpdateInput): Organization | Promise<Organization>;
     updateImage(input: UploadImageInput): Organization | Promise<Organization>;
@@ -188,6 +176,31 @@ export interface IMutation {
     createVictory(createVictoryInput: CreateVictoryInput): Victory | Promise<Victory>;
     updateVictory(updateVictoryInput: UpdateVictoryInput): Victory | Promise<Victory>;
     removeVictory(id: number): Nullable<Victory> | Promise<Nullable<Victory>>;
+}
+
+export interface Event {
+    _id?: Nullable<string>;
+    name: string;
+    description: string;
+    time: string;
+    image: string;
+    type: string;
+    audience?: Nullable<string>;
+    startDate: string;
+    endDate: string;
+    interested: Interested[];
+    shares: number;
+    likes: number;
+    createdAt?: Nullable<Date>;
+    updatedAt?: Nullable<Date>;
+    authorId: string;
+    author: Author;
+}
+
+export interface Interested {
+    authorId: string;
+    authorImg: string;
+    name: string;
 }
 
 export interface Organization {

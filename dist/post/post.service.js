@@ -168,7 +168,7 @@ let PostService = class PostService {
             const author = post.author || post.org;
             if ((author === null || author === void 0 ? void 0 : author._id.toString()) !== authorId)
                 throw new common_1.UnauthorizedException('Your not allowed to delete');
-            const del = await this.postModel.deleteOne({ _di: postId });
+            const del = await this.postModel.deleteOne({ _id: postId });
             return del;
         }
         catch (error) {
