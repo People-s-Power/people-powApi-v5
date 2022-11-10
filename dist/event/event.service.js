@@ -133,6 +133,10 @@ let EventService = class EventService {
             throw new common_1.NotFoundException('Event not found');
         }
         const interested = event.interested;
+        const alReadyInterested = interested.find(item => item.authorId.toString() === authorId.toString());
+        if (alReadyInterested) {
+            throw new common_1.BadRequestException('Already interested');
+        }
         interested.push({
             authorId,
             authorImg,

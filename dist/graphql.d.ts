@@ -77,17 +77,17 @@ export interface Advert {
     image: string;
     shares: number;
     likes: number;
+    authorId: string;
+    author: Author;
     createdAt?: Nullable<Date>;
     updatedAt?: Nullable<Date>;
-    author: Author;
 }
 export interface IQuery {
     adverts(page?: Nullable<number>, limit?: Nullable<number>, filter?: Nullable<string>): Advert[] | Promise<Advert[]>;
     advert(advertId?: Nullable<string>): Advert | Promise<Advert>;
-    myAdverts(): Advert[] | Promise<Advert[]>;
+    myAdverts(authorId: string): Advert[] | Promise<Advert[]>;
     events(page?: Nullable<number>, limit?: Nullable<number>, filter?: Nullable<string>): Event[] | Promise<Event[]>;
     event(eventId: string): Event | Promise<Event>;
-    myEvents(authorId: string, page?: Nullable<number>, limit?: Nullable<number>, filter?: Nullable<string>): Event[] | Promise<Event[]>;
     authorEvents(authorId: string, page?: Nullable<number>, limit?: Nullable<number>, filter?: Nullable<string>): Event[] | Promise<Event[]>;
     interestedEvent(authorId: string): Event[] | Promise<Event[]>;
     getOrganzations(): Organization[] | Promise<Organization[]>;
@@ -126,7 +126,8 @@ export interface IQuery {
 }
 export interface IMutation {
     createdAd(caption: string, message: string, email: string, duration: string, link: string, action: string, audience: string, imageFile: string): Advert | Promise<Advert>;
-    updateAd(caption: string, message: string, email: string, duration: string, link: string, action: string, audience: string, imageFile: string): Advert | Promise<Advert>;
+    createdAdOrg(caption: string, message: string, email: string, duration: string, link: string, action: string, audience: string, imageFile: string, authorId: string): Advert | Promise<Advert>;
+    updateAd(caption: string, message: string, email: string, duration: string, link: string, action: string, audience: string, imageFile: string, advertId: string, authorId: string): Advert | Promise<Advert>;
     deleteAd(advertId: string): Nullable<Advert> | Promise<Nullable<Advert>>;
     createEvent(name: string, description: string, time: string, startDate: string, endDate: string, imageFile: string, type: string): Event | Promise<Event>;
     createEventOrg(name: string, description: string, time: string, startDate: string, endDate: string, imageFile: string, type: string, authorId: string): Event | Promise<Event>;

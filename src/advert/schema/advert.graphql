@@ -10,22 +10,24 @@ type Advert {
   image: String!
   shares: Int!
   likes: Int!
+  authorId: ID!
+  author: Author!
   createdAt: Date
   updatedAt: Date
-  author: Author!
 }
 
 
 type Query {
   adverts(page: Int, limit: Int, filter: String): [Advert!]!
   advert(advertId: ID): Advert!
-  myAdverts: [Advert!]!
+  myAdverts(authorId: ID!): [Advert!]!
 }
 
 
 type Mutation {
   createdAd(caption: String!, message: String!, email: String!, duration: String!, link: String!, action: String!, audience: String!, imageFile: String!): Advert!
-  updateAd(caption: String!, message: String!, email: String!, duration: String!, link: String!, action: String!, audience: String!, imageFile: String!): Advert!
+  createdAdOrg(caption: String!, message: String!, email: String!, duration: String!, link: String!, action: String!, audience: String!, imageFile: String!, authorId: ID!): Advert!
+  updateAd(caption: String!, message: String!, email: String!, duration: String!, link: String!, action: String!, audience: String!, imageFile: String!, advertId: ID!, authorId: ID!): Advert!
   deleteAd(advertId: ID!): Advert
 }
 
