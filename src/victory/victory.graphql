@@ -1,24 +1,23 @@
 type Victory {
-  # Example field (placeholder)
-  exampleField: Int
-}
-
-input CreateVictoryInput {
-  # Example field (placeholder)
-  exampleField: Int
-}
-
-input UpdateVictoryInput {
-  id: Int!
+  _id: ID!
+  body: String!
+  image: String!
+  author: Author!
+  shares: Int!
+  likes: Int!
+  createdAt: Date
+  updatedAt: Date
+  authorId: String!
 }
 
 type Query {
-  victories: [Victory]!
-  victory(id: Int!): Victory
+  victories(page: Int, limit: Int, filter: String): [Victory]!
+  victory(id: ID!): Victory
+  myVictories(authorId: ID!): [Victory]!
 }
 
 type Mutation {
-  createVictory(createVictoryInput: CreateVictoryInput!): Victory!
-  updateVictory(updateVictoryInput: UpdateVictoryInput!): Victory!
-  removeVictory(id: Int!): Victory
+  createVictory(body: String!, authorId: ID!): Victory!
+  updateVictory(body: String!, authorId: ID): Victory!
+  removeVictory(id: ID!): Victory
 }

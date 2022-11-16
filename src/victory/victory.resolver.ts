@@ -1,31 +1,39 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { VictoryService } from './victory.service';
-import { CreateVictoryInput } from './dto/create-victory.input';
-import { UpdateVictoryInput } from './dto/update-victory.input';
 
 @Resolver('Victory')
 export class VictoryResolver {
   constructor(private readonly victoryService: VictoryService) {}
 
   @Mutation('createVictory')
-  create(@Args('createVictoryInput') createVictoryInput: CreateVictoryInput) {
-    return this.victoryService.create(createVictoryInput);
+  async createVictory(@Args() { body, authorId }) {
+    const victory =  await this.victoryService.create(body, authorId);
+    return victory
   }
 
   @Query('victories')
-  findAll() {
-    return this.victoryService.findAll();
+  async findAll(@Args() { page, limit, filter }) {
+    const victories = await this.victoryService.findAll(page, limit, filter);
+    return victories
   }
 
   @Query('victory')
-  findOne(@Args('id') id: number) {
-    return this.victoryService.findOne(id);
+  async findOne(@Args('id') id: string) {
+    const victory = await this.victoryService.findOne(id);
+    return victory
   }
 
-  @Mutation('updateVictory')
-  update(@Args('updateVictoryInput') updateVictoryInput: UpdateVictoryInput) {
-    return this.victoryService.update(updateVictoryInput.id, updateVictoryInput);
+  @Query('myVictories')
+  async myVictories(authorId, page, limit, filter) {
+    console.log(authorId, page, limit, filter)
+    const victories = await this.victoryService.findAll(page, limit, filter, authorId)
+    return victories
   }
+
+  // @Mutation('updateVictory')
+  // update(@Args('updateVictoryInput') updateVictoryInput: UpdateVictoryInput) {
+  //   return this.victoryService.update(updateVictoryInput.id, updateVictoryInput);
+  // }
 
   @Mutation('removeVictory')
   remove(@Args('id') id: number) {

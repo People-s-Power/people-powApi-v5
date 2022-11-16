@@ -59,12 +59,6 @@ export interface UserInput {
     isActive?: Nullable<boolean>;
     name?: Nullable<string>;
 }
-export interface CreateVictoryInput {
-    exampleField?: Nullable<number>;
-}
-export interface UpdateVictoryInput {
-    id: number;
-}
 export interface Advert {
     _id?: Nullable<string>;
     caption: string;
@@ -121,8 +115,9 @@ export interface IQuery {
     getTopReps(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
     getMyUsers(search?: Nullable<string>): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
     seedUsers(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
-    victories(): Nullable<Victory>[] | Promise<Nullable<Victory>[]>;
-    victory(id: number): Nullable<Victory> | Promise<Nullable<Victory>>;
+    victories(page?: Nullable<number>, limit?: Nullable<number>, filter?: Nullable<string>): Nullable<Victory>[] | Promise<Nullable<Victory>[]>;
+    victory(id: string): Nullable<Victory> | Promise<Nullable<Victory>>;
+    myVictories(authorId: string): Nullable<Victory>[] | Promise<Nullable<Victory>[]>;
 }
 export interface IMutation {
     createdAd(caption: string, message: string, email: string, duration: string, link: string, action: string, audience: string, imageFile: string): Advert | Promise<Advert>;
@@ -154,9 +149,9 @@ export interface IMutation {
     deleteUser(id?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
     deleteManyUser(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
     updateUser(input?: Nullable<UserInput>): Nullable<User> | Promise<Nullable<User>>;
-    createVictory(createVictoryInput: CreateVictoryInput): Victory | Promise<Victory>;
-    updateVictory(updateVictoryInput: UpdateVictoryInput): Victory | Promise<Victory>;
-    removeVictory(id: number): Nullable<Victory> | Promise<Nullable<Victory>>;
+    createVictory(body: string, authorId: string): Victory | Promise<Victory>;
+    updateVictory(body: string, authorId?: Nullable<string>): Victory | Promise<Victory>;
+    removeVictory(id: string): Nullable<Victory> | Promise<Nullable<Victory>>;
 }
 export interface Event {
     _id?: Nullable<string>;
@@ -311,7 +306,15 @@ export interface User {
     myUsers?: Nullable<Nullable<User>[]>;
 }
 export interface Victory {
-    exampleField?: Nullable<number>;
+    _id: string;
+    body: string;
+    image: string;
+    author: Author;
+    shares: number;
+    likes: number;
+    createdAt?: Nullable<Date>;
+    updatedAt?: Nullable<Date>;
+    authorId: string;
 }
 export declare type Upload = any;
 declare type Nullable<T> = T | null;

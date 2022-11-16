@@ -15,23 +15,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.VictoryResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const victory_service_1 = require("./victory.service");
-const create_victory_input_1 = require("./dto/create-victory.input");
-const update_victory_input_1 = require("./dto/update-victory.input");
 let VictoryResolver = class VictoryResolver {
     constructor(victoryService) {
         this.victoryService = victoryService;
     }
-    create(createVictoryInput) {
-        return this.victoryService.create(createVictoryInput);
+    async createVictory({ body, authorId }) {
+        const victory = await this.victoryService.create(body, authorId);
+        return victory;
     }
-    findAll() {
-        return this.victoryService.findAll();
+    async findAll({ page, limit, filter }) {
+        const victories = await this.victoryService.findAll(page, limit, filter);
+        return victories;
     }
-    findOne(id) {
-        return this.victoryService.findOne(id);
+    async findOne(id) {
+        const victory = await this.victoryService.findOne(id);
+        return victory;
     }
-    update(updateVictoryInput) {
-        return this.victoryService.update(updateVictoryInput.id, updateVictoryInput);
+    async myVictories(authorId, page, limit, filter) {
+        console.log(authorId, page, limit, filter);
+        const victories = await this.victoryService.findAll(page, limit, filter, authorId);
+        return victories;
     }
     remove(id) {
         return this.victoryService.remove(id);
@@ -39,31 +42,31 @@ let VictoryResolver = class VictoryResolver {
 };
 __decorate([
     (0, graphql_1.Mutation)('createVictory'),
-    __param(0, (0, graphql_1.Args)('createVictoryInput')),
+    __param(0, (0, graphql_1.Args)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_victory_input_1.CreateVictoryInput]),
-    __metadata("design:returntype", void 0)
-], VictoryResolver.prototype, "create", null);
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], VictoryResolver.prototype, "createVictory", null);
 __decorate([
     (0, graphql_1.Query)('victories'),
+    __param(0, (0, graphql_1.Args)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
 ], VictoryResolver.prototype, "findAll", null);
 __decorate([
     (0, graphql_1.Query)('victory'),
     __param(0, (0, graphql_1.Args)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
 ], VictoryResolver.prototype, "findOne", null);
 __decorate([
-    (0, graphql_1.Mutation)('updateVictory'),
-    __param(0, (0, graphql_1.Args)('updateVictoryInput')),
+    (0, graphql_1.Query)('myVictories'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [update_victory_input_1.UpdateVictoryInput]),
-    __metadata("design:returntype", void 0)
-], VictoryResolver.prototype, "update", null);
+    __metadata("design:paramtypes", [Object, Object, Object, Object]),
+    __metadata("design:returntype", Promise)
+], VictoryResolver.prototype, "myVictories", null);
 __decorate([
     (0, graphql_1.Mutation)('removeVictory'),
     __param(0, (0, graphql_1.Args)('id')),
