@@ -32,6 +32,14 @@ export class AdvertResolver {
 
   @UseGuards(GQLoginGuard)
   @Mutation()
+  async createdAdOrg(@Args() { caption, message, email, duration, link, action, audience, imageFile, authorId }) {
+    const advert = await this.advertService.createOrg({ caption, message, email, duration, link, action, audience, imageFile }, authorId)
+
+    return advert
+  }
+
+  @UseGuards(GQLoginGuard)
+  @Mutation()
   async updateAd(@Args() { caption, message, email, duration, link, action, audience, imageFile, advertId, authorId }) {
     const advert = await this.advertService.update({ caption, message, email, duration, link, action, audience, imageFile }, advertId, authorId)
 

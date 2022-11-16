@@ -33,6 +33,10 @@ let AdvertResolver = class AdvertResolver {
         const advert = await this.advertService.create({ caption, message, email, duration, link, action, audience, imageFile }, user);
         return advert;
     }
+    async createdAdOrg({ caption, message, email, duration, link, action, audience, imageFile, authorId }) {
+        const advert = await this.advertService.createOrg({ caption, message, email, duration, link, action, audience, imageFile }, authorId);
+        return advert;
+    }
     async updateAd({ caption, message, email, duration, link, action, audience, imageFile, advertId, authorId }) {
         const advert = await this.advertService.update({ caption, message, email, duration, link, action, audience, imageFile }, advertId, authorId);
         return advert;
@@ -61,6 +65,14 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], AdvertResolver.prototype, "createdAd", null);
+__decorate([
+    (0, common_1.UseGuards)(graphql_guard_1.GQLoginGuard),
+    (0, graphql_1.Mutation)(),
+    __param(0, (0, graphql_1.Args)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AdvertResolver.prototype, "createdAdOrg", null);
 __decorate([
     (0, common_1.UseGuards)(graphql_guard_1.GQLoginGuard),
     (0, graphql_1.Mutation)(),
