@@ -24,23 +24,23 @@
 
 
 
-# FROM node:16-alpine
+FROM node:16-alpine
 
-# # RUN mkdir /usr/src/app
+# RUN mkdir /usr/src/app
 
-# RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
-# WORKDIR /home/node/app
+WORKDIR /home/node/app
 
-# COPY package*.json ./
+COPY package*.json ./
 
-# USER node
+USER node
 
-# RUN npm install
+RUN npm install
 
-# COPY --chown=node:node . .
+COPY --chown=node:node . .
 
-# EXPOSE 8080
+EXPOSE 8080
 
-# CMD [ "yarn", "dev" ]
+CMD [ "yarn", "dev" ]
 
