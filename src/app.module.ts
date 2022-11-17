@@ -20,6 +20,7 @@ import { PostModule } from './post/post.module';
 import { EventModule } from './event/event.module';
 import { AdvertModule } from './advert/advert.module';
 import { VictoryModule } from './victory/victory.module';
+import { GeneralModule } from './general/general.module';
 
 @Module({
 
@@ -78,7 +79,8 @@ import { VictoryModule } from './victory/victory.module';
     PostModule,
     EventModule,
     AdvertModule,
-    VictoryModule
+    VictoryModule,
+    GeneralModule
   ],
   controllers: [AppController],
   providers: [AppService],

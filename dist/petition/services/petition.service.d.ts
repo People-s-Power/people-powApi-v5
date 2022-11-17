@@ -8,6 +8,7 @@ import { PetitionGateway } from '../gateway/petition.gateway';
 import { Petition, PetitionDocument, ViewDocument } from '../schema/petition.schema';
 import { Endorsement } from '../schema/endorsement.schema';
 import { ClientProxy } from '@nestjs/microservices';
+import { ReqWithUser } from 'src/typings';
 export declare class ISessionResponseData {
     id: any;
     user: string;
@@ -22,13 +23,14 @@ export declare class PetitionService {
     private readonly noticeModel;
     private PetitionGateway;
     private connection;
+    private readonly req;
     logger: Logger;
-    constructor(client: ClientProxy, userModel: Model<UserDocument>, viewModel: Model<ViewDocument>, PetitionModel: Model<PetitionDocument>, endorsementModel: Model<Endorsement>, noticeModel: Model<NoticeDocument>, PetitionGateway: PetitionGateway, connection: Connection);
+    constructor(client: ClientProxy, userModel: Model<UserDocument>, viewModel: Model<ViewDocument>, PetitionModel: Model<PetitionDocument>, endorsementModel: Model<Endorsement>, noticeModel: Model<NoticeDocument>, PetitionGateway: PetitionGateway, connection: Connection, req: ReqWithUser | any);
     create(data: CreatePetitionDTO, user: UserDocument): Promise<Petition>;
     createForOrg(data: CreatePetitionOrgDTO): Promise<Petition>;
     findAll(region?: string, limit?: number): Promise<Petition[]>;
     findAllOtherRegions(limit?: number): Promise<Petition[]>;
-    findAllActive(region: string, limit?: number): Promise<Petition[]>;
+    findAllActive(limit?: number): Promise<Petition[]>;
     findAllActiveOtherRegions(region: string, limit?: number): Promise<Petition[]>;
     findOne(slug: string): Promise<PetitionDocument>;
     update(data: Partial<UpdatePetitionDTO>): Promise<Petition>;

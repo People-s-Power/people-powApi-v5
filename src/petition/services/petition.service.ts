@@ -20,6 +20,8 @@ import { Petition, PetitionDocument, View, ViewDocument } from '../schema/petiti
 import { Endorsement } from '../schema/endorsement.schema';
 import { ClientProxy } from '@nestjs/microservices';
 import { UserController } from 'src/user/controllers/user.controller';
+import { REQUEST } from '@nestjs/core';
+import { ReqWithUser } from 'src/typings';
 // import { viewCampMail, updateCampMail } from  '../../utils/sendMaijet'
 
 export class ISessionResponseData {
@@ -43,6 +45,7 @@ export class PetitionService {
     private readonly noticeModel: Model<NoticeDocument>,
     private PetitionGateway: PetitionGateway,
     @InjectConnection() private connection: Connection,
+    @Inject(REQUEST) private readonly req: ReqWithUser | any,
   ) {
     this.logger = new Logger()
   }
@@ -165,12 +168,13 @@ export class PetitionService {
   async findAll(region?: string, limit?: number, ): Promise<Petition[]> {
     try {
       const petitions = await this.PetitionModel
-        .find({ region: region })
+        .find()
         .sort({ createdAt: -1 })
         .limit(limit)
         .populate('endorsements', 'id')
         .populate('views');
 
+        console.log(petitions)
       return petitions as unknown as Promise<PetitionDocument[]>;
     } catch (error) {
       throw error;
@@ -192,7 +196,9 @@ export class PetitionService {
     }
   }
 
-  async findAllActive(region: string, limit?: number): Promise<Petition[]> {
+  async findAllActive(limit?: number): Promise<Petition[]> {
+    const location = this.req.location;
+    const region = location.country_name
     try {
       const petitions = await this.PetitionModel
         .find({ status: PetitionStatusEnum.Active })

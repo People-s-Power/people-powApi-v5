@@ -27,6 +27,7 @@ const post_module_1 = require("./post/post.module");
 const event_module_1 = require("./event/event.module");
 const advert_module_1 = require("./advert/advert.module");
 const victory_module_1 = require("./victory/victory.module");
+const general_module_1 = require("./general/general.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -74,7 +75,8 @@ AppModule = __decorate([
             post_module_1.PostModule,
             event_module_1.EventModule,
             advert_module_1.AdvertModule,
-            victory_module_1.VictoryModule
+            victory_module_1.VictoryModule,
+            general_module_1.GeneralModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

@@ -24,11 +24,12 @@ const petition_gateway_1 = require("../gateway/petition.gateway");
 const petition_schema_1 = require("../schema/petition.schema");
 const endorsement_schema_1 = require("../schema/endorsement.schema");
 const microservices_1 = require("@nestjs/microservices");
+const core_1 = require("@nestjs/core");
 class ISessionResponseData {
 }
 exports.ISessionResponseData = ISessionResponseData;
 let PetitionService = class PetitionService {
-    constructor(client, userModel, viewModel, PetitionModel, endorsementModel, noticeModel, PetitionGateway, connection) {
+    constructor(client, userModel, viewModel, PetitionModel, endorsementModel, noticeModel, PetitionGateway, connection, req) {
         this.client = client;
         this.userModel = userModel;
         this.viewModel = viewModel;
@@ -37,6 +38,7 @@ let PetitionService = class PetitionService {
         this.noticeModel = noticeModel;
         this.PetitionGateway = PetitionGateway;
         this.connection = connection;
+        this.req = req;
         this.logger = new common_1.Logger();
     }
     async create(data, user) {
@@ -110,11 +112,12 @@ let PetitionService = class PetitionService {
     async findAll(region, limit) {
         try {
             const petitions = await this.PetitionModel
-                .find({ region: region })
+                .find()
                 .sort({ createdAt: -1 })
                 .limit(limit)
                 .populate('endorsements', 'id')
                 .populate('views');
+            console.log(petitions);
             return petitions;
         }
         catch (error) {
@@ -135,7 +138,9 @@ let PetitionService = class PetitionService {
             throw error;
         }
     }
-    async findAllActive(region, limit) {
+    async findAllActive(limit) {
+        const location = this.req.location;
+        const region = location.country_name;
         try {
             const petitions = await this.PetitionModel
                 .find({ status: petition_interface_1.PetitionStatusEnum.Active })
@@ -366,6 +371,7 @@ PetitionService = __decorate([
     __param(4, (0, mongoose_1.InjectModel)(endorsement_schema_1.Endorsement.name)),
     __param(5, (0, mongoose_1.InjectModel)(notification_schema_1.Notice.name)),
     __param(7, (0, mongoose_1.InjectConnection)()),
+    __param(8, (0, common_1.Inject)(core_1.REQUEST)),
     __metadata("design:paramtypes", [microservices_1.ClientProxy,
         mongoose_2.Model,
         mongoose_2.Model,
@@ -373,7 +379,7 @@ PetitionService = __decorate([
         mongoose_2.Model,
         mongoose_2.Model,
         petition_gateway_1.PetitionGateway,
-        mongoose_2.Connection])
+        mongoose_2.Connection, Object])
 ], PetitionService);
 exports.PetitionService = PetitionService;
 //# sourceMappingURL=petition.service.js.map

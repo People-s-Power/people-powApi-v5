@@ -1,0 +1,27 @@
+type General {
+  adverts: [Advert!]!
+  events: [Event!]!
+  petitions: [Petition!]!
+  posts: [Post!]!
+  victories: [Victory!]!
+}
+
+input CreateGeneralInput {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input UpdateGeneralInput {
+  id: Int!
+}
+
+type Query {
+  general: General!
+  testOFGen: General!
+}
+
+type Mutation {
+  createGeneral(createGeneralInput: CreateGeneralInput!): General!
+  updateGeneral(updateGeneralInput: UpdateGeneralInput!): General!
+  removeGeneral(id: Int!): General
+}

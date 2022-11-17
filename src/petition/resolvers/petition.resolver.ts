@@ -1,4 +1,5 @@
-import { UseGuards } from '@nestjs/common';
+import { UseGuards,
+  Inject } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CurrentUser, GQLGuard, GQLoginGuard, locationGLQ } from 'src/auth/guards/graphql.guard';
 import { UserDocument } from 'src/user/entity/user.schema';
@@ -39,9 +40,8 @@ export class PetitionResolver {
     return await this.petitionService.findOne(slug);
   }
   @Query()
-  async getActivePetitions(@Args('limit') limit: number, @locationGLQ() location) {
-    const region = location.country_name
-    return await this.petitionService.findAllActive(region);
+  async getActivePetitions(@Args('limit') limit: number, ) {
+    return await this.petitionService.findAllActive();
   }
 
   @Query()

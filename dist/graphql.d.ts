@@ -1,3 +1,9 @@
+export interface CreateGeneralInput {
+    exampleField?: Nullable<number>;
+}
+export interface UpdateGeneralInput {
+    id: number;
+}
 export interface CreateOrgInput {
     name: string;
     email: string;
@@ -84,6 +90,8 @@ export interface IQuery {
     event(eventId: string): Event | Promise<Event>;
     authorEvents(authorId: string, page?: Nullable<number>, limit?: Nullable<number>, filter?: Nullable<string>): Event[] | Promise<Event[]>;
     interestedEvent(authorId: string): Event[] | Promise<Event[]>;
+    general(): General | Promise<General>;
+    testOFGen(): General | Promise<General>;
     getOrganzations(): Organization[] | Promise<Organization[]>;
     getOrganzation(id: string): Organization | Promise<Organization>;
     getUserOrganizations(id: string): Organization[] | Promise<Organization[]>;
@@ -129,6 +137,9 @@ export interface IMutation {
     updateEvent(name: string, description: string, time: string, startDate: string, endDate: string, imageFile: string, type: string, eventId: string, authorId: string): Event | Promise<Event>;
     interested(eventId: string, authorId: string, authorImg: string, name: string): Event | Promise<Event>;
     deleteEvent(eventId: string): Nullable<string> | Promise<Nullable<string>>;
+    createGeneral(createGeneralInput: CreateGeneralInput): General | Promise<General>;
+    updateGeneral(updateGeneralInput: UpdateGeneralInput): General | Promise<General>;
+    removeGeneral(id: number): Nullable<General> | Promise<Nullable<General>>;
     createOrg(input: CreateOrgInput): Organization | Promise<Organization>;
     updateOrganization(input: UpdateInput): Organization | Promise<Organization>;
     updateImage(input: UploadImageInput): Organization | Promise<Organization>;
@@ -175,6 +186,13 @@ export interface Interested {
     authorId: string;
     authorImg: string;
     name: string;
+}
+export interface General {
+    adverts: Advert[];
+    events: Event[];
+    petitions: Petition[];
+    posts: Post[];
+    victories: Victory[];
 }
 export interface Organization {
     _id: string;

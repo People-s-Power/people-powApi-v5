@@ -9,7 +9,7 @@ export declare class PetitionResolver {
     getPetitions(limit: number, location: any): Promise<import("../schema/petition.schema").Petition[]>;
     getPetitionsOtherRegion(): Promise<import("../schema/petition.schema").Petition[]>;
     getPetition(slug: string): Promise<import("../schema/petition.schema").PetitionDocument>;
-    getActivePetitions(limit: number, location: any): Promise<import("../schema/petition.schema").Petition[]>;
+    getActivePetitions(limit: number): Promise<import("../schema/petition.schema").Petition[]>;
     getActivePetitionsOtherRegion(limit: number, location: any): Promise<(region: string, limit?: number) => Promise<import("../schema/petition.schema").Petition[]>>;
     deletePetition(id: string): Promise<import("../schema/petition.schema").PetitionDocument>;
 }

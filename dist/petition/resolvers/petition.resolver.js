@@ -36,9 +36,8 @@ let PetitionResolver = class PetitionResolver {
     async getPetition(slug) {
         return await this.petitionService.findOne(slug);
     }
-    async getActivePetitions(limit, location) {
-        const region = location.country_name;
-        return await this.petitionService.findAllActive(region);
+    async getActivePetitions(limit) {
+        return await this.petitionService.findAllActive();
     }
     async getActivePetitionsOtherRegion(limit, location) {
         const region = location.country_name;
@@ -80,9 +79,8 @@ __decorate([
 __decorate([
     (0, graphql_1.Query)(),
     __param(0, (0, graphql_1.Args)('limit')),
-    __param(1, (0, graphql_guard_1.locationGLQ)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Object]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], PetitionResolver.prototype, "getActivePetitions", null);
 __decorate([
