@@ -50,4 +50,10 @@ export class GeneralResolver {
     return like
   }
 
+  @Mutation()
+  async unlike(@Args() { authorId, itemId }) {
+    const like = await this.generalService.unlike(itemId, authorId)
+    return like
+  }
+
 }

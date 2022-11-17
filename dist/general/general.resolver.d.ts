@@ -22,5 +22,9 @@ export declare class GeneralResolver {
     like({ authorId, itemId }: {
         authorId: any;
         itemId: any;
-    }): Promise<string>;
+    }): Promise<"Sucess" | "Failed">;
+    unlike({ authorId, itemId }: {
+        authorId: any;
+        itemId: any;
+    }): Promise<"Unliked!!" | "Failed!">;
 }
