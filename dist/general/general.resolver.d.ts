@@ -1,6 +1,4 @@
 import { GeneralService } from './general.service';
-import { CreateGeneralInput } from './dto/create-general.input';
-import { UpdateGeneralInput } from './dto/update-general.input';
 import { VictoryService } from 'src/victory/victory.service';
 import { PostService } from 'src/post/post.service';
 import { PetitionService } from 'src/petition/services/petition.service';
@@ -14,14 +12,6 @@ export declare class GeneralResolver {
     private readonly eventService;
     private readonly advertService;
     constructor(generalService: GeneralService, victoryService: VictoryService, postService: PostService, petitionService: PetitionService, eventService: EventService, advertService: AdvertService);
-    create(createGeneralInput: CreateGeneralInput): string;
-    testOFGen(): Promise<{
-        adverts: any[];
-        events: any[];
-        petitions: import("../petition/schema/petition.schema").Petition[];
-        posts: import("../post/schema/post.schema").PostDocument[];
-        victories: any[];
-    }>;
     general(): Promise<{
         adverts: any[];
         events: any[];
@@ -29,6 +19,8 @@ export declare class GeneralResolver {
         posts: import("../post/schema/post.schema").PostDocument[];
         victories: any[];
     }>;
-    update(updateGeneralInput: UpdateGeneralInput): string;
-    remove(id: number): string;
+    like({ authorId, itemId }: {
+        authorId: any;
+        itemId: any;
+    }): Promise<string>;
 }

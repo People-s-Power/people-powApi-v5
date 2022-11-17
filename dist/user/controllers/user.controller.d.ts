@@ -59,7 +59,7 @@ export declare class UserController {
     } & {
         _id: import("mongoose").Types.ObjectId;
     }>;
-    seedUser(): Promise<(Omit<any, keyof import("../entity/user.schema").User | "_doc" | keyof import("mongoose").Document<any, any, any>> & import("../entity/user.schema").User & import("mongoose").Document<any, any, any> & {
+    seedUser(): Promise<(Omit<any, keyof import("../entity/user.schema").User | keyof import("mongoose").Document<any, any, any> | "_doc"> & import("../entity/user.schema").User & import("mongoose").Document<any, any, any> & {
         _id: any;
         _doc: any;
     } & {

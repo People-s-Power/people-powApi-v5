@@ -6,13 +6,14 @@ type General {
   victories: [Victory!]!
 }
 
-input CreateGeneralInput {
-  # Example field (placeholder)
-  exampleField: Int
+input ShareInput {
+  authorId: ID!
+  itemId: ID!
 }
 
-input UpdateGeneralInput {
-  id: Int!
+input LikeInput {
+  authorId: ID!
+  itemId: ID!
 }
 
 type Query {
@@ -21,7 +22,8 @@ type Query {
 }
 
 type Mutation {
-  createGeneral(createGeneralInput: CreateGeneralInput!): General!
-  updateGeneral(updateGeneralInput: UpdateGeneralInput!): General!
-  removeGeneral(id: Int!): General
+  share(authorId: ID! itemId: ID!): General!
+  like(authorId: ID! itemId: ID!): String!
+  unlike(authorId: ID! itemId: ID!): String!
+  comment(authorId: ID! itemId: ID!): General
 }

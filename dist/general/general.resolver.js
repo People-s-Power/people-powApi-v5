@@ -15,8 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GeneralResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const general_service_1 = require("./general.service");
-const create_general_input_1 = require("./dto/create-general.input");
-const update_general_input_1 = require("./dto/update-general.input");
 const victory_service_1 = require("../victory/victory.service");
 const post_service_1 = require("../post/post.service");
 const petition_service_1 = require("../petition/services/petition.service");
@@ -31,35 +29,7 @@ let GeneralResolver = class GeneralResolver {
         this.eventService = eventService;
         this.advertService = advertService;
     }
-    create(createGeneralInput) {
-        return this.generalService.create(createGeneralInput);
-    }
-    async testOFGen() {
-        console.log('Fires cool');
-        const [victories, adverts, posts, petitions, events] = await Promise.all([
-            this.victoryService.findAll(),
-            this.advertService.findAll(),
-            this.postService.findAll(),
-            this.petitionService.findAll(),
-            this.eventService.findAll(),
-        ]);
-        console.log({
-            victories: victories.length,
-            adverts: adverts.length,
-            petitions: petitions.length,
-            events: events.length,
-            posts: posts.length
-        });
-        return {
-            adverts,
-            events,
-            petitions,
-            posts,
-            victories
-        };
-    }
     async general() {
-        console.log('Fires cool');
         const [victories, adverts, posts, petitions, events] = await Promise.all([
             this.victoryService.findAll(),
             this.advertService.findAll(),
@@ -67,13 +37,6 @@ let GeneralResolver = class GeneralResolver {
             this.petitionService.findAll(),
             this.eventService.findAll(),
         ]);
-        console.log({
-            victories: victories.length,
-            adverts: adverts.length,
-            petitions: petitions.length,
-            events: events.length,
-            posts: posts.length
-        });
         return {
             adverts,
             events,
@@ -82,26 +45,11 @@ let GeneralResolver = class GeneralResolver {
             victories
         };
     }
-    update(updateGeneralInput) {
-        return this.generalService.update(updateGeneralInput.id, updateGeneralInput);
-    }
-    remove(id) {
-        return this.generalService.remove(id);
+    async like({ authorId, itemId }) {
+        const like = await this.generalService.like(itemId, authorId);
+        return like;
     }
 };
-__decorate([
-    (0, graphql_1.Mutation)('createGeneral'),
-    __param(0, (0, graphql_1.Args)('createGeneralInput')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_general_input_1.CreateGeneralInput]),
-    __metadata("design:returntype", void 0)
-], GeneralResolver.prototype, "create", null);
-__decorate([
-    (0, graphql_1.Query)('testOFGen'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], GeneralResolver.prototype, "testOFGen", null);
 __decorate([
     (0, graphql_1.Query)('general'),
     __metadata("design:type", Function),
@@ -109,19 +57,12 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], GeneralResolver.prototype, "general", null);
 __decorate([
-    (0, graphql_1.Mutation)('updateGeneral'),
-    __param(0, (0, graphql_1.Args)('updateGeneralInput')),
+    (0, graphql_1.Mutation)(),
+    __param(0, (0, graphql_1.Args)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [update_general_input_1.UpdateGeneralInput]),
-    __metadata("design:returntype", void 0)
-], GeneralResolver.prototype, "update", null);
-__decorate([
-    (0, graphql_1.Mutation)('removeGeneral'),
-    __param(0, (0, graphql_1.Args)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", void 0)
-], GeneralResolver.prototype, "remove", null);
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], GeneralResolver.prototype, "like", null);
 GeneralResolver = __decorate([
     (0, graphql_1.Resolver)('General'),
     __metadata("design:paramtypes", [general_service_1.GeneralService,

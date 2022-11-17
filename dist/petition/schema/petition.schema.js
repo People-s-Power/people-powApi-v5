@@ -105,13 +105,13 @@ __decorate([
     __metadata("design:type", Number)
 ], Petition.prototype, "numberOfPaidViewsCount", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: [{ type: mongoose_2.Types.ObjectId, ref: 'User', autopopulate: true }] }),
+    (0, mongoose_1.Prop)(),
     __metadata("design:type", Array)
 ], Petition.prototype, "likes", void 0);
 __decorate([
     (0, mongoose_1.Prop)(),
-    __metadata("design:type", Number)
-], Petition.prototype, "likeCount", void 0);
+    __metadata("design:type", Array)
+], Petition.prototype, "shares", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ type: Boolean, default: false }),
     __metadata("design:type", Boolean)

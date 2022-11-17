@@ -73,10 +73,10 @@ export class Petition {
   numberOfPaidEndorsementCount: number;
   @Prop({ type: Number, defalut: 0 })
   numberOfPaidViewsCount: number;
-  @Prop({ type: [{ type: Types.ObjectId, ref: 'User', autopopulate: true }] })
-  likes: UserDocument[];
   @Prop()
-  likeCount: number;
+  likes: string[];
+  @Prop()
+  shares: string[];
   @Prop({ type: Boolean, default: false })
   promoted: boolean;
   @Prop({

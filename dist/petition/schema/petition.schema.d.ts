@@ -50,8 +50,8 @@ export declare class Petition {
     endorserIds: string[];
     numberOfPaidEndorsementCount: number;
     numberOfPaidViewsCount: number;
-    likes: UserDocument[];
-    likeCount: number;
+    likes: string[];
+    shares: string[];
     promoted: boolean;
     views: any[];
     region: string;
