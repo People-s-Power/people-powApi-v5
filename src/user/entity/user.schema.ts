@@ -95,10 +95,6 @@ export class User {
   following: string[];
   @Prop({ default: [] }) //Organsations user is gonna be an editor or admin
   orgOperating: string[];
-  @Prop({ default: 0 })
-  followersCount: number;
-  @Prop({ default: 0 })
-  followingCount: number;
   @Prop({ default: false })
   createdOrg: boolean;
 }

@@ -20,5 +20,6 @@ export declare class GeneralService {
     unlike(itemId: any, authorId: any): Promise<"Unliked!!" | "Failed!">;
     checkIfLiked(list: string[], authorId: any): string;
     updateLikes(list: string[], authorId: string): string[];
-    remove(id: number): string;
+    addFollowers(id: any, userId: any): Promise<"Failed" | "Followed">;
+    unFollow(id: any, userId: any): Promise<string>;
 }

@@ -56,4 +56,10 @@ export class GeneralResolver {
     return like
   }
 
+  @Mutation()
+  async follow(@Args() { followerId, followId }){
+    const res = await this.generalService.addFollowers(followerId, followId)
+    return res
+  }
+
 }

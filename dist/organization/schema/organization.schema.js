@@ -46,14 +46,6 @@ __decorate([
     __metadata("design:type", Array)
 ], orgnaization.prototype, "following", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ default: 0 }),
-    __metadata("design:type", Number)
-], orgnaization.prototype, "followersCount", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ default: 0 }),
-    __metadata("design:type", Number)
-], orgnaization.prototype, "followingCount", void 0);
-__decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", Array)
 ], orgnaization.prototype, "operators", void 0);

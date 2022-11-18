@@ -138,8 +138,94 @@ let GeneralService = class GeneralService {
         const unliked = list.filter(item => item.toString() !== authorId.toString());
         return unliked;
     }
-    remove(id) {
-        return `This action removes a #${id} general`;
+    async addFollowers(id, userId) {
+        try {
+            const [user, org] = await Promise.all([
+                this.userModel.findById(userId),
+                this.orgModel.findById(userId)
+            ]).catch(e => {
+                throw new common_1.NotFoundException('User or org not found');
+            });
+            if (user) {
+                const res = user.followers.find(item => item.toString() === id.toString());
+                if (res)
+                    throw new common_1.BadRequestException('User already following');
+                const [userFollower, orgFollower] = await Promise.all([
+                    this.userModel.findById(id),
+                    this.orgModel.findById(id)
+                ]).catch(e => {
+                    throw new common_1.NotFoundException('User or org not found');
+                });
+                if (userFollower) {
+                    let { following } = userFollower;
+                    following.push(userId);
+                    await userFollower.save();
+                }
+                if (orgFollower) {
+                    let { following } = orgFollower;
+                    following.push(userId);
+                    await orgFollower.save();
+                }
+                const { followers } = user;
+                const fx = followers;
+                fx.push(id);
+                user.followers = fx;
+                await user.save();
+                return 'Followed';
+            }
+            if (org) {
+                const res = org.followers.find(item => item.toString() === id.toString());
+                if (res)
+                    throw new common_1.BadRequestException('User already following');
+                const [userFollower, orgFollower] = await Promise.all([
+                    this.userModel.findById(id),
+                    this.orgModel.findById(id)
+                ]).catch(e => {
+                    throw new common_1.NotFoundException('User or org not found');
+                });
+                if (userFollower) {
+                    let { following } = userFollower;
+                    following.push(userId);
+                    await userFollower.save();
+                }
+                if (orgFollower) {
+                    let { following } = orgFollower;
+                    following.push(userId);
+                    await orgFollower.save();
+                }
+                const { followers } = org;
+                const fx = followers;
+                fx.push(id);
+                org.followers = fx;
+                await org.save();
+                return 'Followed';
+            }
+            return 'Failed';
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+    async unFollow(id, userId) {
+        try {
+            const [user, org] = await Promise.all([
+                this.userModel.findById(userId),
+                this.orgModel.findById(userId)
+            ]).catch(e => {
+                throw new common_1.NotFoundException('User or org not found');
+            });
+            const userIsFollowing = user.followers.filter(item => item !== id);
+            user.followers = userIsFollowing;
+            await user.save();
+            const unFollowedUser = await this.userModel.findById(id);
+            const followers = unFollowedUser.following.filter(item => item !== userId);
+            unFollowedUser.following = followers;
+            await unFollowedUser.save();
+            return 'payload';
+        }
+        catch (error) {
+            throw error;
+        }
     }
 };
 GeneralService = __decorate([

@@ -53,6 +53,10 @@ let GeneralResolver = class GeneralResolver {
         const like = await this.generalService.unlike(itemId, authorId);
         return like;
     }
+    async follow({ followerId, followId }) {
+        const res = await this.generalService.addFollowers(followerId, followId);
+        return res;
+    }
 };
 __decorate([
     (0, graphql_1.Query)('general'),
@@ -74,6 +78,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], GeneralResolver.prototype, "unlike", null);
+__decorate([
+    (0, graphql_1.Mutation)(),
+    __param(0, (0, graphql_1.Args)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], GeneralResolver.prototype, "follow", null);
 GeneralResolver = __decorate([
     (0, graphql_1.Resolver)('General'),
     __metadata("design:paramtypes", [general_service_1.GeneralService,

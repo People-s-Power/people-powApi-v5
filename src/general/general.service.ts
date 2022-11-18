@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Advert, AdvertDocument } from 'src/advert/schema/advert';
@@ -153,7 +153,127 @@ export class GeneralService {
   }
 
 
-  remove(id: number) {
-    return `This action removes a #${id} general`;
+  async addFollowers(id, userId) {
+    try {
+
+      // Find user
+      // const user = await this.userModel.findById(userId)
+      const [user, org] = await Promise.all([
+        this.userModel.findById(userId),
+        this.orgModel.findById(userId)
+      ]).catch(e => {
+        throw new NotFoundException('User or org not found')
+      }) 
+
+      if (user) {
+        
+        // Check if user is already following
+        const res = user.followers.find(item => item.toString() === id.toString())
+        if(res) throw new BadRequestException('User already following')
+        
+        // Add the followed user to the followers following Array
+        const [userFollower, orgFollower] = await Promise.all([
+          this.userModel.findById(id),
+          this.orgModel.findById(id)
+        ]).catch(e => {
+          throw new NotFoundException('User or org not found')
+        }) 
+
+        if (userFollower) {
+          let { following } = userFollower
+          following.push(userId)
+          await userFollower.save()
+        }
+
+        if (orgFollower) {
+          let { following } = orgFollower
+          following.push(userId)
+          await orgFollower.save()
+        }
+  
+        // Push in new follower
+        const { followers } = user
+        const fx = followers
+        fx.push(id)
+  
+        // Save new follower
+        user.followers = fx
+        await user.save()
+      
+        return 'Followed'
+      }
+
+      if (org) {
+        
+        // Check if user is already following
+        const res = org.followers.find(item => item.toString() === id.toString())
+        if(res) throw new BadRequestException('User already following')
+        
+        // Add the followed user to the followers following Array
+        const [userFollower, orgFollower] = await Promise.all([
+          this.userModel.findById(id),
+          this.orgModel.findById(id)
+        ]).catch(e => {
+          throw new NotFoundException('User or org not found')
+        }) 
+        
+        if (userFollower) {
+          let { following } = userFollower
+          following.push(userId)
+          await userFollower.save()
+        }
+
+        if (orgFollower) {
+          let { following } = orgFollower
+          following.push(userId)
+          await orgFollower.save()
+        }
+  
+        // Push in new follower
+        const { followers } = org
+        const fx = followers
+        fx.push(id)
+  
+        // Save new follower
+        org.followers = fx
+        await org.save()
+      
+        return 'Followed'
+      }
+      return 'Failed'
+    } catch (error) {
+      throw error
+    }
+  }
+
+
+  async unFollow(id, userId) {
+    try {
+      
+      // Check if user exists Allways!!!
+      const [user, org] = await Promise.all([
+        this.userModel.findById(userId),
+        this.orgModel.findById(userId)
+      ]).catch(e => {
+        throw new NotFoundException('User or org not found')
+      })
+
+      // Unfollow the user
+      const userIsFollowing =  user.followers.filter(item => item !== id)
+      user.followers = userIsFollowing
+      await user.save()
+
+      // Remove user from following
+      const unFollowedUser = await this.userModel.findById(id)
+      const followers = unFollowedUser.following.filter(item => item !== userId)
+      unFollowedUser.following = followers
+
+      await unFollowedUser.save() 
+
+      return 'payload'
+    } catch (error) {
+      throw error
+    }
+
   }
 }

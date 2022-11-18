@@ -37,8 +37,6 @@ export declare class orgnaization {
     phone: string;
     followers: string[];
     following: string[];
-    followersCount: number;
-    followingCount: number;
     operators: Ioperators[];
     facebook: string;
     linkedIn: string;

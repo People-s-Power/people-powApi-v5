@@ -8,8 +8,6 @@ type Organization {
   phone: String!
   followers: [String]!
   following: [String]!
-  followersCount: Int!
-  followingCount: Int!
   operators: [Ioperators]!
   facebook: String!
   linkedIn: String!

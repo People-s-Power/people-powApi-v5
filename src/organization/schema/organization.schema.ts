@@ -29,10 +29,6 @@ export class orgnaization {
   followers: string[];
   @Prop()
   following: string[];
-  @Prop({ default: 0 })
-  followersCount: number;
-  @Prop({ default: 0 })
-  followingCount: number;
   @Prop()
   operators: Ioperators[];
   @Prop({ default: 'Add social' })

@@ -25,5 +25,7 @@ type Mutation {
   share(authorId: ID! itemId: ID!): General!
   like(authorId: ID! itemId: ID!): String!
   unlike(authorId: ID! itemId: ID!): String!
+  follow(followerId: ID! followId: ID!): String!
+  unfollow(followerId: ID! unfollowId: ID!): String!
   comment(authorId: ID! itemId: ID!): General
 }

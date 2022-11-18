@@ -37,9 +37,9 @@ export class FollowersService {
       if(!follower) throw new BadRequestException(`User don't exist`)
       let { following } = follower
       following.push(userId)
-      let userFollowing = follower.followingCount
-      userFollowing ++
-      follower.followingCount = userFollowing
+      // let userFollowing = follower.followingCount
+      // userFollowing ++
+      // follower.followingCount = userFollowing
       await follower.save()
 
       // Push in new follower
@@ -49,23 +49,23 @@ export class FollowersService {
 
       // Save new follower
       user.followers = fx
-      let userFollower = user.followersCount
-      userFollower ++
-      user.followersCount = userFollower
+      // let userFollower = user.followersCount
+      // userFollower ++
+      // user.followersCount = userFollower
       const result = await user.save()
 
       const payload = {
         userFollowed: {
           followers: result.followers,
-          followersCount: result.followersCount,
-          following: result.following,
-          followingCount: result.followingCount
+          // followersCount: result.followersCount,
+          // following: result.following,
+          // followingCount: result.followingCount
         },
         userFollowing: {
           followers: follower.followers,
-          followersCount: follower.followersCount,
-          following: follower.following,
-          followingCount: follower.followingCount
+          // followersCount: follower.followersCount,
+          // following: follower.following,
+          // followingCount: follower.followingCount
         }
       }
       return payload
@@ -89,40 +89,40 @@ export class FollowersService {
       }
       const { followers } = user
       const fx = followers
-      fx.splice(userIsFollowing, 1)
+      // fx.splice(userIsFollowing, 1)
 
-      user.followers = fx
-      let followerCount = user.followersCount
-      followerCount --
-      user.followersCount = followerCount < 0 ? 0 : followerCount
-      const result = await user.save()
+      // user.followers = fx
+      // let followerCount = user.followersCount
+      // followerCount --
+      // user.followersCount = followerCount < 0 ? 0 : followerCount
+      // const result = await user.save()
 
-      // Remove user from following
-      const follower = await this.userModel.findById(id)
-      if(!follower) throw new BadRequestException(`User don't exist`)
-      let { following } = follower
-      const followedUserIndex = following.findIndex(item => item === userId)
-      follower.followingCount --
-      follower.following.splice(followedUserIndex, 1)
+      // // Remove user from following
+      // const follower = await this.userModel.findById(id)
+      // if(!follower) throw new BadRequestException(`User don't exist`)
+      // let { following } = follower
+      // const followedUserIndex = following.findIndex(item => item === userId)
+      // follower.followingCount --
+      // follower.following.splice(followedUserIndex, 1)
 
-      await follower.save()
+      // await follower.save()
 
-      const payload = {
-        userFollowed: {
-          followers: user.followers,
-          followersCount: user.followersCount,
-          following: user.following,
-          followingCount: user.followingCount
-        },
-        userFollowing: {
-          followers: follower.followers,
-          followersCount: follower.followersCount,
-          following: follower.following,
-          followingCount: follower.followingCount
-        }
-      }
+      // const payload = {
+      //   userFollowed: {
+      //     followers: user.followers,
+      //     followersCount: user.followersCount,
+      //     following: user.following,
+      //     followingCount: user.followingCount
+      //   },
+      //   userFollowing: {
+      //     followers: follower.followers,
+      //     followersCount: follower.followersCount,
+      //     following: follower.following,
+      //     followingCount: follower.followingCount
+      //   }
+      // }
 
-      return payload
+      return 'payload'
     } catch (error) {
       throw error
     }

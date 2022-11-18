@@ -27,4 +27,8 @@ export declare class GeneralResolver {
         authorId: any;
         itemId: any;
     }): Promise<"Unliked!!" | "Failed!">;
+    follow({ followerId, followId }: {
+        followerId: any;
+        followId: any;
+    }): Promise<"Failed" | "Followed">;
 }
