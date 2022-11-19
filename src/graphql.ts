@@ -164,7 +164,7 @@ export interface IMutation {
     share(authorId: string, itemId: string): General | Promise<General>;
     like(authorId: string, itemId: string): string | Promise<string>;
     unlike(authorId: string, itemId: string): string | Promise<string>;
-    follow(followerId: string, followId: string): string | Promise<string>;
+    follow(followerId: string, followId: string): string | Promise<string>; 
     unfollow(followerId: string, unfollowId: string): string | Promise<string>;
     comment(authorId: string, itemId: string): Nullable<General> | Promise<Nullable<General>>;
     createOrg(input: CreateOrgInput): Organization | Promise<Organization>;
