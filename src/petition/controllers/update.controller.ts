@@ -9,8 +9,8 @@ export class UpdateController {
   @UseGuards(JwtAuthGuard)
   @Post()
   addUpdate(@Body() data) {
-    const { campaignId, body } = data
-    return this.updateService.addUpdates(campaignId, body)
+    const { campaignId, body, image } = data
+    return this.updateService.addUpdates(campaignId, body, image)
   }
 
   @Get('/:campaignId')

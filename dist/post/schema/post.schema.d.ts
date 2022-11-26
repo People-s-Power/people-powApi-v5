@@ -40,5 +40,6 @@ export declare class Post {
     shares: string[];
     isPetition: boolean;
     image: string;
+    promoted: boolean;
 }
 export declare const PostSchema: import("mongoose").Schema<Post, import("mongoose").Model<Post, any, any, any, any>, {}, {}, {}, {}, "type", Post>;

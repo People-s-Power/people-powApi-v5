@@ -13,8 +13,9 @@ export class IEvent {
   interested: Interested[];
   authorId: ObjectId;
   author: string;
-  shares: string[]
-  likes: string[]
+  shares: string[];
+  likes: string[];
+  promoted: boolean;
 }
 
 export class Interested {

@@ -28,5 +28,6 @@ export declare type UpdateDocument = Update & Document;
 export declare class Update {
     petition: Record<string, Petition>;
     body: string;
+    image: string;
 }
 export declare const UpdateSchema: import("mongoose").Schema<Update, import("mongoose").Model<Update, any, any, any, any>, {}, {}, {}, {}, "type", Update>;

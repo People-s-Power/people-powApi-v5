@@ -15,6 +15,7 @@ type Event {
   updatedAt: Date
   authorId: String!
   author: Author!
+  promoted: Boolean!
 }
 
 

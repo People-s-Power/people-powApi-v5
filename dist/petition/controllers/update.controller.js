@@ -21,8 +21,8 @@ let UpdateController = class UpdateController {
         this.updateService = updateService;
     }
     addUpdate(data) {
-        const { campaignId, body } = data;
-        return this.updateService.addUpdates(campaignId, body);
+        const { campaignId, body, image } = data;
+        return this.updateService.addUpdates(campaignId, body, image);
     }
     getCampUpdates(param) {
         const { campaignId } = param;

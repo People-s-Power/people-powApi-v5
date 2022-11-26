@@ -37,7 +37,8 @@ exports.eventSchema = new mongoose_1.Schema({
         required: true
     },
     shares: [],
-    likes: []
+    likes: [],
+    promoted: { type: Boolean, default: false }
 });
 exports.event = mongoose_1.default.model('event', exports.eventSchema);
 //# sourceMappingURL=event.js.map

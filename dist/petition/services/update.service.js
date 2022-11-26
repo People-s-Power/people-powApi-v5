@@ -16,15 +16,20 @@ exports.UpdateService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
+const cloudinary_1 = require("../../utils/cloudinary");
 const update_schema_1 = require("../schema/update.schema");
 let UpdateService = class UpdateService {
     constructor(UpdateModel) {
         this.UpdateModel = UpdateModel;
     }
-    async addUpdates(campaignId, body) {
+    async addUpdates(campaignId, body, img) {
+        const image = await (0, cloudinary_1.cloudinaryUpload)(img).catch((err) => {
+            throw err;
+        });
         const update = await this.UpdateModel.create({
             campaign: campaignId,
-            body: body
+            body: body,
+            image
         });
         await update.save();
         return update;

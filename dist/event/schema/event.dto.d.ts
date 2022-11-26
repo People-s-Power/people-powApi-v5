@@ -13,6 +13,7 @@ export declare class IEvent {
     author: string;
     shares: string[];
     likes: string[];
+    promoted: boolean;
 }
 export declare class Interested {
     authorId: ObjectId;

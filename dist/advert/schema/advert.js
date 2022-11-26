@@ -55,6 +55,10 @@ __decorate([
     __metadata("design:type", Array)
 ], Advert.prototype, "likes", void 0);
 __decorate([
+    (0, mongoose_1.Prop)({ type: Boolean, default: false }),
+    __metadata("design:type", Boolean)
+], Advert.prototype, "promoted", void 0);
+__decorate([
     (0, mongoose_1.Prop)({
         type: String,
         enum: ['User', 'orgnaization'],

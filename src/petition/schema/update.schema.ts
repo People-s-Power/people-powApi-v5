@@ -22,6 +22,8 @@ export class Update {
   petition: Record<string, Petition>;
   @Prop({ required: true })
   body: string;
+  @Prop({ required: true })
+  image: string;
 }
 
 export const UpdateSchema = SchemaFactory.createForClass(Update);

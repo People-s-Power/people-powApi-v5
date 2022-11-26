@@ -37,6 +37,7 @@ export declare class Advert {
     image: string;
     shares: string[];
     likes: string[];
+    promoted: boolean;
     author: string;
     authorId: string;
 }

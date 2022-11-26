@@ -12,6 +12,7 @@ type Advert {
   likes: Int!
   authorId: ID!
   author: Author!
+  promoted: Boolean!
   createdAt: Date
   updatedAt: Date
 }

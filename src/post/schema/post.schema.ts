@@ -40,6 +40,8 @@ export class Post {
   isPetition: boolean
   @Prop({ default: '//fsdsdf' })
   image: string;
+  @Prop({ type: Boolean, default: false })
+  promoted: boolean;
 
 }
 

@@ -39,6 +39,8 @@ export class Advert {
   shares: string[];
   @Prop()
   likes: string[];
+  @Prop({ type: Boolean, default: false })
+  promoted: boolean;
   @Prop({
     type: String,
     enum: ['User', 'orgnaization'],

@@ -51,6 +51,10 @@ __decorate([
     (0, mongoose_1.Prop)({ default: '//fsdsdf' }),
     __metadata("design:type", String)
 ], Post.prototype, "image", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: Boolean, default: false }),
+    __metadata("design:type", Boolean)
+], Post.prototype, "promoted", void 0);
 Post = __decorate([
     (0, graphql_1.ObjectType)(),
     (0, mongoose_1.Schema)({

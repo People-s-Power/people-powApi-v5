@@ -37,7 +37,8 @@ export const eventSchema: Schema = new Schema<IEvent>({
     required: true
   },
   shares: [],
-  likes: []
+  likes: [],
+  promoted: { type: Boolean, default: false }
 })
 
 export const event = mongoose.model('event', eventSchema) 
