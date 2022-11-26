@@ -20,14 +20,18 @@ const post_service_1 = require("../post/post.service");
 const petition_service_1 = require("../petition/services/petition.service");
 const event_service_1 = require("../event/event.service");
 const advert_service_1 = require("../advert/advert.service");
+const user_service_1 = require("../user/services/user.service");
+const organization_service_1 = require("../organization/organization.service");
 let GeneralResolver = class GeneralResolver {
-    constructor(generalService, victoryService, postService, petitionService, eventService, advertService) {
+    constructor(generalService, victoryService, postService, petitionService, eventService, advertService, userService, orgService) {
         this.generalService = generalService;
         this.victoryService = victoryService;
         this.postService = postService;
         this.petitionService = petitionService;
         this.eventService = eventService;
         this.advertService = advertService;
+        this.userService = userService;
+        this.orgService = orgService;
     }
     async general() {
         const [victories, adverts, posts, petitions, events] = await Promise.all([
@@ -44,6 +48,14 @@ let GeneralResolver = class GeneralResolver {
             posts,
             victories
         };
+    }
+    async connections() {
+        const [users, orgs] = await Promise.all([
+            this.userService.getUsers(),
+            this.orgService.getOrganizations()
+        ]);
+        const results = [...users, ...orgs];
+        return results;
     }
     async like({ authorId, itemId }) {
         const like = await this.generalService.like(itemId, authorId);
@@ -64,6 +76,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], GeneralResolver.prototype, "general", null);
+__decorate([
+    (0, graphql_1.Mutation)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], GeneralResolver.prototype, "connections", null);
 __decorate([
     (0, graphql_1.Mutation)(),
     __param(0, (0, graphql_1.Args)()),
@@ -92,7 +110,9 @@ GeneralResolver = __decorate([
         post_service_1.PostService,
         petition_service_1.PetitionService,
         event_service_1.EventService,
-        advert_service_1.AdvertService])
+        advert_service_1.AdvertService,
+        user_service_1.UserService,
+        organization_service_1.OrganizationService])
 ], GeneralResolver);
 exports.GeneralResolver = GeneralResolver;
 //# sourceMappingURL=general.resolver.js.map

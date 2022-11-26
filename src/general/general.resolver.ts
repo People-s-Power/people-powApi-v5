@@ -6,6 +6,8 @@ import { PetitionService } from 'src/petition/services/petition.service';
 import { EventService } from 'src/event/event.service';
 import { AdvertService } from 'src/advert/advert.service';
 import { locationGLQ } from 'src/auth/guards/graphql.guard';
+import { UserService } from 'src/user/services/user.service';
+import { OrganizationService } from 'src/organization/organization.service';
 
 @Resolver('General')
 export class GeneralResolver {
@@ -15,7 +17,9 @@ export class GeneralResolver {
     private readonly postService: PostService,
     private readonly petitionService: PetitionService,
     private readonly eventService: EventService,
-    private readonly advertService: AdvertService
+    private readonly advertService: AdvertService,
+    private readonly userService: UserService,
+    private readonly orgService: OrganizationService
     ) {}
 
   @Query('general')
@@ -41,6 +45,18 @@ export class GeneralResolver {
       posts,
       victories
     }
+  }
+
+
+  @Mutation()
+  async connections(){
+    const [users, orgs] = await Promise.all([
+      this.userService.getUsers(),
+      this.orgService.getOrganizations()
+    ])
+
+    const results = [...users, ...orgs]
+    return results
   }
 
 

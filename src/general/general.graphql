@@ -6,6 +6,12 @@ type General {
   victories: [Victory!]!
 }
 
+type Connections{
+  name: String!
+  image: String!
+  _id: ID!
+}
+
 input ShareInput {
   authorId: ID!
   itemId: ID!
@@ -22,6 +28,7 @@ type Query {
 }
 
 type Mutation {
+  connections:[Connections]
   share(authorId: ID! itemId: ID!): General!
   like(authorId: ID! itemId: ID!): String!
   unlike(authorId: ID! itemId: ID!): String!

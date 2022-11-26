@@ -161,10 +161,11 @@ export interface IMutation {
     updateEvent(name: string, description: string, time: string, startDate: string, endDate: string, imageFile: string, type: string, eventId: string, authorId: string): Event | Promise<Event>;
     interested(eventId: string, authorId: string, authorImg: string, name: string): Event | Promise<Event>;
     deleteEvent(eventId: string): Nullable<string> | Promise<Nullable<string>>;
+    connections(): Nullable<Nullable<Connections>[]> | Promise<Nullable<Nullable<Connections>[]>>;
     share(authorId: string, itemId: string): General | Promise<General>;
     like(authorId: string, itemId: string): string | Promise<string>;
     unlike(authorId: string, itemId: string): string | Promise<string>;
-    follow(followerId: string, followId: string): string | Promise<string>; 
+    follow(followerId: string, followId: string): string | Promise<string>;
     unfollow(followerId: string, unfollowId: string): string | Promise<string>;
     comment(authorId: string, itemId: string): Nullable<General> | Promise<Nullable<General>>;
     createOrg(input: CreateOrgInput): Organization | Promise<Organization>;
@@ -223,6 +224,12 @@ export interface General {
     petitions: Petition[];
     posts: Post[];
     victories: Victory[];
+}
+
+export interface Connections {
+    name: string;
+    image: string;
+    _id: string;
 }
 
 export interface Organization {

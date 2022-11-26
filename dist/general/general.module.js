@@ -30,6 +30,8 @@ const update_schema_1 = require("../petition/schema/update.schema");
 const reportCamp_schema_1 = require("../petition/schema/reportCamp.schema");
 const endorsement_schema_1 = require("../petition/schema/endorsement.schema");
 const petition_gateway_1 = require("../petition/gateway/petition.gateway");
+const user_service_1 = require("../user/services/user.service");
+const organization_service_1 = require("../organization/organization.service");
 let GeneralModule = class GeneralModule {
 };
 GeneralModule = __decorate([
@@ -62,7 +64,8 @@ GeneralModule = __decorate([
                         },
                     },
                 },
-            ])
+            ]),
+            common_1.CacheModule.register(),
         ],
         providers: [
             general_resolver_1.GeneralResolver,
@@ -72,7 +75,9 @@ GeneralModule = __decorate([
             petition_service_1.PetitionService,
             post_service_1.PostService,
             victory_service_1.VictoryService,
-            petition_gateway_1.PetitionGateway
+            petition_gateway_1.PetitionGateway,
+            user_service_1.UserService,
+            organization_service_1.OrganizationService
         ]
     })
 ], GeneralModule);

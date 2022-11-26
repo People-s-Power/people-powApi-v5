@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 import { GeneralService } from './general.service';
 import { GeneralResolver } from './general.resolver';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -21,6 +21,8 @@ import { Update, UpdateSchema } from 'src/petition/schema/update.schema';
 import { ReportCamp, ReportCampSchema } from 'src/petition/schema/reportCamp.schema';
 import { Endorsement, EndorsementSchema } from 'src/petition/schema/endorsement.schema';
 import { PetitionGateway } from 'src/petition/gateway/petition.gateway';
+import { UserService } from 'src/user/services/user.service';
+import { OrganizationService } from 'src/organization/organization.service';
 
 @Module({
   imports: [
@@ -51,7 +53,8 @@ import { PetitionGateway } from 'src/petition/gateway/petition.gateway';
           },
         },
       },
-    ])
+    ]),
+    CacheModule.register(),
   ],
   providers: [
     GeneralResolver,
@@ -61,7 +64,9 @@ import { PetitionGateway } from 'src/petition/gateway/petition.gateway';
     PetitionService,
     PostService,
     VictoryService,
-    PetitionGateway
+    PetitionGateway,
+    UserService,
+    OrganizationService
   ]
 })
 export class GeneralModule {}
