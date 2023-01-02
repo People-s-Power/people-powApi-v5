@@ -40,7 +40,7 @@ let VictoryService = class VictoryService {
             authorId,
             author: authorEnum
         });
-        return Object.assign(Object.assign({}, victory._doc), { author, shares: victory.shares.length, likes: victory.likes.length });
+        return Object.assign(Object.assign({}, victory._doc), { author, shares: victory.shares.length, likes: victory.likes });
     }
     async findAll(page, limit, filter, authorId) {
         const victories = await this.VictoryModel.find(Object.assign(Object.assign({}, (filter && {
@@ -58,7 +58,7 @@ let VictoryService = class VictoryService {
                         name: user.name,
                         email: user.email,
                         image: user.image
-                    }, shares: item.shares.length, likes: item.likes.length });
+                    }, shares: item.shares.length, likes: item.likes });
             }
             const org = await this.orgModel.findById(item.authorId);
             return Object.assign(Object.assign({}, item._doc), { author: {
@@ -66,7 +66,7 @@ let VictoryService = class VictoryService {
                     name: org.name,
                     email: org.email,
                     image: org.image
-                }, shares: item.shares.length, likes: item.likes.length });
+                }, shares: item.shares.length, likes: item.likes });
         }));
         return result;
     }
@@ -79,7 +79,7 @@ let VictoryService = class VictoryService {
                     name: user.name,
                     email: user.email,
                     image: user.image
-                }, shares: victory.shares.length, likes: victory.likes.length });
+                }, shares: victory.shares.length, likes: victory.likes });
         }
         const org = await this.orgModel.findById(victory.authorId);
         return Object.assign(Object.assign({}, victory._doc), { author: {
@@ -87,7 +87,7 @@ let VictoryService = class VictoryService {
                 name: org.name,
                 email: org.email,
                 image: org.image
-            }, shares: victory.shares.length, likes: victory.likes.length });
+            }, shares: victory.shares.length, likes: victory.likes });
     }
     remove(id) {
         return `This action removes a #${id} victory`;

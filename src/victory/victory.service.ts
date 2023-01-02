@@ -34,7 +34,7 @@ console.log(author?.name)
       ...victory._doc,
       author,
       shares: victory.shares.length,
-      likes: victory.likes.length
+      likes: victory.likes
     }
   }
 
@@ -69,7 +69,7 @@ console.log(author?.name)
               image: user.image
             },
             shares: item.shares.length,
-            likes: item.likes.length
+            likes: item.likes
           }
         }
         const org = await this.orgModel.findById(item.authorId)
@@ -82,7 +82,7 @@ console.log(author?.name)
             image: org.image
           },
           shares: item.shares.length,
-          likes: item.likes.length
+          likes: item.likes
         }
       })
     )
@@ -106,7 +106,7 @@ console.log(author?.name)
           image: user.image
         },
         shares: victory.shares.length,
-        likes: victory.likes.length
+        likes: victory.likes
       }
     }
 
@@ -120,7 +120,7 @@ console.log(author?.name)
         image: org.image
       },
       shares: victory.shares.length,
-      likes: victory.likes.length
+      likes: victory.likes
     }
   }
 

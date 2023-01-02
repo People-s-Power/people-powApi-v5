@@ -98,9 +98,10 @@ export interface Advert {
     audience?: Nullable<string>;
     image: string;
     shares: number;
-    likes: number;
+    likes: Nullable<string>[];
     authorId: string;
     author: Author;
+    promoted: boolean;
     createdAt?: Nullable<Date>;
     updatedAt?: Nullable<Date>;
 }
@@ -167,7 +168,7 @@ export interface IMutation {
     unlike(authorId: string, itemId: string): string | Promise<string>;
     follow(followerId: string, followId: string): string | Promise<string>;
     unfollow(followerId: string, unfollowId: string): string | Promise<string>;
-    comment(authorId: string, itemId: string): Nullable<General> | Promise<Nullable<General>>;
+    comment(authorId: string, itemId: string, body: string): Comment | Promise<Comment>;
     createOrg(input: CreateOrgInput): Organization | Promise<Organization>;
     updateOrganization(input: UpdateInput): Organization | Promise<Organization>;
     updateImage(input: UploadImageInput): Organization | Promise<Organization>;
@@ -205,11 +206,12 @@ export interface Event {
     endDate: string;
     interested: Interested[];
     shares: number;
-    likes: number;
+    likes: Nullable<string>[];
     createdAt?: Nullable<Date>;
     updatedAt?: Nullable<Date>;
     authorId: string;
     author: Author;
+    promoted: boolean;
 }
 
 export interface Interested {
@@ -230,6 +232,12 @@ export interface Connections {
     name: string;
     image: string;
     _id: string;
+}
+
+export interface Comment {
+    body: string;
+    authorId: string;
+    author: string;
 }
 
 export interface Organization {
@@ -317,11 +325,12 @@ export interface Post {
     body: string;
     petition: Petition;
     author: Author;
-    likes: number;
+    likes: Nullable<string>[];
     comments: Comment[];
     shares: number;
     isPetition?: Nullable<boolean>;
     image: string;
+    promoted: boolean;
     createdAt?: Nullable<Date>;
     updatedAt?: Nullable<Date>;
 }
@@ -331,11 +340,6 @@ export interface Author {
     name?: Nullable<string>;
     email?: Nullable<string>;
     image?: Nullable<string>;
-}
-
-export interface Comment {
-    author: string;
-    body: string;
 }
 
 export interface User {
@@ -376,7 +380,7 @@ export interface Victory {
     image: string;
     author: Author;
     shares: number;
-    likes: number;
+    likes: Nullable<string>[];
     createdAt?: Nullable<Date>;
     updatedAt?: Nullable<Date>;
     authorId: string;

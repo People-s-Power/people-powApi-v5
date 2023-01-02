@@ -42,7 +42,7 @@ let AdvertService = class AdvertService {
                         name: user.name,
                         email: user.email,
                         image: user.image
-                    }, shares: item.shares.length, likes: item.likes.length });
+                    }, shares: item.shares.length, likes: item.likes });
             }
             const org = await this.orgModel.findById(item.authorId);
             return Object.assign(Object.assign({}, item._doc), { author: {
@@ -50,7 +50,7 @@ let AdvertService = class AdvertService {
                     name: org.name,
                     email: org.email,
                     image: org.image
-                }, shares: item.shares.length, likes: item.likes.length });
+                }, shares: item.shares.length, likes: item.likes });
         }));
         return result;
     }
@@ -63,7 +63,7 @@ let AdvertService = class AdvertService {
                     name: user.name,
                     email: user.email,
                     image: user.image
-                }, shares: advert.shares.length, likes: advert.likes.length });
+                }, shares: advert.shares.length, likes: advert.likes });
         }
         const org = await this.orgModel.findById(advert.authorId);
         return Object.assign(Object.assign({}, advert._doc), { author: {
@@ -71,7 +71,7 @@ let AdvertService = class AdvertService {
                 name: org.name,
                 email: org.email,
                 image: org.image
-            }, shares: advert.shares.length, likes: advert.likes.length });
+            }, shares: advert.shares.length, likes: advert.likes });
     }
     async create(data, user) {
         const image = await (0, cloudinary_1.cloudinaryUpload)(data.imageFile).catch((err) => {
@@ -83,7 +83,7 @@ let AdvertService = class AdvertService {
                 name: user.name,
                 email: user.email,
                 image: user.image
-            }, shares: advert.shares.length, likes: advert.likes.length });
+            }, shares: advert.shares.length, likes: advert.likes });
     }
     async createOrg(data, authorId) {
         const org = await this.orgModel.findById(authorId);
@@ -99,7 +99,7 @@ let AdvertService = class AdvertService {
                 name: org.name,
                 email: org.email,
                 image: org.image
-            }, shares: advert.shares.length, likes: advert.likes.length });
+            }, shares: advert.shares.length, likes: advert.likes });
     }
     async update(data, advertId, authorId) {
         const advert = await this.advertModel.findById(advertId);
@@ -117,7 +117,7 @@ let AdvertService = class AdvertService {
                     name: user.name,
                     email: user.email,
                     image: user.image
-                }, shares: advertItem.shares.length, likes: advertItem.likes.length });
+                }, shares: advertItem.shares.length, likes: advertItem.likes });
         }
         const org = await this.orgModel.findById(advertItem.authorId);
         return Object.assign(Object.assign({}, advertItem._doc), { author: {
@@ -125,7 +125,7 @@ let AdvertService = class AdvertService {
                 name: org.name,
                 email: org.email,
                 image: org.image
-            }, shares: advertItem.shares.length, likes: advertItem.likes.length });
+            }, shares: advertItem.shares.length, likes: advertItem.likes });
     }
 };
 AdvertService = __decorate([

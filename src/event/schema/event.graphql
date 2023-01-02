@@ -10,7 +10,7 @@ type Event {
   endDate: String!
   interested: [Interested!]!
   shares: Int!
-  likes: Int!
+  likes: [String]!
   createdAt: Date
   updatedAt: Date
   authorId: String!

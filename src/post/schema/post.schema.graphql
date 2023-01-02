@@ -3,7 +3,7 @@ type Post {
   body: String!
   petition: Petition!
   author: Author!
-  likes: Int!
+  likes: [String]!
   comments: [Comment!]!
   shares: Int!
   isPetition: Boolean

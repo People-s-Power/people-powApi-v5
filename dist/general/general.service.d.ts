@@ -18,7 +18,7 @@ export declare class GeneralService {
     findAll(): string;
     like(itemId: any, authorId: any): Promise<"Sucess" | "Failed">;
     unlike(itemId: any, authorId: any): Promise<"Unliked!!" | "Failed!">;
-    checkIfLiked(list: string[], authorId: any): string;
+    checkIfLiked(list: string[], authorId: any, itemId: any): string;
     updateLikes(list: string[], authorId: string): string[];
     addFollowers(id: any, userId: any): Promise<"Failed" | "Followed">;
     unFollow(id: any, userId: any): Promise<string>;

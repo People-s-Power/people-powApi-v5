@@ -42,7 +42,7 @@ let EventService = class EventService {
                         name: user.name,
                         email: user.email,
                         image: user.image
-                    }, shares: item.shares.length, likes: item.likes.length });
+                    }, shares: item.shares.length, likes: item.likes });
             }
             const org = await this.orgModel.findById(item.authorId);
             return Object.assign(Object.assign({}, item._doc), { author: {
@@ -50,7 +50,7 @@ let EventService = class EventService {
                     name: org.name,
                     email: org.email,
                     image: org.image
-                }, shares: item.shares.length, likes: item.likes.length });
+                }, shares: item.shares.length, likes: item.likes });
         }));
         return result;
     }
@@ -63,7 +63,7 @@ let EventService = class EventService {
                     name: user.name,
                     email: user.email,
                     image: user.image
-                }, shares: event.shares.length, likes: event.likes.length });
+                }, shares: event.shares.length, likes: event.likes });
         }
         const org = await this.orgModel.findById(event.authorId);
         return Object.assign(Object.assign({}, event._doc), { author: {
@@ -71,7 +71,7 @@ let EventService = class EventService {
                 name: org.name,
                 email: org.email,
                 image: org.image
-            }, shares: event.shares.length, likes: event.likes.length });
+            }, shares: event.shares.length, likes: event.likes });
     }
     async create(data, user) {
         const image = await (0, cloudinary_1.cloudinaryUpload)(data.imageFile).catch((err) => {
@@ -83,7 +83,7 @@ let EventService = class EventService {
                 name: user.name,
                 email: user.email,
                 image: user.image
-            }, shares: event.shares.length, likes: event.likes.length });
+            }, shares: event.shares.length, likes: event.likes });
     }
     async createOrg(data, authorId) {
         const org = await this.orgModel.findById(authorId);
@@ -99,7 +99,7 @@ let EventService = class EventService {
                 name: org.name,
                 email: org.email,
                 image: org.image
-            }, shares: event.shares.length, likes: event.likes.length });
+            }, shares: event.shares.length, likes: event.likes });
     }
     async update(data, eventId, authorId) {
         const event = await this.eventModel.findById(eventId);
@@ -117,7 +117,7 @@ let EventService = class EventService {
                     name: user.name,
                     email: user.email,
                     image: user.image
-                }, shares: eventItem.shares.length, likes: eventItem.likes.length });
+                }, shares: eventItem.shares.length, likes: eventItem.likes });
         }
         const org = await this.orgModel.findById(eventItem.authorId);
         return Object.assign(Object.assign({}, eventItem._doc), { author: {
@@ -125,7 +125,7 @@ let EventService = class EventService {
                 name: org.name,
                 email: org.email,
                 image: org.image
-            }, shares: eventItem.shares.length, likes: eventItem.likes.length });
+            }, shares: eventItem.shares.length, likes: eventItem.likes });
     }
     async interested(eventId, authorId, authorImg, name) {
         const event = await this.eventModel.findById(eventId);
@@ -151,7 +151,7 @@ let EventService = class EventService {
                     name: user.name,
                     email: user.email,
                     image: user.image
-                }, shares: event.shares.length, likes: event.likes.length });
+                }, shares: event.shares.length, likes: event.likes });
         }
         const org = await this.orgModel.findById(event.authorId);
         return Object.assign(Object.assign({}, event._doc), { author: {
@@ -159,7 +159,7 @@ let EventService = class EventService {
                 name: org.name,
                 email: org.email,
                 image: org.image
-            }, shares: event.shares.length, likes: event.likes.length });
+            }, shares: event.shares.length, likes: event.likes });
     }
     async remove(eventId, authorId) {
         const event = await this.eventModel.findById(eventId);

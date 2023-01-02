@@ -46,7 +46,7 @@ export class AdvertService {
               image: user.image
             },
             shares: item.shares.length,
-            likes: item.likes.length
+            likes: item.likes
           }
         }
         const org = await this.orgModel.findById(item.authorId)
@@ -59,7 +59,7 @@ export class AdvertService {
             image: org.image
           },
           shares: item.shares.length,
-          likes: item.likes.length
+          likes: item.likes
         }
       })
     )
@@ -83,7 +83,7 @@ export class AdvertService {
           image: user.image
         },
         shares: advert.shares.length,
-        likes: advert.likes.length
+        likes: advert.likes
       }
     }
 
@@ -97,7 +97,7 @@ export class AdvertService {
         image: org.image
       },
       shares: advert.shares.length,
-      likes: advert.likes.length
+      likes: advert.likes
     }
   }
 
@@ -123,7 +123,7 @@ export class AdvertService {
         image: user.image
       },
       shares: advert.shares.length,
-      likes: advert.likes.length
+      likes: advert.likes
     }
 
   }
@@ -153,7 +153,7 @@ export class AdvertService {
         image: org.image
       },
       shares: advert.shares.length,
-      likes: advert.likes.length
+      likes: advert.likes
     }
 
   }
@@ -188,7 +188,7 @@ export class AdvertService {
           image: user.image
         },
         shares: advertItem.shares.length,
-        likes: advertItem.likes.length
+        likes: advertItem.likes
       }
     }
 
@@ -202,7 +202,7 @@ export class AdvertService {
         image: org.image
       },
       shares: advertItem.shares.length,
-      likes: advertItem.likes.length
+      likes: advertItem.likes
     }
 
   }

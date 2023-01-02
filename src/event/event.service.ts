@@ -47,7 +47,7 @@ export class EventService {
               image: user.image
             },
             shares: item.shares.length,
-            likes: item.likes.length
+            likes: item.likes
           }
         }
         const org = await this.orgModel.findById(item.authorId)
@@ -60,7 +60,7 @@ export class EventService {
             image: org.image
           },
           shares: item.shares.length,
-          likes: item.likes.length
+          likes: item.likes
         }
       })
     )
@@ -85,7 +85,7 @@ export class EventService {
           image: user.image
         },
         shares: event.shares.length,
-        likes: event.likes.length
+        likes: event.likes
       }
     }
 
@@ -99,7 +99,7 @@ export class EventService {
         image: org.image
       },
       shares: event.shares.length,
-      likes: event.likes.length
+      likes: event.likes
     }
   }
 
@@ -127,7 +127,7 @@ export class EventService {
         image: user.image
       },
       shares: event.shares.length,
-      likes: event.likes.length
+      likes: event.likes
     }
 
   }
@@ -157,7 +157,7 @@ export class EventService {
         image: org.image
       },
       shares: event.shares.length,
-      likes: event.likes.length
+      likes: event.likes
     }
 
   }
@@ -192,7 +192,7 @@ export class EventService {
           image: user.image
         },
         shares: eventItem.shares.length,
-        likes: eventItem.likes.length
+        likes: eventItem.likes
       }
     }
 
@@ -206,7 +206,7 @@ export class EventService {
         image: org.image
       },
       shares: eventItem.shares.length,
-      likes: eventItem.likes.length
+      likes: eventItem.likes
     }
 
   }
@@ -243,7 +243,7 @@ export class EventService {
           image: user.image
         },
         shares: event.shares.length,
-        likes: event.likes.length
+        likes: event.likes
       }
     }
 
@@ -257,7 +257,7 @@ export class EventService {
         image: org.image
       },
       shares: event.shares.length,
-      likes: event.likes.length
+      likes: event.likes
     }
   }
 

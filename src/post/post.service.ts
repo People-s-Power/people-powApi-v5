@@ -42,7 +42,7 @@ export class PostService {
               image: post.author.image || post.org.image
             },
             shares: post.shares.length,
-            likes: post.likes.length
+            likes: post.likes
           }
         })
     } catch (error) {
@@ -63,7 +63,7 @@ export class PostService {
       return {
         ...post._doc,
         shares: post.shares.length,
-        likes: post.likes.length
+        likes: post.likes
       }
     } catch (error) {
       console.log(error)
@@ -143,7 +143,7 @@ export class PostService {
           image: author.image
         },
         shares: post.shares.length,
-        likes: post.likes.length
+        likes: post.likes
       }
 
     } catch (error) {
@@ -184,14 +184,14 @@ export class PostService {
           image: author.image
         },
         shares: post.shares.length,
-        likes: post.likes.length
+        likes: post.likes
       }
 
     } catch (error) {
       console.log(error)
       throw error
     }
-  }
+  } 
 
 
   async delete(postId, authorId) {

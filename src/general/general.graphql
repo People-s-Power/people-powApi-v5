@@ -12,10 +12,16 @@ type Connections{
   _id: ID!
 }
 
+type Comment {
+  body: String!
+  authorId: String!
+}
+
 input ShareInput {
   authorId: ID!
   itemId: ID!
 }
+
 
 input LikeInput {
   authorId: ID!
@@ -34,5 +40,5 @@ type Mutation {
   unlike(authorId: ID! itemId: ID!): String!
   follow(followerId: ID! followId: ID!): String!
   unfollow(followerId: ID! unfollowId: ID!): String!
-  comment(authorId: ID! itemId: ID!): General
+  comment(authorId: ID!, itemId: ID!, body: String!): Comment!
 }

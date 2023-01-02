@@ -41,7 +41,7 @@ let PostService = class PostService {
                         name: post.author.name || post.org.name,
                         email: post.author.email || post.org.email,
                         image: post.author.image || post.org.image
-                    }, shares: post.shares.length, likes: post.likes.length });
+                    }, shares: post.shares.length, likes: post.likes });
             });
         }
         catch (error) {
@@ -56,7 +56,7 @@ let PostService = class PostService {
                 .populate('petition');
             if (!post)
                 throw new common_1.NotFoundException('Post not Found');
-            return Object.assign(Object.assign({}, post._doc), { shares: post.shares.length, likes: post.likes.length });
+            return Object.assign(Object.assign({}, post._doc), { shares: post.shares.length, likes: post.likes });
         }
         catch (error) {
             console_1.default.log(error);
@@ -123,7 +123,7 @@ let PostService = class PostService {
                     name: author.name,
                     email: author.email,
                     image: author.image
-                }, shares: post.shares.length, likes: post.likes.length });
+                }, shares: post.shares.length, likes: post.likes });
         }
         catch (error) {
             console_1.default.log(error);
@@ -153,7 +153,7 @@ let PostService = class PostService {
                     name: author.name,
                     email: author.email,
                     image: author.image
-                }, shares: post.shares.length, likes: post.likes.length });
+                }, shares: post.shares.length, likes: post.likes });
         }
         catch (error) {
             console_1.default.log(error);

@@ -43,7 +43,7 @@ export class GeneralService {
     });
 
     if (petition) {
-      const liked = this.checkIfLiked(petition.likes, authorId)
+      const liked = this.checkIfLiked(petition.likes, authorId, itemId)
       if (liked) throw new BadRequestException('Liked by user')
       petition.likes.push(authorId)
       await petition.save()
@@ -51,7 +51,7 @@ export class GeneralService {
     }
 
     if (victory) {
-      const liked = this.checkIfLiked(victory.likes, authorId)
+      const liked = this.checkIfLiked(victory.likes, authorId, itemId)
       if (liked) throw new BadRequestException('Liked by user')
       victory.likes.push(authorId)
       await victory.save()
@@ -59,7 +59,7 @@ export class GeneralService {
     }
 
     if (advert) {
-      const liked = this.checkIfLiked(advert.likes, authorId)
+      const liked = this.checkIfLiked(advert.likes, authorId, itemId)
       if (liked) throw new BadRequestException('Liked by user')
       advert.likes.push(authorId)
       await advert.save()
@@ -67,7 +67,7 @@ export class GeneralService {
     }
 
     if (event) {
-      const liked = this.checkIfLiked(event.likes, authorId)
+      const liked = this.checkIfLiked(event.likes, authorId, itemId)
       if (liked) throw new BadRequestException('Liked by user')
       event.likes.push(authorId)
       await event.save()
@@ -75,7 +75,7 @@ export class GeneralService {
     }
 
     if (post) {
-      const liked = this.checkIfLiked(post.likes, authorId)
+      const liked = this.checkIfLiked(post.likes, authorId, itemId)
       if (liked) throw new BadRequestException('Liked by user')
       post.likes.push(authorId)
       await post.save()
@@ -104,7 +104,7 @@ export class GeneralService {
       throw new Error(`Can't find activity`);
     });
 
-
+    console.log('Unliked')
     if (petition) {
       const updatedLikes = this.updateLikes(petition.likes, authorId)
       petition.likes = updatedLikes
@@ -143,8 +143,11 @@ export class GeneralService {
     return 'Failed!'
   }
 
-  checkIfLiked(list: string[], authorId): string {
+  checkIfLiked(list: string[], authorId, itemId): string {
     const liked = list.find(item => item.toString() === authorId.toString())
+    if (liked) {
+      this.unlike(itemId, authorId)
+    }
     return liked
   }
   updateLikes(list: string[], authorId: string): string[] {
@@ -276,4 +279,7 @@ export class GeneralService {
     }
 
   }
+
+  
+
 }

@@ -47,7 +47,7 @@ let GeneralService = class GeneralService {
             throw new Error(`Can't find activity`);
         });
         if (petition) {
-            const liked = this.checkIfLiked(petition.likes, authorId);
+            const liked = this.checkIfLiked(petition.likes, authorId, itemId);
             if (liked)
                 throw new common_1.BadRequestException('Liked by user');
             petition.likes.push(authorId);
@@ -55,7 +55,7 @@ let GeneralService = class GeneralService {
             return 'Sucess';
         }
         if (victory) {
-            const liked = this.checkIfLiked(victory.likes, authorId);
+            const liked = this.checkIfLiked(victory.likes, authorId, itemId);
             if (liked)
                 throw new common_1.BadRequestException('Liked by user');
             victory.likes.push(authorId);
@@ -63,7 +63,7 @@ let GeneralService = class GeneralService {
             return 'Sucess';
         }
         if (advert) {
-            const liked = this.checkIfLiked(advert.likes, authorId);
+            const liked = this.checkIfLiked(advert.likes, authorId, itemId);
             if (liked)
                 throw new common_1.BadRequestException('Liked by user');
             advert.likes.push(authorId);
@@ -71,7 +71,7 @@ let GeneralService = class GeneralService {
             return 'Sucess';
         }
         if (event) {
-            const liked = this.checkIfLiked(event.likes, authorId);
+            const liked = this.checkIfLiked(event.likes, authorId, itemId);
             if (liked)
                 throw new common_1.BadRequestException('Liked by user');
             event.likes.push(authorId);
@@ -79,7 +79,7 @@ let GeneralService = class GeneralService {
             return 'Sucess';
         }
         if (post) {
-            const liked = this.checkIfLiked(post.likes, authorId);
+            const liked = this.checkIfLiked(post.likes, authorId, itemId);
             if (liked)
                 throw new common_1.BadRequestException('Liked by user');
             post.likes.push(authorId);
@@ -98,6 +98,7 @@ let GeneralService = class GeneralService {
         ]).catch((e) => {
             throw new Error(`Can't find activity`);
         });
+        console.log('Unliked');
         if (petition) {
             const updatedLikes = this.updateLikes(petition.likes, authorId);
             petition.likes = updatedLikes;
@@ -130,8 +131,11 @@ let GeneralService = class GeneralService {
         }
         return 'Failed!';
     }
-    checkIfLiked(list, authorId) {
+    checkIfLiked(list, authorId, itemId) {
         const liked = list.find(item => item.toString() === authorId.toString());
+        if (liked) {
+            this.unlike(itemId, authorId);
+        }
         return liked;
     }
     updateLikes(list, authorId) {

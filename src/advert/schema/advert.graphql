@@ -9,7 +9,7 @@ type Advert {
   audience: String # Everyone or My Connections or Location
   image: String!
   shares: Int!
-  likes: Int!
+  likes: [String]!
   authorId: ID!
   author: Author!
   promoted: Boolean!
