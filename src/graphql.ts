@@ -231,7 +231,7 @@ export interface General {
 }
 
 export interface Update {
-    petition?: Nullable<string>;
+    petition?: Nullable<Petition>;
     body?: Nullable<string>;
     image?: Nullable<string>;
     authorId?: Nullable<string>;

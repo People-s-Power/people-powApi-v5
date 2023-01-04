@@ -7,7 +7,7 @@ type General {
   updates: [Update!]!
 }
 type Update {
-  petition: String
+  petition: Petition
   body: String
   image: String
   authorId: String

@@ -51,8 +51,8 @@ export declare class GeneralService {
         } & {
             _id: import("mongoose").Types.ObjectId;
         })[];
-        updates: (Update & import("mongoose").Document<any, any, any> & {
+        updates: Omit<Update & import("mongoose").Document<any, any, any> & {
             _id: import("mongoose").Types.ObjectId;
-        })[];
+        }, never>[];
     }>;
 }

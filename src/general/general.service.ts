@@ -330,10 +330,8 @@ export class GeneralService {
           this.postModel.find({author: { $in: user.following }}),
           this.PetitionModel.find({authorId: { $in: user.following }}),
           this.eventModel.find({authorId: { $in: user.following }}),
-          this.UpdateModel.find({authorId: { $in: user.following }})
+          this.UpdateModel.find({authorId: { $in: user.following }}).populate('petition')
         ])
-        console.log(updates)
-        // const updatedEvent = event.ma
         return  {
           adverts,
           events,
@@ -359,7 +357,7 @@ export class GeneralService {
           this.postModel.find({author: { $in: org.following }}),
           this.PetitionModel.find({authorId: { $in: org.following }}),
           this.eventModel.find({authorId: { $in: org.following }}),
-          this.UpdateModel.find({authorId: { $in: user.following }})
+          this.UpdateModel.find({authorId: { $in: user.following }}).populate('petition')
         ])
         return  {
           adverts,

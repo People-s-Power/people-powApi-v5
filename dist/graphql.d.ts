@@ -205,7 +205,7 @@ export interface General {
     updates: Update[];
 }
 export interface Update {
-    petition?: Nullable<string>;
+    petition?: Nullable<Petition>;
     body?: Nullable<string>;
     image?: Nullable<string>;
     authorId?: Nullable<string>;
