@@ -20,8 +20,10 @@ const post_service_1 = require("../post/post.service");
 const petition_service_1 = require("../petition/services/petition.service");
 const event_service_1 = require("../event/event.service");
 const advert_service_1 = require("../advert/advert.service");
+const graphql_guard_1 = require("../auth/guards/graphql.guard");
 const user_service_1 = require("../user/services/user.service");
 const organization_service_1 = require("../organization/organization.service");
+const common_1 = require("@nestjs/common");
 let GeneralResolver = class GeneralResolver {
     constructor(generalService, victoryService, postService, petitionService, eventService, advertService, userService, orgService) {
         this.generalService = generalService;
@@ -69,6 +71,10 @@ let GeneralResolver = class GeneralResolver {
         const res = await this.generalService.addFollowers(followerId, followId);
         return res;
     }
+    async timeline(authorId) {
+        const res = await this.generalService.timeLine(authorId);
+        return res;
+    }
 };
 __decorate([
     (0, graphql_1.Query)('general'),
@@ -103,6 +109,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], GeneralResolver.prototype, "follow", null);
+__decorate([
+    (0, common_1.UseGuards)(graphql_guard_1.GQLoginGuard),
+    (0, graphql_1.Mutation)(),
+    __param(0, (0, graphql_1.Args)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], GeneralResolver.prototype, "timeline", null);
 GeneralResolver = __decorate([
     (0, graphql_1.Resolver)('General'),
     __metadata("design:paramtypes", [general_service_1.GeneralService,

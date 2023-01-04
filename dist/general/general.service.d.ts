@@ -3,7 +3,7 @@ import { AdvertDocument } from 'src/advert/schema/advert';
 import { EventDocument } from 'src/event/schema/event';
 import { organizationDocument } from 'src/organization/schema/organization.schema';
 import { PetitionDocument } from 'src/petition/schema/petition.schema';
-import { PostDocument } from 'src/post/schema/post.schema';
+import { PostDocument, Post } from 'src/post/schema/post.schema';
 import { UserDocument } from 'src/user/entity/user.schema';
 import { VictoryDocument } from 'src/victory/entities/victory.entity';
 export declare class GeneralService {
@@ -22,4 +22,9 @@ export declare class GeneralService {
     updateLikes(list: string[], authorId: string): string[];
     addFollowers(id: any, userId: any): Promise<"Failed" | "Followed">;
     unFollow(id: any, userId: any): Promise<string>;
+    timeLine(authorId: any): Promise<(Post & import("mongoose").Document<any, any, any> & {
+        _doc: any;
+    } & {
+        _id: import("mongoose").Types.ObjectId;
+    })[]>;
 }

@@ -45,7 +45,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UpdateController.prototype, "getCampUpdates", null);
 UpdateController = __decorate([
-    (0, common_1.Controller)('api/v3/campaign/update'),
+    (0, common_1.Controller)('api/v3/petition/update'),
     __metadata("design:paramtypes", [update_service_1.UpdateService])
 ], UpdateController);
 exports.UpdateController = UpdateController;

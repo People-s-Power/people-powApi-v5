@@ -287,7 +287,19 @@ export class GeneralService {
       this.orgModel.findById(authorId)
     ]).catch(e => {
       throw new NotFoundException('User or org not found')
-    }) 
+    })
+
+    if (user) {
+      const posts = await this.postModel.find({authorId: { $in: user.following }})
+      .sort({ createdAt: 'desc' })
+      return posts
+    }
+
+    if (org) {
+      const posts = await this.postModel.find({authorId: { $in: org.following }})
+      .sort({ createdAt: 'desc' })
+      return posts
+    }
   }
 
 }

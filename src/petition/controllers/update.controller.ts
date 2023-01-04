@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { UpdateService } from '../services/update.service';
 
-@Controller('api/v3/campaign/update')
+@Controller('api/v3/petition/update')
 export class UpdateController {
   constructor(private readonly updateService: UpdateService) {}
 

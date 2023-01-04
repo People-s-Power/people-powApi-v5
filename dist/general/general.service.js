@@ -231,6 +231,24 @@ let GeneralService = class GeneralService {
             throw error;
         }
     }
+    async timeLine(authorId) {
+        const [user, org] = await Promise.all([
+            this.userModel.findById(authorId),
+            this.orgModel.findById(authorId)
+        ]).catch(e => {
+            throw new common_1.NotFoundException('User or org not found');
+        });
+        if (user) {
+            const posts = await this.postModel.find({ authorId: { $in: user.following } })
+                .sort({ createdAt: 'desc' });
+            return posts;
+        }
+        if (org) {
+            const posts = await this.postModel.find({ authorId: { $in: org.following } })
+                .sort({ createdAt: 'desc' });
+            return posts;
+        }
+    }
 };
 GeneralService = __decorate([
     (0, common_1.Injectable)(),

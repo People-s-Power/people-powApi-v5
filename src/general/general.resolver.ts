@@ -5,9 +5,10 @@ import { PostService } from 'src/post/post.service';
 import { PetitionService } from 'src/petition/services/petition.service';
 import { EventService } from 'src/event/event.service';
 import { AdvertService } from 'src/advert/advert.service';
-import { locationGLQ } from 'src/auth/guards/graphql.guard';
+import { GQLoginGuard, locationGLQ } from 'src/auth/guards/graphql.guard';
 import { UserService } from 'src/user/services/user.service';
 import { OrganizationService } from 'src/organization/organization.service';
+import { UseGuards } from '@nestjs/common';
 
 @Resolver('General')
 export class GeneralResolver {
@@ -75,6 +76,13 @@ export class GeneralResolver {
   @Mutation()
   async follow(@Args() { followerId, followId }){
     const res = await this.generalService.addFollowers(followerId, followId)
+    return res
+  }
+
+  @UseGuards(GQLoginGuard)
+  @Mutation()
+  async timeline(@Args() authorId) {
+    const res = await this.generalService.timeLine(authorId)
     return res
   }
 

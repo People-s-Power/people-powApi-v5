@@ -41,4 +41,5 @@ type Mutation {
   follow(followerId: ID! followId: ID!): String!
   unfollow(followerId: ID! unfollowId: ID!): String!
   comment(authorId: ID!, itemId: ID!, body: String!): Comment!
+  timeline(authorId: ID): [Post!]!
 }

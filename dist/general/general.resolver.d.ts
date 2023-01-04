@@ -36,4 +36,9 @@ export declare class GeneralResolver {
         followerId: any;
         followId: any;
     }): Promise<"Failed" | "Followed">;
+    timeline(authorId: any): Promise<(import("../post/schema/post.schema").Post & import("mongoose").Document<any, any, any> & {
+        _doc: any;
+    } & {
+        _id: import("mongoose").Types.ObjectId;
+    })[]>;
 }
