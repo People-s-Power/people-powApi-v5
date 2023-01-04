@@ -5,6 +5,7 @@ import { Advert, AdvertDocument } from 'src/advert/schema/advert';
 import { EventDocument, event } from 'src/event/schema/event';
 import { organizationDocument, orgnaization } from 'src/organization/schema/organization.schema';
 import { Petition, PetitionDocument } from 'src/petition/schema/petition.schema';
+import { Update, UpdateDocument } from 'src/petition/schema/update.schema';
 import { PostDocument, Post} from 'src/post/schema/post.schema';
 import { User, UserDocument } from 'src/user/entity/user.schema';
 import { Victory, VictoryDocument } from 'src/victory/entities/victory.entity'
@@ -12,6 +13,8 @@ import { Victory, VictoryDocument } from 'src/victory/entities/victory.entity'
 export class GeneralService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+    @InjectModel(Update.name)
+    private readonly UpdateModel: Model<UpdateDocument>,
     @InjectModel(Advert.name) private readonly advertModel: Model<AdvertDocument>,
     @InjectModel(orgnaization.name) private readonly orgModel: Model<organizationDocument>,
     @InjectModel(event.name) private readonly eventModel: Model<EventDocument>,
@@ -31,13 +34,15 @@ export class GeneralService {
       victory,
       advert,
       event,
-      post
+      post,
+      update
     ] = await Promise.all([
       this.PetitionModel.findById(itemId),
       this.VictoryModel.findById(itemId),
       this.advertModel.findById(itemId),
       this.eventModel.findById(itemId),
-      this.postModel.findById(itemId)
+      this.postModel.findById(itemId),
+      this.UpdateModel.findById(itemId)
     ]).catch((e) => {
       throw new Error(`Can't find activity`);
     });
@@ -82,6 +87,14 @@ export class GeneralService {
       return 'Sucess'
     }
 
+    if (update) {
+      const liked = this.checkIfLiked(update.likes, authorId, itemId)
+      if (liked) return liked
+      update.likes.push(authorId)
+      await update.save()
+      return 'Sucess'
+    }
+
     return 'Failed'
 
 
@@ -93,13 +106,15 @@ export class GeneralService {
       victory,
       advert,
       event,
-      post
+      post,
+      update
     ] = await Promise.all([
       this.PetitionModel.findById(itemId),
       this.VictoryModel.findById(itemId),
       this.advertModel.findById(itemId),
       this.eventModel.findById(itemId),
-      this.postModel.findById(itemId)
+      this.postModel.findById(itemId),
+      this.UpdateModel.findById(itemId)
     ]).catch((e) => {
       throw new Error(`Can't find activity`);
     });
@@ -138,6 +153,14 @@ export class GeneralService {
       post.likes = updatedLikes
       await post.save()
       return 'Unliked!!'
+    }
+
+    if (update) {
+      const liked = this.updateLikes(update.likes, authorId)
+      if (liked) return liked
+      update.likes.push(authorId)
+      await update.save()
+      return 'Sucess'
     }
 
     return 'Failed!'

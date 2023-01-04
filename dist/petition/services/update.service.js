@@ -17,19 +17,27 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const cloudinary_1 = require("../../utils/cloudinary");
+const petition_schema_1 = require("../schema/petition.schema");
 const update_schema_1 = require("../schema/update.schema");
 let UpdateService = class UpdateService {
-    constructor(UpdateModel) {
+    constructor(UpdateModel, PetitionModel) {
         this.UpdateModel = UpdateModel;
+        this.PetitionModel = PetitionModel;
     }
-    async addUpdates(petitionId, body, img) {
+    async addUpdates(petitionId, body, img, authorIdRq) {
+        const petition = await this.PetitionModel.findById(petitionId);
+        console.log(petition);
+        const { authorId } = petition;
+        if (authorId.toString() !== authorIdRq)
+            throw new common_1.UnauthorizedException(`Can't send an update to this petition`);
         const image = await (0, cloudinary_1.cloudinaryUpload)(img).catch((err) => {
             throw err;
         });
         const update = await this.UpdateModel.create({
             petition: petitionId,
             body: body,
-            image
+            image,
+            authorId: authorIdRq
         });
         await update.save();
         return update;
@@ -42,7 +50,9 @@ let UpdateService = class UpdateService {
 UpdateService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(update_schema_1.Update.name)),
-    __metadata("design:paramtypes", [mongoose_2.Model])
+    __param(1, (0, mongoose_1.InjectModel)(petition_schema_1.Petition.name)),
+    __metadata("design:paramtypes", [mongoose_2.Model,
+        mongoose_2.Model])
 ], UpdateService);
 exports.UpdateService = UpdateService;
 //# sourceMappingURL=update.service.js.map

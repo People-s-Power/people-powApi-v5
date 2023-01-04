@@ -20,12 +20,14 @@ const advert_1 = require("../advert/schema/advert");
 const event_1 = require("../event/schema/event");
 const organization_schema_1 = require("../organization/schema/organization.schema");
 const petition_schema_1 = require("../petition/schema/petition.schema");
+const update_schema_1 = require("../petition/schema/update.schema");
 const post_schema_1 = require("../post/schema/post.schema");
 const user_schema_1 = require("../user/entity/user.schema");
 const victory_entity_1 = require("../victory/entities/victory.entity");
 let GeneralService = class GeneralService {
-    constructor(userModel, advertModel, orgModel, eventModel, PetitionModel, postModel, VictoryModel) {
+    constructor(userModel, UpdateModel, advertModel, orgModel, eventModel, PetitionModel, postModel, VictoryModel) {
         this.userModel = userModel;
+        this.UpdateModel = UpdateModel;
         this.advertModel = advertModel;
         this.orgModel = orgModel;
         this.eventModel = eventModel;
@@ -37,12 +39,13 @@ let GeneralService = class GeneralService {
         return `This action returns all general`;
     }
     async like(itemId, authorId) {
-        const [petition, victory, advert, event, post] = await Promise.all([
+        const [petition, victory, advert, event, post, update] = await Promise.all([
             this.PetitionModel.findById(itemId),
             this.VictoryModel.findById(itemId),
             this.advertModel.findById(itemId),
             this.eventModel.findById(itemId),
-            this.postModel.findById(itemId)
+            this.postModel.findById(itemId),
+            this.UpdateModel.findById(itemId)
         ]).catch((e) => {
             throw new Error(`Can't find activity`);
         });
@@ -86,15 +89,24 @@ let GeneralService = class GeneralService {
             await post.save();
             return 'Sucess';
         }
+        if (update) {
+            const liked = this.checkIfLiked(update.likes, authorId, itemId);
+            if (liked)
+                return liked;
+            update.likes.push(authorId);
+            await update.save();
+            return 'Sucess';
+        }
         return 'Failed';
     }
     async unlike(itemId, authorId) {
-        const [petition, victory, advert, event, post] = await Promise.all([
+        const [petition, victory, advert, event, post, update] = await Promise.all([
             this.PetitionModel.findById(itemId),
             this.VictoryModel.findById(itemId),
             this.advertModel.findById(itemId),
             this.eventModel.findById(itemId),
-            this.postModel.findById(itemId)
+            this.postModel.findById(itemId),
+            this.UpdateModel.findById(itemId)
         ]).catch((e) => {
             throw new Error(`Can't find activity`);
         });
@@ -128,6 +140,14 @@ let GeneralService = class GeneralService {
             post.likes = updatedLikes;
             await post.save();
             return 'Unliked!!';
+        }
+        if (update) {
+            const liked = this.updateLikes(update.likes, authorId);
+            if (liked)
+                return liked;
+            update.likes.push(authorId);
+            await update.save();
+            return 'Sucess';
         }
         return 'Failed!';
     }
@@ -283,13 +303,15 @@ let GeneralService = class GeneralService {
 GeneralService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(user_schema_1.User.name)),
-    __param(1, (0, mongoose_1.InjectModel)(advert_1.Advert.name)),
-    __param(2, (0, mongoose_1.InjectModel)(organization_schema_1.orgnaization.name)),
-    __param(3, (0, mongoose_1.InjectModel)(event_1.event.name)),
-    __param(4, (0, mongoose_1.InjectModel)(petition_schema_1.Petition.name)),
-    __param(5, (0, mongoose_1.InjectModel)(post_schema_1.Post.name)),
-    __param(6, (0, mongoose_1.InjectModel)(victory_entity_1.Victory.name)),
+    __param(1, (0, mongoose_1.InjectModel)(update_schema_1.Update.name)),
+    __param(2, (0, mongoose_1.InjectModel)(advert_1.Advert.name)),
+    __param(3, (0, mongoose_1.InjectModel)(organization_schema_1.orgnaization.name)),
+    __param(4, (0, mongoose_1.InjectModel)(event_1.event.name)),
+    __param(5, (0, mongoose_1.InjectModel)(petition_schema_1.Petition.name)),
+    __param(6, (0, mongoose_1.InjectModel)(post_schema_1.Post.name)),
+    __param(7, (0, mongoose_1.InjectModel)(victory_entity_1.Victory.name)),
     __metadata("design:paramtypes", [mongoose_2.Model,
+        mongoose_2.Model,
         mongoose_2.Model,
         mongoose_2.Model,
         mongoose_2.Model,

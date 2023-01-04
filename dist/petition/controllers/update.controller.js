@@ -20,9 +20,9 @@ let UpdateController = class UpdateController {
     constructor(updateService) {
         this.updateService = updateService;
     }
-    addUpdate(data) {
-        const { petitionId, body, image } = data;
-        return this.updateService.addUpdates(petitionId, body, image);
+    addUpdate(data, req) {
+        const { petitionId, body, image, authorId } = data;
+        return this.updateService.addUpdates(petitionId, body, image, authorId);
     }
     getCampUpdates(param) {
         const { petitionId } = param;
@@ -33,8 +33,9 @@ __decorate([
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], UpdateController.prototype, "addUpdate", null);
 __decorate([

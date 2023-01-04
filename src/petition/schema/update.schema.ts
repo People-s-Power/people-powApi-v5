@@ -24,6 +24,12 @@ export class Update {
   body: string;
   @Prop({ required: true })
   image: string;
+  @Prop({ required: true })
+  authorId: string;
+  @Prop()
+  likes: string[];
+  @Prop()
+  shares: string[];
 }
 
 export const UpdateSchema = SchemaFactory.createForClass(Update);

@@ -29,5 +29,8 @@ export declare class Update {
     petition: Record<string, Petition>;
     body: string;
     image: string;
+    authorId: string;
+    likes: string[];
+    shares: string[];
 }
 export declare const UpdateSchema: import("mongoose").Schema<Update, import("mongoose").Model<Update, any, any, any, any>, {}, {}, {}, {}, "type", Update>;

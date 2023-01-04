@@ -31,7 +31,7 @@ export declare class GeneralResolver {
     unlike({ authorId, itemId }: {
         authorId: any;
         itemId: any;
-    }): Promise<"Unliked!!" | "Failed!">;
+    }): Promise<string[] | "Sucess" | "Unliked!!" | "Failed!">;
     follow({ followerId, followId }: {
         followerId: any;
         followId: any;

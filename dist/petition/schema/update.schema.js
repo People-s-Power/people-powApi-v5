@@ -27,6 +27,18 @@ __decorate([
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
 ], Update.prototype, "image", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", String)
+], Update.prototype, "authorId", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", Array)
+], Update.prototype, "likes", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", Array)
+], Update.prototype, "shares", void 0);
 Update = __decorate([
     (0, graphql_1.ObjectType)(),
     (0, mongoose_1.Schema)({

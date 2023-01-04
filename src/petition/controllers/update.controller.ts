@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import { ReqWithUser } from 'src/typings';
 import { UpdateService } from '../services/update.service';
 
 @Controller('api/v3/petition/update')
@@ -8,9 +9,9 @@ export class UpdateController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  addUpdate(@Body() data) {
-    const { petitionId, body, image } = data
-    return this.updateService.addUpdates(petitionId, body, image)
+  addUpdate(@Body() data, @Req() req: ReqWithUser) {
+    const { petitionId, body, image, authorId } = data
+    return this.updateService.addUpdates(petitionId, body, image, authorId)
   }
 
   @Get('/:petitionId')
