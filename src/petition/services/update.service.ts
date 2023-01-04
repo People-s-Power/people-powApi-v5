@@ -12,12 +12,12 @@ export class UpdateService {
   ){}
 
 
-  async addUpdates(campaignId, body, img) {
+  async addUpdates(petitionId, body, img) {
     const image = await cloudinaryUpload(img).catch((err) => {
       throw err;
     });
     const update = await this.UpdateModel.create({
-      campaign: campaignId,
+      petition: petitionId,
       body: body,
       image
     })
@@ -26,8 +26,8 @@ export class UpdateService {
     return update
   }
 
-  async getCampUpdates(campaignId) {
-    const updates = await this.UpdateModel.find({ campaign: campaignId })
+  async getPetitionUpdates(petitionId) {
+    const updates = await this.UpdateModel.find({ petition: petitionId })
     return updates
   }
 }

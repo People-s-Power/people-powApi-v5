@@ -21,12 +21,12 @@ let UpdateController = class UpdateController {
         this.updateService = updateService;
     }
     addUpdate(data) {
-        const { campaignId, body, image } = data;
-        return this.updateService.addUpdates(campaignId, body, image);
+        const { petitionId, body, image } = data;
+        return this.updateService.addUpdates(petitionId, body, image);
     }
     getCampUpdates(param) {
-        const { campaignId } = param;
-        return this.updateService.getCampUpdates(campaignId);
+        const { petitionId } = param;
+        return this.updateService.getPetitionUpdates(petitionId);
     }
 };
 __decorate([
@@ -38,7 +38,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UpdateController.prototype, "addUpdate", null);
 __decorate([
-    (0, common_1.Get)('/:campaignId'),
+    (0, common_1.Get)('/:petitionId'),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

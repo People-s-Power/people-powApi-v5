@@ -36,9 +36,34 @@ export declare class GeneralResolver {
         followerId: any;
         followId: any;
     }): Promise<"Failed" | "Followed">;
-    timeline(authorId: any): Promise<(import("../post/schema/post.schema").Post & import("mongoose").Document<any, any, any> & {
-        _doc: any;
-    } & {
-        _id: import("mongoose").Types.ObjectId;
-    })[]>;
+    timeline({ authorId }: {
+        authorId: any;
+    }): Promise<{
+        adverts: (import("../advert/schema/advert").Advert & import("mongoose").Document<any, any, any> & {
+            _doc: any;
+        } & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        events: (import("mongoose").Document<unknown, any, import("../event/schema/event").EventDocument> & import("../event/schema/event.dto").IEvent & Document & {
+            _id: any;
+            _doc: any;
+        } & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        petitions: (import("../petition/schema/petition.schema").Petition & import("mongoose").Document<any, any, any> & {
+            _doc: any;
+        } & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        posts: (import("../post/schema/post.schema").Post & import("mongoose").Document<any, any, any> & {
+            _doc: any;
+        } & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        victories: (import("../victory/entities/victory.entity").Victory & import("mongoose").Document<any, any, any> & {
+            _doc: any;
+        } & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+    }>;
 }

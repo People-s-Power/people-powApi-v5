@@ -22,20 +22,20 @@ let UpdateService = class UpdateService {
     constructor(UpdateModel) {
         this.UpdateModel = UpdateModel;
     }
-    async addUpdates(campaignId, body, img) {
+    async addUpdates(petitionId, body, img) {
         const image = await (0, cloudinary_1.cloudinaryUpload)(img).catch((err) => {
             throw err;
         });
         const update = await this.UpdateModel.create({
-            campaign: campaignId,
+            petition: petitionId,
             body: body,
             image
         });
         await update.save();
         return update;
     }
-    async getCampUpdates(campaignId) {
-        const updates = await this.UpdateModel.find({ campaign: campaignId });
+    async getPetitionUpdates(petitionId) {
+        const updates = await this.UpdateModel.find({ petition: petitionId });
         return updates;
     }
 };

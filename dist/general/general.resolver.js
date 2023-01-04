@@ -71,7 +71,7 @@ let GeneralResolver = class GeneralResolver {
         const res = await this.generalService.addFollowers(followerId, followId);
         return res;
     }
-    async timeline(authorId) {
+    async timeline({ authorId }) {
         const res = await this.generalService.timeLine(authorId);
         return res;
     }

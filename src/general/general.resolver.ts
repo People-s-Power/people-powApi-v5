@@ -81,7 +81,7 @@ export class GeneralResolver {
 
   @UseGuards(GQLoginGuard)
   @Mutation()
-  async timeline(@Args() authorId) {
+  async timeline(@Args() {authorId}) {
     const res = await this.generalService.timeLine(authorId)
     return res
   }

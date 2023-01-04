@@ -282,6 +282,7 @@ export class GeneralService {
 
 
   async timeLine(authorId) {
+    console.log(authorId)
     const [user, org] = await Promise.all([
       this.userModel.findById(authorId),
       this.orgModel.findById(authorId)
@@ -289,16 +290,58 @@ export class GeneralService {
       throw new NotFoundException('User or org not found')
     })
 
-    if (user) {
-      const posts = await this.postModel.find({authorId: { $in: user.following }})
-      .sort({ createdAt: 'desc' })
-      return posts
-    }
+    try {
 
-    if (org) {
-      const posts = await this.postModel.find({authorId: { $in: org.following }})
-      .sort({ createdAt: 'desc' })
-      return posts
+      if (user) {
+        const [
+          victories,
+          adverts,
+          posts,
+          petitions,
+          events
+        ] = await Promise.all([
+          this.VictoryModel.find({authorId: { $in: user.following }})
+          .sort({ createdAt: 'desc' }),
+          this.advertModel.find({authorId: { $in: user.following }}),
+          this.postModel.find({author: { $in: user.following }}),
+          this.PetitionModel.find({authorId: { $in: user.following }}),
+          this.eventModel.find({authorId: { $in: user.following }}),
+        ])
+        return  {
+          adverts,
+          events,
+          petitions,
+          posts,
+          victories
+        }
+      }
+  
+      if (org) {
+        const [
+          victories,
+          adverts,
+          posts,
+          petitions,
+          events
+        ] = await Promise.all([
+          this.VictoryModel.find({authorId: { $in: org.following }})
+          .sort({ createdAt: 'desc' }),
+          this.advertModel.find({authorId: { $in: org.following }}),
+          this.postModel.find({author: { $in: org.following }}),
+          this.PetitionModel.find({authorId: { $in: org.following }}),
+          this.eventModel.find({authorId: { $in: org.following }}),
+        ])
+        return  {
+          adverts,
+          events,
+          petitions,
+          posts,
+          victories
+        }
+      }
+      
+    } catch (error) {
+      console.log(error)
     }
   }
 

@@ -169,7 +169,7 @@ export interface IMutation {
     follow(followerId: string, followId: string): string | Promise<string>;
     unfollow(followerId: string, unfollowId: string): string | Promise<string>;
     comment(authorId: string, itemId: string, body: string): Comment | Promise<Comment>;
-    timeline(authorId?: Nullable<string>): Post[] | Promise<Post[]>;
+    timeline(authorId: string): General | Promise<General>;
     createOrg(input: CreateOrgInput): Organization | Promise<Organization>;
     updateOrganization(input: UpdateInput): Organization | Promise<Organization>;
     updateImage(input: UploadImageInput): Organization | Promise<Organization>;
