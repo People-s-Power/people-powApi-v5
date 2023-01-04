@@ -227,6 +227,16 @@ export interface General {
     petitions: Petition[];
     posts: Post[];
     victories: Victory[];
+    updates: Update[];
+}
+
+export interface Update {
+    petition?: Nullable<string>;
+    body?: Nullable<string>;
+    image?: Nullable<string>;
+    authorId?: Nullable<string>;
+    likes?: Nullable<Nullable<string>[]>;
+    shares?: Nullable<Nullable<string>[]>;
 }
 
 export interface Connections {

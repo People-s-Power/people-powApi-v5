@@ -4,6 +4,15 @@ type General {
   petitions: [Petition!]!
   posts: [Post!]!
   victories: [Victory!]!
+  updates: [Update!]!
+}
+type Update {
+  petition: String
+  body: String
+  image: String
+  authorId: String
+  likes: [String]
+  shares: [String]
 }
 
 type Connections{

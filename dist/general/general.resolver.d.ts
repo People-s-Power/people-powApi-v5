@@ -65,5 +65,8 @@ export declare class GeneralResolver {
         } & {
             _id: import("mongoose").Types.ObjectId;
         })[];
+        updates: (import("../petition/schema/update.schema").Update & import("mongoose").Document<any, any, any> & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
     }>;
 }

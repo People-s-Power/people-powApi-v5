@@ -261,37 +261,42 @@ let GeneralService = class GeneralService {
         });
         try {
             if (user) {
-                const [victories, adverts, posts, petitions, events] = await Promise.all([
+                const [victories, adverts, posts, petitions, events, updates] = await Promise.all([
                     this.VictoryModel.find({ authorId: { $in: user.following } })
                         .sort({ createdAt: 'desc' }),
                     this.advertModel.find({ authorId: { $in: user.following } }),
                     this.postModel.find({ author: { $in: user.following } }),
                     this.PetitionModel.find({ authorId: { $in: user.following } }),
                     this.eventModel.find({ authorId: { $in: user.following } }),
+                    this.UpdateModel.find({ authorId: { $in: user.following } })
                 ]);
+                console.log(updates);
                 return {
                     adverts,
                     events,
                     petitions,
                     posts,
-                    victories
+                    victories,
+                    updates
                 };
             }
             if (org) {
-                const [victories, adverts, posts, petitions, events] = await Promise.all([
+                const [victories, adverts, posts, petitions, events, updates,] = await Promise.all([
                     this.VictoryModel.find({ authorId: { $in: org.following } })
                         .sort({ createdAt: 'desc' }),
                     this.advertModel.find({ authorId: { $in: org.following } }),
                     this.postModel.find({ author: { $in: org.following } }),
                     this.PetitionModel.find({ authorId: { $in: org.following } }),
                     this.eventModel.find({ authorId: { $in: org.following } }),
+                    this.UpdateModel.find({ authorId: { $in: user.following } })
                 ]);
                 return {
                     adverts,
                     events,
                     petitions,
                     posts,
-                    victories
+                    victories,
+                    updates
                 };
             }
         }

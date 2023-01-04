@@ -3,7 +3,7 @@ import { Advert, AdvertDocument } from 'src/advert/schema/advert';
 import { EventDocument } from 'src/event/schema/event';
 import { organizationDocument } from 'src/organization/schema/organization.schema';
 import { Petition, PetitionDocument } from 'src/petition/schema/petition.schema';
-import { UpdateDocument } from 'src/petition/schema/update.schema';
+import { Update, UpdateDocument } from 'src/petition/schema/update.schema';
 import { PostDocument, Post } from 'src/post/schema/post.schema';
 import { UserDocument } from 'src/user/entity/user.schema';
 import { Victory, VictoryDocument } from 'src/victory/entities/victory.entity';
@@ -49,6 +49,9 @@ export declare class GeneralService {
         victories: (Victory & import("mongoose").Document<any, any, any> & {
             _doc: any;
         } & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        updates: (Update & import("mongoose").Document<any, any, any> & {
             _id: import("mongoose").Types.ObjectId;
         })[];
     }>;
