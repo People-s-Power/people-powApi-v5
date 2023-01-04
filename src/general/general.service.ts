@@ -44,7 +44,7 @@ export class GeneralService {
 
     if (petition) {
       const liked = this.checkIfLiked(petition.likes, authorId, itemId)
-      if (liked) throw new BadRequestException('Liked by user')
+      if (liked) return liked
       petition.likes.push(authorId)
       await petition.save()
       return 'Sucess'
@@ -52,7 +52,7 @@ export class GeneralService {
 
     if (victory) {
       const liked = this.checkIfLiked(victory.likes, authorId, itemId)
-      if (liked) throw new BadRequestException('Liked by user')
+      if (liked) return liked
       victory.likes.push(authorId)
       await victory.save()
       return 'Sucess'
@@ -60,7 +60,7 @@ export class GeneralService {
 
     if (advert) {
       const liked = this.checkIfLiked(advert.likes, authorId, itemId)
-      if (liked) throw new BadRequestException('Liked by user')
+      if (liked) return liked
       advert.likes.push(authorId)
       await advert.save()
       return 'Sucess'
@@ -68,7 +68,7 @@ export class GeneralService {
 
     if (event) {
       const liked = this.checkIfLiked(event.likes, authorId, itemId)
-      if (liked) throw new BadRequestException('Liked by user')
+      if (liked) return liked
       event.likes.push(authorId)
       await event.save()
       return 'Sucess'
@@ -76,7 +76,7 @@ export class GeneralService {
 
     if (post) {
       const liked = this.checkIfLiked(post.likes, authorId, itemId)
-      if (liked) throw new BadRequestException('Liked by user')
+      if (liked) return liked
       post.likes.push(authorId)
       await post.save()
       return 'Sucess'
@@ -280,6 +280,14 @@ export class GeneralService {
 
   }
 
-  
+
+  async timeLine(authorId) {
+    const [user, org] = await Promise.all([
+      this.userModel.findById(authorId),
+      this.orgModel.findById(authorId)
+    ]).catch(e => {
+      throw new NotFoundException('User or org not found')
+    }) 
+  }
 
 }

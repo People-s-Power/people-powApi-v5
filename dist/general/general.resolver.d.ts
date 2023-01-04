@@ -27,7 +27,7 @@ export declare class GeneralResolver {
     like({ authorId, itemId }: {
         authorId: any;
         itemId: any;
-    }): Promise<"Sucess" | "Failed">;
+    }): Promise<string>;
     unlike({ authorId, itemId }: {
         authorId: any;
         itemId: any;

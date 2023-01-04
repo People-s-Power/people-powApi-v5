@@ -38,7 +38,8 @@ import { OrganizationService } from 'src/organization/organization.service';
       { name: View.name, schema: ViewSchema },
       { name: Update.name, schema: UpdateSchema },
       { name: Endorsement.name, schema: EndorsementSchema },
-      { name:ReportCamp.name, schema: ReportCampSchema }
+      { name:ReportCamp.name, schema: ReportCampSchema },
+      
     ]),
     ClientsModule.register([
       {

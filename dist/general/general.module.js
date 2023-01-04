@@ -49,7 +49,7 @@ GeneralModule = __decorate([
                 { name: petition_schema_1.View.name, schema: petition_schema_1.ViewSchema },
                 { name: update_schema_1.Update.name, schema: update_schema_1.UpdateSchema },
                 { name: endorsement_schema_1.Endorsement.name, schema: endorsement_schema_1.EndorsementSchema },
-                { name: reportCamp_schema_1.ReportCamp.name, schema: reportCamp_schema_1.ReportCampSchema }
+                { name: reportCamp_schema_1.ReportCamp.name, schema: reportCamp_schema_1.ReportCampSchema },
             ]),
             microservices_1.ClientsModule.register([
                 {

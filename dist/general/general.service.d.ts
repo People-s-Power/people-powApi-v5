@@ -16,7 +16,7 @@ export declare class GeneralService {
     private readonly VictoryModel;
     constructor(userModel: Model<UserDocument>, advertModel: Model<AdvertDocument>, orgModel: Model<organizationDocument>, eventModel: Model<EventDocument>, PetitionModel: Model<PetitionDocument>, postModel: Model<PostDocument>, VictoryModel: Model<VictoryDocument>);
     findAll(): string;
-    like(itemId: any, authorId: any): Promise<"Sucess" | "Failed">;
+    like(itemId: any, authorId: any): Promise<string>;
     unlike(itemId: any, authorId: any): Promise<"Unliked!!" | "Failed!">;
     checkIfLiked(list: string[], authorId: any, itemId: any): string;
     updateLikes(list: string[], authorId: string): string[];
