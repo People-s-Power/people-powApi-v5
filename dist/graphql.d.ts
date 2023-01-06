@@ -283,6 +283,7 @@ export interface Petition {
     views?: Nullable<Nullable<string>[]>;
     category?: Nullable<string>;
     region?: Nullable<string>;
+    author?: Nullable<Author>;
 }
 export interface View {
     user?: Nullable<string>;

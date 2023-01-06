@@ -13,6 +13,7 @@ type Update {
   authorId: String
   likes: [String]
   shares: [String]
+  author: Author!
 }
 
 type Connections{

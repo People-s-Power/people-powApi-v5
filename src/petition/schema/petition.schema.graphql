@@ -22,6 +22,7 @@ type Petition {
   views: [String]
   category: String
   region: String
+  author: Author
 }
 
 type View {
