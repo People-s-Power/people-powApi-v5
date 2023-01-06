@@ -237,6 +237,7 @@ export interface Update {
     authorId?: Nullable<string>;
     likes?: Nullable<Nullable<string>[]>;
     shares?: Nullable<Nullable<string>[]>;
+    author: Author;
 }
 
 export interface Connections {

@@ -195,7 +195,10 @@ export class GeneralService {
         
         // Check if user is already following
         const res = user.followers.find(item => item.toString() === id.toString())
-        if(res) throw new BadRequestException('User already following')
+        if(res) {
+          this.unFollow(id, userId)
+          return
+        }
         
         // Add the followed user to the followers following Array
         const [userFollower, orgFollower] = await Promise.all([
@@ -316,6 +319,7 @@ export class GeneralService {
     try {
 
       if (user) {
+        const following = [...user.following, authorId]
         const [
           victoriesItems,
           advertsItems,
@@ -324,13 +328,13 @@ export class GeneralService {
           eventsItems,
           updates
         ] = await Promise.all([
-          this.VictoryModel.find({authorId: { $in: user.following }})
+          this.VictoryModel.find({authorId: { $in: following }})
           .sort({ createdAt: 'desc' }),
-          this.advertModel.find({authorId: { $in: user.following }}),
-          this.postModel.find({author: { $in: user.following }}).populate('author', 'petition'),
-          this.PetitionModel.find({authorId: { $in: user.following }}),
-          this.eventModel.find({authorId: { $in: user.following }}),
-          this.UpdateModel.find({authorId: { $in: user.following }}).populate('petition')
+          this.advertModel.find({authorId: { $in: following }}),
+          this.postModel.find({author: { $in: following }}).populate('author', 'petition'),
+          this.PetitionModel.find({authorId: { $in: following }}),
+          this.eventModel.find({authorId: { $in: following }}),
+          this.UpdateModel.find({authorId: { $in: following }}).populate('petition')
         ])
         const posts = postsItems.map(post => {
           return {
@@ -451,7 +455,7 @@ export class GeneralService {
         )
 
 
-        
+
         return  {
           adverts,
           events,
@@ -463,22 +467,143 @@ export class GeneralService {
       }
   
       if (org) {
+        const following = [...org.following, authorId]
         const [
-          victories,
-          adverts,
-          posts,
-          petitions,
-          events,
-          updates,
+          victoriesItems,
+          advertsItems,
+          postsItems,
+          petitionsItems,
+          eventsItems,
+          updates
         ] = await Promise.all([
-          this.VictoryModel.find({authorId: { $in: org.following }})
+          this.VictoryModel.find({authorId: { $in: following }})
           .sort({ createdAt: 'desc' }),
-          this.advertModel.find({authorId: { $in: org.following }}),
-          this.postModel.find({author: { $in: org.following }}),
-          this.PetitionModel.find({authorId: { $in: org.following }}),
-          this.eventModel.find({authorId: { $in: org.following }}),
-          this.UpdateModel.find({authorId: { $in: user.following }}).populate('petition')
+          this.advertModel.find({authorId: { $in: following }}),
+          this.postModel.find({author: { $in: following }}).populate('author', 'petition'),
+          this.PetitionModel.find({authorId: { $in: following }}),
+          this.eventModel.find({authorId: { $in: following }}),
+          this.UpdateModel.find({authorId: { $in: following }}).populate('petition')
         ])
+        const posts = postsItems.map(post => {
+          return {
+            ...post._doc,
+            author: {
+              _id: post.author._id || post.org._id,
+              name: post.author.name || post.org.name,
+              email: post.author.email || post.org.email,
+              image: post.author.image || post.org.image
+            },
+            shares: post.shares,
+            likes: post.likes
+          }
+        })
+        const petitions = petitionsItems.map(petition => {
+          return {
+            ...petition._doc,
+            author: {
+              _id: petition.authorId,
+              name: petition.authorName,
+              email: '',
+              image: petition.authorImg
+            },
+            shares: petition.shares,
+            likes: petition.likes
+          }
+        })
+        const adverts = await Promise.all(
+          advertsItems.map(async item => {
+            if (item.author === 'User') {
+              const user = await this.userModel.findById(item.authorId)
+              return {
+                ...item._doc,
+                author: {
+                  _id: user._id,
+                  name: user.name,
+                  email: user.email,
+                  image: user.image
+                },
+                shares: item.shares,
+                likes: item.likes
+              }
+            }
+            const org = await this.orgModel.findById(item.authorId)
+            return {
+              ...item._doc,
+              author: {
+                _id: org._id,
+                name: org.name,
+                email: org.email,
+                image: org.image
+              },
+              shares: item.shares,
+              likes: item.likes
+            }
+          })
+        )
+        const events = await Promise.all(
+          eventsItems.map(async item => {
+            if (item.author === 'User') {
+              const user = await this.userModel.findById(item.authorId)
+              return {
+                ...item._doc,
+                author: {
+                  _id: user._id,
+                  name: user.name,
+                  email: user.email,
+                  image: user.image
+                },
+                shares: item.shares.length,
+                likes: item.likes
+              }
+            }
+            const org = await this.orgModel.findById(item.authorId)
+            return {
+              ...item._doc,
+              author: {
+                _id: org._id,
+                name: org.name,
+                email: org.email,
+                image: org.image
+              },
+              shares: item.shares.length,
+              likes: item.likes
+            }
+          })
+        )
+
+        const victories = await Promise.all(
+          victoriesItems.map(async item => {
+            if (item.author === 'User') {
+              const user = await this.userModel.findById(item.authorId)
+              return {
+                ...item._doc,
+                author: {
+                  _id: user._id,
+                  name: user.name,
+                  email: user.email,
+                  image: user.image
+                },
+                shares: item.shares.length,
+                likes: item.likes
+              }
+            }
+            const org = await this.orgModel.findById(item.authorId)
+            return {
+              ...item._doc,
+              author: {
+                _id: org._id,
+                name: org.name,
+                email: org.email,
+                image: org.image
+              },
+              shares: item.shares.length,
+              likes: item.likes
+            }
+          })
+        )
+
+
+
         return  {
           adverts,
           events,
@@ -495,3 +620,4 @@ export class GeneralService {
   }
 
 }
+

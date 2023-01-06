@@ -8,7 +8,6 @@ type Victory {
   createdAt: Date
   updatedAt: Date
   authorId: String!
-  author: Author
 }
 
 type Query {
