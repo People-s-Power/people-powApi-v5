@@ -116,3 +116,7 @@ export class UserAndCampDTO {
   user: UserDocument;
   campaigns: PetitionDocument;
 }
+
+export class ShareDTO {
+  
+}

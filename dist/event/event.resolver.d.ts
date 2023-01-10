@@ -8,7 +8,12 @@ export declare class EventResolver {
         limit: any;
         filter: any;
     }): Promise<any[]>;
-    authorEvents(authorId: any, page: any, limit: any, filter: any): Promise<any[]>;
+    authorEvents({ authorId, page, limit, filter }: {
+        authorId: any;
+        page: any;
+        limit: any;
+        filter: any;
+    }): Promise<any[]>;
     event(eventId: any): Promise<any>;
     createEvent({ name, description, time, startDate, endDate, imageFile, type }: {
         name: any;

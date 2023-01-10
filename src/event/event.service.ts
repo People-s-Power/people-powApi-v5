@@ -33,6 +33,7 @@ export class EventService {
       .skip(limit * (page - 1))
       .catch(e => { throw e; });
 
+      console.log('Fired')
 
     const result = await Promise.all(
       events.map(async item => {

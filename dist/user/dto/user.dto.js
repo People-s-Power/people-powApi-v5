@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserAndCampDTO = exports.ChangePasswordDTO = exports.ChangeUserAccountTypeDTO = exports.ChangeUserRoleDTO = exports.AssignUserAdminDTO = exports.UpdateUserDTO = exports.LoginWithGoogleDTO = exports.LoginWithEmailDTO = exports.RegisterWithGoogleDTO = exports.RegisterWithEmailDTO = exports.IUser = exports.AccountTypeEnum = exports.StaffRoleEnum = void 0;
+exports.ShareDTO = exports.UserAndCampDTO = exports.ChangePasswordDTO = exports.ChangeUserAccountTypeDTO = exports.ChangeUserRoleDTO = exports.AssignUserAdminDTO = exports.UpdateUserDTO = exports.LoginWithGoogleDTO = exports.LoginWithEmailDTO = exports.RegisterWithGoogleDTO = exports.RegisterWithEmailDTO = exports.IUser = exports.AccountTypeEnum = exports.StaffRoleEnum = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const mongoose_1 = require("mongoose");
 var StaffRoleEnum;
@@ -54,4 +54,7 @@ exports.ChangePasswordDTO = ChangePasswordDTO;
 class UserAndCampDTO {
 }
 exports.UserAndCampDTO = UserAndCampDTO;
+class ShareDTO {
+}
+exports.ShareDTO = ShareDTO;
 //# sourceMappingURL=user.dto.js.map

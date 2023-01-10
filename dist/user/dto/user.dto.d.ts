@@ -101,4 +101,6 @@ export declare class UserAndCampDTO {
     user: UserDocument;
     campaigns: PetitionDocument;
 }
+export declare class ShareDTO {
+}
 export {};

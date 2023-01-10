@@ -25,10 +25,10 @@ let EventResolver = class EventResolver {
         const events = await this.eventService.findAll(page, limit, filter);
         return events;
     }
-    async authorEvents(authorId, page, limit, filter) {
+    async authorEvents({ authorId, page, limit, filter }) {
         console.log(authorId, page, limit, filter);
-        const event = await this.eventService.findAll(page, limit, filter, authorId);
-        return event;
+        const events = await this.eventService.findAll(page, limit, filter, authorId);
+        return events;
     }
     async event(eventId) {
         const event = await this.eventService.findOne(eventId);
@@ -63,9 +63,10 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EventResolver.prototype, "findAll", null);
 __decorate([
-    (0, graphql_1.Query)('authorEvents'),
+    (0, graphql_1.Query)(),
+    __param(0, (0, graphql_1.Args)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, Object, Object]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], EventResolver.prototype, "authorEvents", null);
 __decorate([

@@ -34,6 +34,7 @@ let EventService = class EventService {
             .limit(limit)
             .skip(limit * (page - 1))
             .catch(e => { throw e; });
+        console.log('Fired');
         const result = await Promise.all(events.map(async (item) => {
             if (item.author === 'User') {
                 const user = await this.userModel.findById(item.authorId);

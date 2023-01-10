@@ -15,11 +15,11 @@ export class EventResolver {
     return events
   }
 
-  @Query('authorEvents')
-  async authorEvents(authorId, page, limit, filter) {
+  @Query()
+  async authorEvents(@Args() {authorId, page, limit, filter}) {
     console.log(authorId, page, limit, filter)
-    const event = await this.eventService.findAll(page, limit, filter, authorId)
-    return event
+    const events = await this.eventService.findAll(page, limit, filter, authorId)
+    return events
   }
 
   @Query()

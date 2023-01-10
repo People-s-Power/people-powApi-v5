@@ -97,6 +97,8 @@ export class User {
   orgOperating: string[];
   @Prop({ default: false })
   createdOrg: boolean;
+  @Prop({ default: [] })
+  shares: []
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

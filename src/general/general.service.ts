@@ -307,6 +307,12 @@ export class GeneralService {
   }
 
 
+  // '636b50787cfaa1ad9a32be9b',
+  // '636b50787cfaa1ad9a32be9b',
+  // '636bb418317398fb86032f42',
+  // '634424f8f59e9b33f6eaa1e8'
+
+
   async timeLine(authorId) {
     console.log(authorId)
     const [user, org] = await Promise.all([
@@ -320,6 +326,7 @@ export class GeneralService {
 
       if (user) {
         const following = [...user.following, authorId]
+        console.log(following)
         const [
           victoriesItems,
           advertsItems,
@@ -337,6 +344,7 @@ export class GeneralService {
           this.UpdateModel.find({authorId: { $in: following }}).populate('petition')
         ])
         const posts = postsItems.map(post => {
+          console.log(post)
           return {
             ...post._doc,
             author: {

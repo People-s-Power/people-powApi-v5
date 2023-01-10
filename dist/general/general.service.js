@@ -264,6 +264,7 @@ let GeneralService = class GeneralService {
         try {
             if (user) {
                 const following = [...user.following, authorId];
+                console.log(following);
                 const [victoriesItems, advertsItems, postsItems, petitionsItems, eventsItems, updates] = await Promise.all([
                     this.VictoryModel.find({ authorId: { $in: following } })
                         .sort({ createdAt: 'desc' }),
@@ -274,6 +275,7 @@ let GeneralService = class GeneralService {
                     this.UpdateModel.find({ authorId: { $in: following } }).populate('petition')
                 ]);
                 const posts = postsItems.map(post => {
+                    console.log(post);
                     return Object.assign(Object.assign({}, post._doc), { author: {
                             _id: post.author._id || post.org._id,
                             name: post.author.name || post.org.name,
