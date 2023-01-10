@@ -19,6 +19,14 @@ export class AdvertResolver {
     const advert = await this.advertService.findOne(advertId)
     return advert
   }
+  
+  @UseGuards(GQLoginGuard)
+  @Query()
+  async myAdverts(@Args() {authorId, page, limit, filter}) {
+    console.log(authorId, page, limit, filter)
+    const events = await this.advertService.findAll(page, limit, filter, authorId)
+    return events
+  }
 
 
 

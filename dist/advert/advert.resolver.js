@@ -29,6 +29,11 @@ let AdvertResolver = class AdvertResolver {
         const advert = await this.advertService.findOne(advertId);
         return advert;
     }
+    async myAdverts({ authorId, page, limit, filter }) {
+        console.log(authorId, page, limit, filter);
+        const events = await this.advertService.findAll(page, limit, filter, authorId);
+        return events;
+    }
     async createdAd({ caption, message, email, duration, link, action, audience, imageFile }, user) {
         const advert = await this.advertService.create({ caption, message, email, duration, link, action, audience, imageFile }, user);
         return advert;
@@ -56,6 +61,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AdvertResolver.prototype, "advert", null);
+__decorate([
+    (0, common_1.UseGuards)(graphql_guard_1.GQLoginGuard),
+    (0, graphql_1.Query)(),
+    __param(0, (0, graphql_1.Args)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AdvertResolver.prototype, "myAdverts", null);
 __decorate([
     (0, common_1.UseGuards)(graphql_guard_1.GQLoginGuard),
     (0, graphql_1.Mutation)(),

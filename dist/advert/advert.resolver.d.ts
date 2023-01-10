@@ -9,6 +9,12 @@ export declare class AdvertResolver {
         filter: any;
     }): Promise<any[]>;
     advert(advertId: any): Promise<any>;
+    myAdverts({ authorId, page, limit, filter }: {
+        authorId: any;
+        page: any;
+        limit: any;
+        filter: any;
+    }): Promise<any[]>;
     createdAd({ caption, message, email, duration, link, action, audience, imageFile }: {
         caption: any;
         message: any;

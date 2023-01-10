@@ -88,7 +88,7 @@ export interface Advert {
 export interface IQuery {
     adverts(page?: Nullable<number>, limit?: Nullable<number>, filter?: Nullable<string>): Advert[] | Promise<Advert[]>;
     advert(advertId?: Nullable<string>): Advert | Promise<Advert>;
-    myAdverts(authorId: string): Advert[] | Promise<Advert[]>;
+    myAdverts(authorId: string, page?: Nullable<number>, limit?: Nullable<number>, filter?: Nullable<string>): Advert[] | Promise<Advert[]>;
     events(page?: Nullable<number>, limit?: Nullable<number>, filter?: Nullable<string>): Event[] | Promise<Event[]>;
     event(eventId: string): Event | Promise<Event>;
     authorEvents(authorId: string, page?: Nullable<number>, limit?: Nullable<number>, filter?: Nullable<string>): Event[] | Promise<Event[]>;

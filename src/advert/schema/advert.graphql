@@ -21,7 +21,7 @@ type Advert {
 type Query {
   adverts(page: Int, limit: Int, filter: String): [Advert!]!
   advert(advertId: ID): Advert!
-  myAdverts(authorId: ID!): [Advert!]!
+  myAdverts(authorId: ID!, page: Int, limit: Int, filter: String): [Advert!]!
 }
 
 
